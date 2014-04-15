@@ -1,0 +1,7 @@
+c:\users\nathan.murados\documents\visual studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtility\bin\Debug\MetricsEvaluationUtility.exe
+c:\users\nathan.murados\documents\visual studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtility\bin\Debug\MetricsEvaluationUtility.pdb
+c:\users\nathan.murados\documents\visual studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtility\obj\x86\Debug\MetricsEvaluationUtility.exe
+c:\users\nathan.murados\documents\visual studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtility\obj\x86\Debug\MetricsEvaluationUtility.pdb
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtility\obj\x86\Debug\MetricsEvaluationUtility.csprojResolveAssemblyReference.cache
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtility\bin\Debug\Ninject.dll
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtility\bin\Debug\Ninject.xml

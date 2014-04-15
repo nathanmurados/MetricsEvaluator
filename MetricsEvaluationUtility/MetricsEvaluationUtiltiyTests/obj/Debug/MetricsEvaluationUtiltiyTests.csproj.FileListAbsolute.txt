@@ -1,0 +1,13 @@
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\MetricsEvaluationUtiltiyTests.dll
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\MetricsEvaluationUtiltiyTests.pdb
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\MetricsEvaluationUtility.exe
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\nunit.framework.dll
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\Ninject.dll
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\MetricsEvaluationUtility.pdb
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\nunit.framework.xml
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\Ninject.xml
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\obj\Debug\MetricsEvaluationUtiltiyTests.csprojResolveAssemblyReference.cache
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\obj\Debug\MetricsEvaluationUtiltiyTests.dll
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\obj\Debug\MetricsEvaluationUtiltiyTests.pdb
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\Moq.dll
+C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\bin\Debug\Moq.xml

@@ -1,0 +1,807 @@
+﻿@model  Accelerate.Framework.Models.ViewModels.CMSViewModel
+@{
+    ViewBag.Title = "Html Template";
+    Layout = "~/Views/Shared/_ThemesMenu.cshtml";
+    var urlHelper = new UrlHelper(Html.ViewContext.RequestContext);
+    string baseurl = urlHelper.Content("~");
+    Html.Hidden("baseurl", baseurl);
+}
+
+        
+<div onclick="alert(clicked)"></div>
+<div ondblclick="alert(clicked)"></div>
+<div onmousedown="alert(clicked)"></div>
+<div onmousemove="alert(clicked)"></div>
+
+<style type="text/css">
+    .errorClass
+    {
+        border: solid 1px red;
+    }
+</style>
+<script src="~/Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+@*<script src="~/Scripts/ContentPageInstancesScript.js" type="text/javascript"></script>*@
+<script src="~/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<script src="~/Content/ckeditor/ckeditor.js" type="text/javascript"> </script>
+<script type="text/javascript">
+    var cssFilePath = "";
+    var FlagremovePlainText = true;
+    var validateForm = true;
+    var validateName = true;
+    var validateNameSave = false;
+
+    $(document).ready(function () {
+
+        function checkPlaceHolderName() {
+
+            var msgFlag = false;
+            var placeHolderCount = 0;
+            var str = CKEDITOR.instances['HtmlContent'].getData();
+            str = str.replace(/\n/g, '');
+            str = str.replace(/\t/g, '');
+            str = str.replace(/\&nbsp;/g, '');
+
+            if ((str.substring(0, str.indexOf("<"))).toString().trim() != '')
+                str = str.replace(str.substring(0, str.indexOf("<")), '<div>' + str.substring(0, str.indexOf("<")) + '</div>');
+            if ((str.substring(str.lastIndexOf(">") + 1).toString().trim()) != '')
+                str = str.replace(str.substring(str.lastIndexOf(">") + 1), '<div>' + str.substring(str.lastIndexOf(">") + 1) + '</div>');
+
+            // Create regular expression pattern.
+            var re = new RegExp(">(.*?)<");
+            var re1 = new RegExp("{{(.*?)}}");
+
+            var placeholders = [];
+
+            // Attempt match on search string.
+            //            return;
+            var r = str.match(re, "g");
+         
+
+            while (r != null) {
+                var sp1 = r[0].toString();
+
+                sp1 = sp1.replace(/\[/g, '{');
+
+                sp1 = sp1.replace(/\]/g, '}');
+
+                var p1 = sp1.match(re1, "g");
+               
+                if (p1 != null) {
+                    placeHolderCount = placeHolderCount + 1;
+                    if (p1[1].toString().trim() == '') {
+                        msgFlag = true;
+                        if (msgFlag == true) {
+
+                            alert("Please Specify Placeholder Name.");
+                            //                msgFlag = false;
+                        }
+
+                        return msgFlag;
+
+                    }
+//                    else if ($('#Type').val() == 'Master' && p1[1].toString().trim() != 'Content') {
+
+//                        msgFlag = true;
+//                        if (msgFlag == true) {
+
+//                            alert("Placeholder Name must be 'Content'.");
+//                            //                msgFlag = false;
+//                        }
+
+//                        return msgFlag;
+
+
+//                    }
+
+                }
+                str = str.replace(r[0], "PHNameExit");
+                r = str.match(re, "g");
+
+            }
+            //            if ($('#Type').val() == 'Master' && placeHolderCount >= 2 && msgFlag == false) {
+
+            //                msgFlag = true;
+            //                if (msgFlag == true) {
+
+            //                    alert("Only one Placeholder is allowed for Master Template.");
+            //                    //                msgFlag = false;
+            //                }
+
+            //                return msgFlag;
+            //            }
+
+            return msgFlag;
+        };
+
+
+
+        function removePlainText() {
+            //                        var str = "3throu3gh t3he<abc >start[[Paceholder2]]end< of >the< bo  > {{wwww}} < def >ok";
+            //            var str = '';
+            //            if (strP == '') {
+            //                 str = CKEDITOR.instances['HtmlContent'].getData();
+            //             } else {
+            //                str = strP;
+
+            //            }
+            //            FlagremovePlainText = false;
+
+            var msgFlag = false;
+            msgFlag = checkPlaceHolderName();
+            if (msgFlag == true) {
+                return msgFlag;
+            }
+            var str = CKEDITOR.instances['HtmlContent'].getData();
+            str = str.replace(/\n/g, '');
+            str = str.replace(/\t/g, '');
+            str = str.replace(/\&nbsp;/g, '');
+
+            if ((str.substring(0, str.indexOf("<"))).toString().trim() != '')
+                str = str.replace(str.substring(0, str.indexOf("<")), '<div>' + str.substring(0, str.indexOf("<")) + '</div>');
+            if ((str.substring(str.lastIndexOf(">") + 1).toString().trim()) != '')
+                str = str.replace(str.substring(str.lastIndexOf(">") + 1), '<div>' + str.substring(str.lastIndexOf(">") + 1) + '</div>');
+
+            // Create regular expression pattern.
+            var re = new RegExp(">(.*?)<");
+            var re1 = new RegExp("{{(.*?)}}");
+
+            var placeholders = [];
+
+            // Attempt match on search string.
+            //            return;
+            var r = str.match(re, "g");
+
+            var j = 0;
+            while (r != null) {
+                var sp1 = r[0].toString();
+
+                //                sp1 = sp1.replace(/\[/g, '{');
+
+                //                sp1 = sp1.replace(/\]/g, '}');
+
+                var p1 = sp1.match(re1, "g");
+
+                if (p1 != null) {
+
+                    placeholders.push(p1[0]);
+                    str = str.replace(r[0], "ThisIsPlaceholder");
+                    if (p1[0].toString().length != sp1.length - 2) { msgFlag = true; }
+
+                }
+
+                else {
+
+                    //---------Add []
+                    //                    var str = "startPaceholder2]]end";
+                    //                        var str = '';
+                    if (sp1.indexOf('[') != -1) {
+                        var l = sp1.indexOf('[');
+                        var l1 = sp1.lastIndexOf(']');
+                        var ps = sp1.substring(l, l1 + 1);
+                        placeholders.push(ps);
+                        str = str.replace(r[0], "ThisIsPlaceholder");
+                        if (r[0].toString().length > ps.length + 2) { msgFlag = true; }
+
+                        //                        alert(ss);
+                    } else {
+                        str = str.replace(r[0], "ThisIsPlainText");
+                        if (r[0].toString().length > 2) { msgFlag = true; }
+                    }
+
+                    //------------
+
+                    //                    str = str.replace(r[0], "ThisIsPlainText");
+                    //                    if (r[0].toString().length > 2) { msgFlag = true; }
+
+                }
+
+                j++;
+
+                r = str.match(re, "g");
+            }
+
+            for (i = 0; i < j; i++) {
+                str = str.replace("ThisIsPlainText", "><");
+                if (str.search("ThisIsPlaceholder") != -1) {
+
+                    str = str.replace("ThisIsPlaceholder", ">" + placeholders[i] + "<");
+                }
+                //                msgFlag = true;
+            }
+
+            setTimeout(function () {
+                CKEDITOR.instances['HtmlContent'].setData(str.toString(), function () {
+                    this.checkDirty();  // true
+                });
+            }, 100);
+
+            if (msgFlag == true && FlagremovePlainText == true) {
+
+                alert("Plain Text is Not Allowed");
+                //                msgFlag = false;
+            }
+
+            return msgFlag;
+        };
+
+        $('#btnCancel').live('click', function (event) {
+
+            window.location = $('#baseurl').val() + 'CMS/List';
+
+        });
+
+        function saveValidation(event) {
+            validateForm = true;
+            checkTitleDesc();
+            checkCKEditorData();
+            FlagremovePlainText = false;
+
+            if (validateForm == false) {
+                if (event != null || event != undefined) {
+                    event.preventDefault ? event.preventDefault() : event.returnValue = false;
+                    FlagremovePlainText = true;
+                }
+            }
+
+            if (removePlainText() == true) {
+                FlagremovePlainText = true;
+                if (event != null || event != undefined) {
+                    event.preventDefault ? event.preventDefault() : event.returnValue = false;
+                    FlagremovePlainText = true;
+                }
+            }
+        };
+        $('#UpdateStatusSave').live('click', function (event) {
+            saveValidation(event);
+
+            if ((event != null || event != undefined) && validateName == false) {
+                event.preventDefault ? event.preventDefault() : event.returnValue = false;
+                validateNameSave = true;
+
+            }
+
+
+        });
+        $("#LogicalName").keypress(function () {
+            $('#TitleErrorMessageBlank').css('display', 'none');
+            $('#TitleErrorMessagePresent').css('display', 'none');
+            $('#TitleErrorMessageError').css('display', 'none');
+            $("#LogicalName").removeClass('errorClass');
+        });
+
+        $('#LogicalName').focus(function () {
+            $('#TitleErrorMessageBlank').css('display', 'none');
+
+            //            $('#TitleErrorMessageError').css('display', 'none');
+            //            $('#TitleErrorMessagePresent').css('display', 'none');
+            //            $("#LogicalName").removeClass('errorClass');
+            $('#DescErrorMessage').css('display', 'none');
+            $("#Desc").removeClass('errorClass');
+        });
+        $('#Desc').focus(function () {
+            $('#DescErrorMessage').css('display', 'none');
+            $("#Desc").removeClass('errorClass');
+        });
+        $('#LogicalName').focusout(function () {
+            $('#TitleErrorMessageError').css('display', 'none');
+            $('#TitleErrorMessagePresent').css('display', 'none');
+            if ($('#LogicalName').val() == '') {
+                $('#TitleErrorMessageBlank').css('display', 'block');
+                $("#LogicalName").addClass('errorClass');
+            }
+        });
+        $('#Desc').focusout(function () {
+
+            if ($('#Desc').val() == '') {
+                $('#DescErrorMessage').css('display', 'block');
+                $("#Desc").addClass('errorClass');
+
+            }
+        });
+
+        Editor.on('focus', function (e) {
+
+            $('#HtmlContentErrorMessage').css('display', 'none');
+        });
+
+        Editor.on('blur', function (e) {
+            checkCKEditorData();
+            FlagremovePlainText == true;
+            removePlainText();
+            //            checkPlaceHolderName();
+
+
+            //            if (removePlainText() == true) {
+            //                if (FlagremovePlainText == true) {
+            //                    FlagremovePlainText = false;
+            //                    if (event != null || event != undefined) {
+            //                        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            //                      
+            //                    } 
+            //                }
+            ////                FlagremovePlainText = true;
+            ////                if (event != null || event != undefined) {
+            ////                    event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            ////                }
+            //            } else {
+            //                FlagremovePlainText = false;
+            //            }
+        });
+        function checkCKEditorData() {
+            var editorData = CKEDITOR.instances['HtmlContent'].getData();
+
+            if (editorData == '') {
+                $('#HtmlContentErrorMessage').css('display', 'block');
+                //                event.preventDefault();
+                //                if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                //                if (event != null || event != undefined) { event.preventDefault ? event.preventDefault() : event.returnValue = false; }
+                validateForm = false;
+            } else {
+                $('#HtmlContentErrorMessage').css('display', 'none');
+                //                removePlainText();
+            }
+            //            if (removePlainText() == true) {
+            //                if (event != null || event != undefined) { event.preventDefault ? event.preventDefault() : event.returnValue = false; }
+            //            }
+            return validateForm;
+        };
+
+        function checkTitleDesc() {
+            if ($('#LogicalName').val() == '') {
+                $('#TitleErrorMessageBlank').css('display', 'block');
+                $("#LogicalName").addClass('errorClass');
+                //                event.preventDefault();
+                //                if (event != null || event != undefined) { event.preventDefault ? event.preventDefault() : event.returnValue = false; }
+                validateForm = false;
+            }
+            if ($('#Desc').val() == '') {
+                $('#DescErrorMessage').css('display', 'block');
+                $("#Desc").addClass('errorClass');
+                //                event.preventDefault();
+                //                if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                //                if (event != null || event != undefined) { event.preventDefault ? event.preventDefault() : event.returnValue = false; }
+                validateForm = false;
+            }
+
+            if ($('#Type option:selected').text() == '-Select-') {
+
+                $('#TemplateTypeErrorMessage').css('display', 'block');
+                $("#Type").addClass('errorClass');
+                validateForm = false;
+            }
+
+            return validateForm;
+        }
+
+        $('#Type').change(function (e) {
+            if ($('#Type option:selected').text() != '-Select-') {
+                $('#TemplateTypeErrorMessage').css('display', 'none');
+                $("#Type").removeClass('errorClass');
+            } else {
+                $('#TemplateTypeErrorMessage').css('display', 'block');
+                $("#Type").addClass('errorClass');
+            }
+
+        });
+
+        $('#CSSFile').change(function (e) {
+            var themeId = $('#CSSFile').val();
+            $.ajax({
+                type: "POST",
+                url: $('#baseurl').val() + "CMS/GetCssName/",
+                data: "themeId=" + themeId,
+                dataType: "JSON",
+                success: function (evt) {
+                    cssFilePath = "";
+                    cssFilePath = evt.replace('~', '../..');
+                    applyCss();
+                    checkCKEditorData();
+
+                },
+                error: function (req, status, error) {
+                    cssFilePath = "";
+                    applyCss();
+                    checkCKEditorData();
+
+                }
+            });
+
+        });
+
+        function applyCss() {
+            var editorData = CKEDITOR.instances['HtmlContent'].getData();
+            //            alert("1"+ editorData);
+            //editorData = editorData.trim();
+            var startIndex = editorData.indexOf('id="UserCSSFile"');
+            var link = '  <link href="' + cssFilePath + '" id="UserCSSFile" rel="stylesheet" type="text/css" /> ';
+            if (startIndex >= 0) {
+                var endIndex = editorData.indexOf('rel="stylesheet" type="text/css" />');
+                var strToRemove = editorData.substring(0, endIndex + 36);
+                editorData = editorData.replace(strToRemove, '');
+                //                alert("2" + editorData);
+            }
+            if (cssFilePath != "") {
+                editorData = link + editorData;
+                //                alert("3" + editorData);
+            }
+            setTimeout(function () {
+                CKEDITOR.instances['HtmlContent'].setData(editorData.toString(), function () {
+                    this.checkDirty();  // true
+                });
+            }, 500);
+
+            //            alert("4" + editorData);
+        }
+
+        ////        if ($('#ShowEditUserButton').val() == false && $('#ShowViewUserButton').val() == true) {
+        //        alert($('#ShowEditUserButton').val().toString());
+        //
+        //            $('#LogicalName').attr("disabled", "disabled");
+        //            $('#Desc').attr("disabled", "disabled");
+        //            $('#CSSFile').attr("disabled", "disabled");
+        //            $('#Type').attr("disabled", "disabled");
+        //
+        ////        }
+
+        var txtbox = $('#LogicalName').val();
+        var action = "";
+        $('#ID').attr("readonly", true);
+        if (txtbox != "") {
+            action = "Edit";
+            //            $('#LogicalName').attr("readonly", true);
+            //                    $('#LogicalName').attr("disabled", "disabled");
+        } else {
+            action = "Create";
+        }
+        //        $('#LNameExist').hide();
+        $('#LogicalName').bind('blur', function () {
+            validateName = false;
+            var lName = $('#LogicalName').val();
+            //            $('#LogicalName').val('');
+            var docName = $('#DocID').val();
+            var dat = {};
+            dat.logicalName = lName;
+            dat.docName = docName;
+
+            if (lName != null && lName != '') {
+                //                if (action == "Create") {
+                $.ajax({
+                    type: "POST",
+                    url: $('#baseurl').val() + "CMS/ValidateLogicalName/",
+                    data: dat,
+                    //                        "logicalName=" + lName,
+                    success: function (response) {
+                        $('#LogicalName').val(lName);
+                        if (response == "False") {
+                            $('#LogicalName').val('');
+                            $('#LogicalName').focus();
+                            $('#TitleErrorMessagePresent').css('display', 'block');
+                            $("#LogicalName").addClass('errorClass');
+                            //                                $('#LNameExist').show();
+                            validateName = true;
+                            validateNameSave = false;
+                        }
+                        else if (response == "ElasticSearchError") {
+                            $('#LogicalName').val('');
+                            $('#LogicalName').focus();
+                            $("#LogicalName").addClass('errorClass');
+                            $('#TitleErrorMessageError').css('display', 'block');
+                            validateName = true;
+                            validateNameSave = false;
+
+                            //                                $('#LNameExist').show();
+                        }
+                        else if (response == "True") {
+                            //                                $('#LNameExist').hide();
+                            $('#TitleErrorMessagePresent').css('display', 'none');
+                            $("#LogicalName").removeClass('errorClass');
+
+                            validateName = true;
+                            if (validateNameSave == true) {
+                                validateNameSave = false;
+                                saveValidation(event);
+                                if (validateForm == true && removePlainText() == false) {
+                                    $("#formCreate").submit();
+                                }
+                            }
+
+
+                        }
+                    }
+                });
+                //                    $('#LNameExist').hide();
+                //                $('#TitleErrorMessagePresent').css('display', 'none');
+                //                $("#LogicalName").removeClass('errorClass');
+            }
+
+            //            } else {
+            //                //                $('#LNameExist').text("Logical Name Required");
+            //                //                $('#LNameExist').show();
+            //                //                $('#LNameExist').hide();
+            //                $('#TitleErrorMessagePresent').css('display', 'none');
+            //            }
+        });
+    });
+</script>
+@{
+
+    using (Html.BeginForm("Save", "CMS", FormMethod.Post, new { id = "formCreate" }))
+    {
+    <input type="hidden" name="EditUserButton" id="ShowEditUserButton" value="@ViewBag.ShowEditUserButton" />
+    <input type="hidden" name="ViewUserButton" id="ShowViewUserButton" value="@ViewBag.ShowViewUserButton" />
+    <div class="StatusBar">
+        <table>
+            <tr>
+                <td style="width: 140px" align="left">
+                    @*   <div class="AddQuestionDetails TopLabel">*@
+                        @Html.Label(" Web PageInstances Layout ID") 
+                   @* <span class="field-validation-error">*</span>*@<br/>&nbsp;
+                    @Html.TextBoxFor(model => model.Title, new { id = "ID", style = "width:50%", @readonly = "readonly", onclick = "test" })
+                    @*   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        @Html.ValidationMessageFor(model => model.Title)*@ @*  </div>*@
+                </td>
+                <td style="width: 140px" align="left">
+                    @*     <div class="AddQuestionDetails">*@
+                    @Html.Label("Web PageInstances Layout Title")
+                    <span class="field-validation-error">*</span><br/>
+              
+                    <span>
+                        @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                        {
+                            @Html.TextBoxFor(model => model.LName, new { id = "LogicalName1", maxlength = "100", style = "width:200px", @disabled = "true" })
+
+                        }
+                        else
+                        {
+
+                            @Html.TextBoxFor(model => model.LName, new { id = "LogicalName", maxlength = "100", style = "width:200px" })
+                        }
+                    </span>
+                </td>
+                <td style="width: 300px" align="left" valign="bottom">
+                    @Html.ValidationMessageFor(model => model.LName)
+                    <span class="field-validation-error" id="TitleErrorMessageBlank" style="display: none">
+                        <span>Title cannot be blank.</span></span> <span class="field-validation-error" id="TitleErrorMessagePresent"
+                                                                         style="display: none"><span>Title already present.</span></span> 
+                    <span class="field-validation-error" id="TitleErrorMessageError"
+                          style="display: none"><span>Elastic Search Server is not responding.</span></span>
+                          @*   @if (!string.IsNullOrWhiteSpace(ViewBag.LogicalUniqueErrorMsg))
+                        {
+                            <div style="margin-left: 104px;">
+                                <label id="LNameAvail" style="color: Red">@ViewBag.LogicalUniqueErrorMsg</label>
+                            </div>
+                        }*@ @* </div>*@
+                </td>
+                <td>
+                    <div class="work-status">
+                        @switch (@Convert.ToString(@Model.WorkflowStatus ?? string.Empty).ToLower())
+                        {
+                            case "live":
+                            <span class="live">@Model.WorkflowStatus</span>
+                                          break;
+
+                            case "de-commissioned":
+                            <span class="de-commissioned">@Model.WorkflowStatus</span>
+                                                     break;
+
+                            case "ready for live":
+                            <span class="progress">@Model.WorkflowStatus</span>
+                                              break;
+                            case "work in progress":
+                            <span class="progress">@Model.WorkflowStatus</span>
+                                              break;
+                            default:
+                            <span>@(Model.WorkflowStatus ?? string.Empty)</span>
+                              break;
+                        }
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="Middle">
+        <div class="Std-Layout">
+            <div class="StatusBar" style="margin-left: -24px; width: 103%">
+                <div class="QuestionDashboard">
+                    <li>
+                        <table>
+                            <tr>
+                                <td style="width: 99px;" valign="top">
+                                    @Html.Label("Subject/Purpose")
+                                    <span class="field-validation-error">*</span>
+                                </td>
+                                <td style="width: 250px; height: 45px" align="left">
+                                    @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                                    {
+                                        @Html.TextAreaFor(model => model.Desc, new { style = "width:100%;height:45px", id = "Desc", maxlength = "500", @disabled = "true" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextAreaFor(model => model.Desc, new { style = "width:100%;height:45px", id = "Desc", maxlength = "500" })
+                                    }
+                                    @*       @Html.ValidationMessageFor(model => model.Desc)*@
+                                </td>
+                                <td>
+                                    <span class="field-validation-error" id="DescErrorMessage" style="display: none"><span>
+                                                                                                                         Description cannot be blank.</span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="clear">
+                        </div>
+                    </li>
+                    <br />
+                    <li>
+                        @Html.Label("Select Theme")
+                        @* <span class="field-validation-error">*</span>*@
+                        @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                        {
+
+                            @Html.DropDownListFor(model => model.CSSFile, Model.ThemesViewModelist.Select(a => new SelectListItem { Selected = false, Text = a.LogicalFieldName, Value = a.ThemeId }).ToList(), "-Select-", new { id = "CSSFile", @disabled = "true", style = "padding: 0%;" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(model => model.CSSFile, Model.ThemesViewModelist.Select(a => new SelectListItem { Selected = false, Text = a.LogicalFieldName, Value = a.ThemeId }).ToList(), "-Select-", new { id = "CSSFile", style = "padding: 0%;" })
+                        }
+                        <div class="clear">
+                        </div>
+                    </li>
+                    <br />
+                    <li>
+                        <div class="editor-label" style="display:inline; float:left">
+                            @Html.Label("Template Type") 
+                            <span class="field-validation-error" style="display:inline;">*</span>
+                            <span class="field-validation-error" style="display:inline;">
+                                @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                                {
+                                    @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetNames(typeof(TemplateType))), "-Select-", new { id = "Type", @disabled = "true", style = "padding: 0%;" })
+
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetNames(typeof(TemplateType))), "-Select-", new { id = "Type", style = "padding: 0%;" })
+
+                                }
+                            </span>
+                        </div>
+                        <div style="float:left">
+                            <span class="field-validation-error" id="TemplateTypeErrorMessage" style="display: none"><span> Please Select Template Type.</span></span>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </li>
+                    <br />
+                    <li>
+                        <div id="divHtmlContent">
+                            @Html.Label("HTML Template Content")
+                            <span class="field-validation-error">*</span>
+                            @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                            {
+                                @Html.TextAreaFor(model => model.HtmlContent, new { id = "HtmlContent", @disabled = "true" })
+
+                            }
+                            else
+                            {
+                                @Html.TextAreaFor(model => model.HtmlContent, new { id = "HtmlContent" })
+
+                            }
+                            @* @Html.ValidationMessageFor(model => model.HtmlContent)*@ <span class="field-validation-error"
+                                                                                              id="HtmlContentErrorMessage" style="display: none"><span>HTML Content cannot be blank.</span></span>
+                            @*   <label id="HtmlContent" style="color: Red; display: none; font-size: 0.9em; font-weight: normal;">
+                            </label>*@
+                            <script type="text/javascript">
+                                var Editor = CKEDITOR.replace('HtmlContent',
+                                {
+                                    //	    extraPlugins: 'placeholder',
+//                                        toolbar: [['Source', 'Maximize', 'Preview'], ['CreatePlaceholder']],
+                                    toolbar: [['Source', 'Bold', 'Italic', 'NumberedList', 'BulletedList', 
+                                        'Cut', 'Copy', 'Paste',  'PasteFromWord', 'Undo', 'Redo', 'Find', 'Replace', 'SelectAll', 'SpellChecker', 'Scayt',
+                                        'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat', 'Outdent', 'Indent', 'Inlinequote', 'CreateDiv',
+                                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyInline', 'BidiLtr', 'BidiRtl', 'Table',
+                                        'Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor', 'Maximize', 'ShowInlines'], ['CreatePlaceholder']],
+                                             
+//                                        toolbar: [['Source', 'Bold', 'Italic', 'NumberedList', 'BulletedList', 'Link', 'Unlink', 'Preview',
+//                                            'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo', 'Find', 'Replace', 'SelectAll', 'SpellChecker', 'Scayt',
+//                                            'Form', 'Checkbox', 'Radio', 'Select', 'Button', 'ImageButton',
+//                                            'HiddenField', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat', 'Outdent', 'Indent', 'Inlinequote', 'CreateDiv',
+//                                            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyInline', 'BidiLtr', 'BidiRtl', 'Anchor',
+//                                            'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageInstancesBreak', 'Iframe',
+//                                            'Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor', 'Maximize', 'ShowInlines'], ['CreatePlaceholder']],
+                                        
+                                    extraPlugins: 'placeholder',
+                                    language: 'en',
+                                    enterMode: CKEDITOR.ENTER_BR,
+                                    shiftEnterMode: CKEDITOR.ENTER_P
+
+                                });
+                            </script>
+                        </div>
+                    </li>
+                </div>
+                <div class="editor-label">
+                    @*  @Html.TextBoxFor(model => model.CDate, new { style = "width: 200px",id = "CDate" })*@
+                    @Html.HiddenFor(model => model.CDate, new { style = "width: 200px", id = "CDate" })
+                    @*    @Html.TextBoxFor(model => model.CDate, new { style = "display:none;" })*@
+                    @*  @Html.HiddenFor(model => model.WorkflowStatus, new { style = "display:none;", id = "WorkflowStatus" })
+                    @Html.TextBoxFor(model => model.WorkflowDesc, new { style = "display:none;", id = "WorkflowDesc1" })*@
+                    @Html.TextBoxFor(model => model.DocID, new { style = "display:none;", id = "DocID" })
+                    @Html.TextBoxFor(model => model.OldWorkflowStatus, new { style = "display:none;", id = "OldWorkflowStatus" })
+                </div>
+                <div class="editor-label">
+                    @Html.TextBoxFor(model => model.CssChanged, new { style = "display:none;", id = "CssChanged" })
+                </div>
+                @*  @if (Model.WorkflowStatus == WorkflowStatus.InReview && !Model.IsNew)
+                {
+                    <div id="divWorkflow" class="AnswerValue">
+                        @Html.LabelFor(model => model.WorkflowStatus)
+                         <span class="field-validation-error">*</span>
+                        @Html.DropDownListFor(model => model.WorkflowStatus, new List<SelectListItem> { new SelectListItem { Text = WorkflowStatus.Approved, Value = WorkflowStatus.Approved , Selected  = ViewBag.SelectedItemType == WorkflowStatus.Approved},
+                                    new SelectListItem { Text = WorkflowStatus.InProgress, Value = WorkflowStatus.InProgress, Selected  = ViewBag.SelectedItemType ==WorkflowStatus.InProgress }},
+                                                       "--Select--", new { style = "padding: 0%;" })
+                        @Html.ValidationMessageFor(model => model.WorkflowStatus)
+                    </div>}
+                @if (Model.WorkflowStatus == WorkflowStatus.InReview || Model.WorkflowStatus == WorkflowStatus.Approved)
+                {
+                    <div id="divComment" class="AnswerValue">
+                        @Html.LabelFor(model => model.WorkflowDesc)
+                         <span class="field-validation-error" id="commentValidateion">*</span>
+                        @Html.TextAreaFor(model => model.WorkflowDesc)
+                        @Html.ValidationMessageFor(model => model.WorkflowDesc)
+                    </div>
+                }*@
+                <table>
+                    <tr>
+                        @if (Model.WorkflowStatus != WorkflowStatus.InReview && ViewBag.ShowEditUserButton)
+                        {
+                            <td>
+                                @*   <input type="submit" style="width: 80px" id="btnSave" value="Save" name="command" />*@
+                                <button type="submit" id="UpdateStatusSave" name="command" value="Save">
+                                    Save</button>
+                            </td>
+                            <td>
+                                <button type="submit" id="UpdateStatusSave" name="command" value="Send for Approval">
+                                    Send for Approval</button>
+                            </td>
+                        }
+                        @if (Model.WorkflowStatus == WorkflowStatus.InReview && ViewBag.ShowApproveUserButton && ViewBag.ShowEditUserButton)
+                        {
+                            <td>
+                                <button type="submit" id="UpdateStatusSave" name="command" value="Reject">
+                                    Reject</button>
+                            </td>
+                            <td>
+                                <button type="submit" id="UpdateStatusSave" name="command" value="Accept">
+                                    Accept</button>
+                            </td>
+                        }
+                        @if (Model.WorkflowStatus == WorkflowStatus.Approved && ViewBag.ShowDeCommissionUserButton && ViewBag.ShowEditUserButton)
+                        {
+
+                            <td>
+                                <button type="submit" id="UpdateStatusSave" name="command" value="De-commission"
+                                        onclick=" return confirm('You will not be able to use this HTML Template'); ">
+                                    De-commission</button>
+                            </td>
+                        }
+                        <td>
+                            @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                            {
+                                <input type="button" style="width: 80px" id="btnCancel" value="OK" name="command" />
+
+                            }
+                            else
+                            {
+                                <input type="button" style="width: 80px" id="btnCancel" value="Cancel" name="command" />
+
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    }
+}

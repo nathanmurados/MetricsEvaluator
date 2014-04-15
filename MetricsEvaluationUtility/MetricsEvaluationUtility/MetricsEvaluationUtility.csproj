@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MetricsEvaluationUtility</RootNamespace>
+    <AssemblyName>MetricsEvaluationUtility</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Services\DateTimeProvider.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsAttributesProvider.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsBlockEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Css\CssBlockEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsValidationEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Css\CssRazorEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsRazorEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Css\CssPageEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsPageEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsReferencesEvaluator.cs" />
+    <Compile Include="Services\Presenters\JavascriptStatsPresenter.cs" />
+    <Compile Include="Services\Storers\JavascriptStatsStorer.cs" />
+    <Compile Include="Services\Evaluators\RelevantAttributesEvaluator.cs" />
+    <Compile Include="ViewModels\JavaScriptEvaluationResult.cs" />
+    <Compile Include="ViewModels\JavascriptOccurenceResult.cs" />
+    <Compile Include="ViewModels\DetailedJavaScriptEvaluationResult.cs" />
+    <Compile Include="Services\Storers\CssStatsStorer.cs" />
+    <Compile Include="Services\Storers\Storer.cs" />
+    <Compile Include="ViewModels\CssEvaluationResult.cs" />
+    <Compile Include="Services\Evaluators\Css\CssValidationEvaluator.cs" />
+    <Compile Include="ViewModels\DetailedCssEvaluationResult.cs" />
+    <Compile Include="Services\Extensions\StringExtensions.cs" />
+    <Compile Include="Services\Presenters\CssStatsPresenter.cs" />
+    <Compile Include="Services\IHasHumanInterface.cs" />
+    <Compile Include="Services\Presenters\FilteredExtensionsListPresenter.cs" />
+    <Compile Include="Services\Evaluators\FilteredFilesEvaluator.cs" />
+    <Compile Include="Services\ConsoleAppHumanInterface.cs" />
+    <Compile Include="Services\Evaluators\DirectoryFileEvaluator.cs" />
+    <Compile Include="Executable.cs" />
+    <Compile Include="Services\Presenters\FileExtensionsPresenter.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Presenters\FilteredFilesStatsPresenter.cs" />
+    <Compile Include="Services\IHasListPresenter.cs" />
+    <Compile Include="Services\IPresenter.cs" />
+    <Compile Include="Services\Presenters\ListPresenter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
