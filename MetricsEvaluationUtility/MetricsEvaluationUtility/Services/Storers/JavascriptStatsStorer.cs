@@ -59,7 +59,7 @@ namespace MetricsEvaluationUtility.Services.Storers
                     });
                 }
 
-                sb.AppendFormat(",{0},{1}", result.Block.Count, result.Razor.Count);
+                sb.AppendFormat(",{0},{1}", result.Block.Sum(x => x.InlineJavascriptTags.Count), result.Razor.Count);
                 sb.AppendLine("");
             }
 
