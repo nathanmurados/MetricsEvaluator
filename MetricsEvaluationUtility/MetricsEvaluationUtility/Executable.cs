@@ -9,8 +9,7 @@ namespace MetricsEvaluationUtility
 {
     public class Executable
     {
-        private const string Directory = @"C:\Checkouts\Accelerate V2";
-
+        
         public IHumanInterface Ux { get; private set; }
         public IListPresenter ListPresenter { get; private set; }
         public IFileExtensionPresenter FileExtensionPresenter { get; private set; }
@@ -20,9 +19,16 @@ namespace MetricsEvaluationUtility
         public IFilteredFilesStatsPresenter FilteredFilesStatsPresenter { get; private set; }
         public IJavaScriptStatsPresenter JavaScriptStatsPresenter { get; private set; }
         public IFilteredFilesEvaluator FilteredFilesEvaluator { get; private set; }
-
-        public Executable(IHumanInterface ux, IFileExtensionPresenter fileExtensionPresenter, IDirectoryFileEvaluator directoryFileEvaluator, IListPresenter listPresenter, IFilteredFilesPresenter filteredFilesPresenter, IFilteredFilesStatsPresenter filteredFilesStatsPresenter, ICssStatsPresenter cssStatsPresenter, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator)
+        public IJavaScriptFileStatsPresenter JavaScriptFileStatsPresenter { get; private set; }
+        public ISettingsValidator SettingsValidator { get; private set; }
+        public ISettingsEvaluator SettingsEvaluator { get; private set; }
+        
+        public Executable(IHumanInterface ux, IFileExtensionPresenter fileExtensionPresenter, IDirectoryFileEvaluator directoryFileEvaluator, IListPresenter listPresenter, IFilteredFilesPresenter filteredFilesPresenter, IFilteredFilesStatsPresenter filteredFilesStatsPresenter, ICssStatsPresenter cssStatsPresenter, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, IJavaScriptFileStatsPresenter javaScriptFileStatsPresenter, ISettingsValidator settingsValidator, ISettingsEvaluator settingsEvaluator)
         {
+            SettingsEvaluator = settingsEvaluator;
+
+            SettingsValidator = settingsValidator;
+            JavaScriptFileStatsPresenter = javaScriptFileStatsPresenter;
             FilteredFilesEvaluator = filteredFilesEvaluator;
             JavaScriptStatsPresenter = javaScriptStatsPresenter;
             CssStatsPresenter = cssStatsPresenter;
@@ -38,12 +44,16 @@ namespace MetricsEvaluationUtility
 
         public void Execute()
         {
-            var files = DirectoryFileEvaluator.GetFiles(Directory).OrderBy(x => x).ToList();
+            SettingsValidator.Validate();
+
+            var directory = SettingsEvaluator.GetApTwoDirectory();
+
+            var files = DirectoryFileEvaluator.GetFiles(directory).OrderBy(x => x).ToList();
 
             var loop = true;
             while (loop)
             {
-                Ux.WriteLine(string.Format("Analysing: {0}", Directory));
+                Ux.WriteLine(string.Format("Analysing: {0}", directory));
 
                 Ux.AddOption("Exit", () => loop = false);
 
@@ -56,6 +66,8 @@ namespace MetricsEvaluationUtility
                 Ux.AddOptionWithHeadingSpace("Count inline CSS on filtered files", () => CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files)));
 
                 Ux.AddOptionWithHeadingSpace("Count inline Javascript on filtered files", () => JavaScriptStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files)));
+
+                Ux.AddOptionWithHeadingSpace("Count inline Javascript on specific file...", () => JavaScriptFileStatsPresenter.Present());
 
                 Ux.DisplayOptions("Please choose an option");
             }

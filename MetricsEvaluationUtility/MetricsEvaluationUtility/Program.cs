@@ -38,6 +38,9 @@ namespace MetricsEvaluationUtility
                 Bind<IJavaScriptStatsStorer>().To<JavaScriptStatsStorer>();
                 Bind<IRelevantAttributesEvaluator>().To<RelevantAttributesEvaluator>();
                 Bind<IStorer>().To<Storer>();
+                Bind<IJavaScriptFileStatsPresenter>().To<JavaScriptFileStatsPresenter>();
+                Bind<ISettingsValidator>().To<SettingsValidator>();
+                Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
             }
         }
 
@@ -54,7 +57,10 @@ namespace MetricsEvaluationUtility
                 kernel.Get<IFilteredFilesStatsPresenter>(),
                 kernel.Get<ICssStatsPresenter>(),
                 kernel.Get<IJavaScriptStatsPresenter>(),
-                kernel.Get<IFilteredFilesEvaluator>()        
+                kernel.Get<IFilteredFilesEvaluator>(),
+                kernel.Get<JavaScriptFileStatsPresenter>(),
+                kernel.Get<ISettingsValidator>(),
+                kernel.Get<ISettingsEvaluator>()
             );
 
             prog.Execute();

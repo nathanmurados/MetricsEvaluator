@@ -35,6 +35,7 @@ namespace MetricsEvaluationUtility.Services
 
         public string Read(string str)
         {
+            Console.Write("{0}: ", str);
             return Console.ReadLine();
         }
 

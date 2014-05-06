@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\ISettingsValidator.cs" />
+    <Compile Include="Services\Evaluators\ISettingsEvaluator.cs" />
+    <Compile Include="Services\Presenters\IJavaScriptFileStatsPresenter.cs" />
+    <Compile Include="Services\Presenters\JavaScriptFileStatsPresenter.cs" />
     <Compile Include="Services\DateTimeProvider.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsAttributesProvider.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsBlockEvaluator.cs" />
@@ -59,6 +63,8 @@
     <Compile Include="Services\Presenters\JavascriptStatsPresenter.cs" />
     <Compile Include="Services\Storers\JavascriptStatsStorer.cs" />
     <Compile Include="Services\Evaluators\RelevantAttributesEvaluator.cs" />
+    <Compile Include="Services\Evaluators\SettingsEvaluator.cs" />
+    <Compile Include="Services\SettingsValidator.cs" />
     <Compile Include="ViewModels\JavaScriptEvaluationResult.cs" />
     <Compile Include="ViewModels\JavascriptOccurenceResult.cs" />
     <Compile Include="ViewModels\DetailedJavaScriptEvaluationResult.cs" />
