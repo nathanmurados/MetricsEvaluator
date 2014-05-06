@@ -14,3 +14,7 @@ C:\Code\Me2\MetricsEvaluator\MetricsEvaluationUtility\MetricsEvaluationUtility\b
 C:\Code\Me2\MetricsEvaluator\MetricsEvaluationUtility\MetricsEvaluationUtility\bin\Debug\Ninject.dll
 C:\Code\Me2\MetricsEvaluator\MetricsEvaluationUtility\MetricsEvaluationUtility\bin\Debug\Ninject.xml
 C:\Code\Me2\MetricsEvaluator\MetricsEvaluationUtility\MetricsEvaluationUtility\obj\x86\Debug\MetricsEvaluationUtility.csprojResolveAssemblyReference.cache
+C:\Code\Me2\MetricsEvaluator\MetricsEvaluationUtility\MetricsEvaluationUtility\bin\Debug\MetricsEvaluationUtility.exe.manifest
+C:\Code\Me2\MetricsEvaluator\MetricsEvaluationUtility\MetricsEvaluationUtility\bin\Debug\MetricsEvaluationUtility.application
+C:\Code\Me2\MetricsEvaluator\MetricsEvaluationUtility\MetricsEvaluationUtility\obj\x86\Debug\MetricsEvaluationUtility.exe.manifest
+C:\Code\Me2\MetricsEvaluator\MetricsEvaluationUtility\MetricsEvaluationUtility\obj\x86\Debug\MetricsEvaluationUtility.application

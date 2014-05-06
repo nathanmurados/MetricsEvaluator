@@ -47,7 +47,7 @@ namespace MetricsEvaluationUtility.Services.Storers
 
                 foreach (var attribute in attributesInUse)
                 {
-                    var blockCount = result.Block.Count(x => comparer.Equals(attribute, x.AttributeName));
+                    var blockCount = result.Block.Where(x => comparer.Equals(attribute, x.AttributeName)).Sum(x => x.InlineJavascriptTags.Count);
                     var razorCount = result.Razor.Count(x => comparer.Equals(attribute, x.AttributeName));
                     sb.AppendFormat(",{0}", blockCount + razorCount);
 

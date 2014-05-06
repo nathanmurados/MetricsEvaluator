@@ -62,9 +62,9 @@ namespace MetricsEvaluationUtility.Services.Presenters
 
             var comparer = StringComparer.OrdinalIgnoreCase;
 
-            Ux.WriteLine(string.Format("Inline Instances: {0}", results.Sum(x => x.PageInstances.Count)));
+            Ux.WriteLine(string.Format("Inline Page Instances: {0}", results.Sum(x => x.PageInstances.Count)));
             Ux.WriteLine(string.Format("Inline Lines Of Code: {0}", results.Sum(x => x.PageInstances.Sum(y => y))));
-            Ux.WriteLine(string.Format("Inline Instances: {0}", results.Sum(x => x.Block.Count)));
+            Ux.WriteLine(string.Format("Inline Block Instances: {0}", results.Sum(x => x.Block.Sum(y => y.InlineJavascriptTags.Count))));
             Ux.WriteLine(string.Format("Razor Instances: {0}", results.Sum(x => x.Razor.Count)));
 
             foreach (var tag in attributes)
