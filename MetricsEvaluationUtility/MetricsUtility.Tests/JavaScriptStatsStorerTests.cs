@@ -56,7 +56,7 @@ namespace MetricsUtiltiy.Tests
                 }
             };
 
-            evaluator.Store(testData);
+            evaluator.Store(testData, string.Empty);
         }
 
     }

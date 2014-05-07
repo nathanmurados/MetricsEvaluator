@@ -19,7 +19,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
 
         public string Evaluate(string groupName)
         {
-            return string.Format("CSS Results {0} {1}.csv",
+            return string.Format("CSS Results {0}{1}.csv",
                 DateTimeProvider.Now.ToString("yyMMddHHmmss"),
                 string.IsNullOrWhiteSpace(groupName) ? "" : string.Format(" {0} ", groupName)
                 //Properties.Settings.Default.InspectionPath.Replace("\\", "~").Replace(":", ""),

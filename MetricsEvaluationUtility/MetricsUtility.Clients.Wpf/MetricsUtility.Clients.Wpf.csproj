@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\Evaluators\GroupedCssEvaluator.cs" />
+    <Compile Include="Services\Evaluators\GroupedJavaScriptEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IGroupedCssEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IFoldersPerGroupEvaluator.cs" />
     <Compile Include="Services\Evaluators\FoldersPerGroupEvaluator.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Services\Evaluators\DirectoryGroupEvaluator.cs" />
     <Compile Include="Services\Evaluators\CssStatsFileNameEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IChildDirectoryCountEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IGroupedJavaScriptEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScriptStatsFileNameEvaluator.cs" />
     <Compile Include="Services\Evaluators\ChildDirectoryCountEvaluator.cs" />
     <Compile Include="Services\Presenters\FilePresenter.cs" />

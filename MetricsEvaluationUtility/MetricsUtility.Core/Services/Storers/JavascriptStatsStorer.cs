@@ -24,7 +24,7 @@ namespace MetricsUtility.Core.Services.Storers
             RelevantAttributesEvaluator = relevantAttributesEvaluator;
         }
 
-        public string Store(List<JavaScriptEvaluationResult> results)
+        public string Store(List<JavaScriptEvaluationResult> results, string groupName)
         {
             var attributeTotals = new List<AttributeTotal>();
 
@@ -74,7 +74,7 @@ namespace MetricsUtility.Core.Services.Storers
 
             sb.AppendFormat(",{0},{1}", attributeTotals.Sum(x => x.BlockCount), attributeTotals.Sum(x => x.RazorCount));
 
-            var filename = Storer.Store(sb, JavaScriptStatsFileNameEvaluator.Evaluate());
+            var filename = Storer.Store(sb, JavaScriptStatsFileNameEvaluator.Evaluate(groupName));
 
             Ux.WriteLine(string.Format("Saved to {0}", filename));
             Ux.WriteLine("");
@@ -93,6 +93,6 @@ namespace MetricsUtility.Core.Services.Storers
 
     public interface IJavaScriptStatsStorer
     {
-        string Store(List<JavaScriptEvaluationResult> results);
+        string Store(List<JavaScriptEvaluationResult> results, string groupName);
     }
 }

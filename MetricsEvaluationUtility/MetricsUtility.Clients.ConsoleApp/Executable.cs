@@ -76,7 +76,7 @@ namespace MetricsUtility.Clients.ConsoleApp
                 Ux.AddOptionWithHeadingSpace("Count inline Javascript on filtered files", () =>
                 {
                     var results = JavaScriptStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
-                    Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () => JavaScriptStatsStorer.Store(results), null);
+                    Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () => JavaScriptStatsStorer.Store(results, string.Empty), null);
                 });
 
                 Ux.AddOptionWithHeadingSpace("Count inline Javascript and CSS on specific file...", () => JavaScriptFileStatsPresenter.Present());

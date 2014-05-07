@@ -11,10 +11,12 @@ namespace MetricsUtility.Clients.ConsoleApp.Services
         {
             DateTimeProvider = dateTimeProvider;
         }
-        
-        public string Evaluate()
+
+        public string Evaluate(string groupName)
         {
-            return "JS Validation Results " + DateTimeProvider.Now.ToString("yy-MM-dd HH.mm.ss") + ".csv";
+            return string.Format("JavaScript Results - {0} {1}.csv",
+                groupName,
+                DateTimeProvider.Now.ToString("yy-MM-dd HH.mm.ss"));
         }
     }
 }

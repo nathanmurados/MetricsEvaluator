@@ -33,7 +33,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 var results = JavaScriptStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
                 Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () =>
                 {
-                    var filename = CssJavaScriptStorer.Store(results);
+                    var filename = CssJavaScriptStorer.Store(results, string.Empty);
                     FilePresenter.Present(filename);
                 }, null);
 

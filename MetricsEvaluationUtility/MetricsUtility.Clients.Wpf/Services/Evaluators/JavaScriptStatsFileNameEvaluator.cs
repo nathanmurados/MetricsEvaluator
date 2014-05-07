@@ -11,10 +11,14 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
         {
             DateTimeProvider = dateTimeProvider;
         }
-
-        public string Evaluate()
+        
+        public string Evaluate(string groupName)
         {
-            return string.Format("JS Results {0} {1}.csv", Properties.Settings.Default.InspectionPath.Replace("\\", "~").Replace(":", ""), DateTimeProvider.Now.ToString("yyMMddHHmmss"));
+            return string.Format("JS Results {0}{1}.csv",
+                DateTimeProvider.Now.ToString("yyMMddHHmmss"),
+                string.IsNullOrWhiteSpace(groupName) ? "" : string.Format(" {0} ", groupName)
+                //Properties.Settings.Default.InspectionPath.Replace("\\", "~").Replace(":", ""),
+            );
         }
     }
 }
