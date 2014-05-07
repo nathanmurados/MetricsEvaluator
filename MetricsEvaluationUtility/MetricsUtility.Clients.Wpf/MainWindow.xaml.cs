@@ -18,9 +18,18 @@ namespace MetricsUtility.Clients.Wpf
         public ISolutionCssMetricsPresenter SolutionCssMetricsPresenter { get; private set; }
         public ISolutionChoicePresenter SolutionChoicePresenter { get; private set; }
         public IResultsDirectoryChoicePresenter ResultsDirectoryChoicePresenter { get; private set; }
+        public IBoolOptionPresenter BoolOptionPresenter { get; private set; }
+        public IOutputPresenter OutputPresenter { get; private set; }
+        public IProgressPresenter ProgressPresenter { get; private set; }
+        public IInputPresenter InputPresenter { get; private set; }
+        public IOptionsPresenter OptionsPresenter { get; set; }
 
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ISolutionCssMetricsPresenter solutionCssMetricsPresenter, IHumanInterface ux, ISolutionChoicePresenter solutionChoicePresenter, IResultsDirectoryChoicePresenter resultsDirectoryChoicePresenter)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ISolutionCssMetricsPresenter solutionCssMetricsPresenter, IHumanInterface ux, ISolutionChoicePresenter solutionChoicePresenter, IResultsDirectoryChoicePresenter resultsDirectoryChoicePresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter)
         {
+            InputPresenter = inputPresenter;
+            ProgressPresenter = progressPresenter;
+            OutputPresenter = outputPresenter;
+            BoolOptionPresenter = boolOptionPresenter;
             ResultsDirectoryChoicePresenter = resultsDirectoryChoicePresenter;
             SolutionChoicePresenter = solutionChoicePresenter;
             Ux = ux;
@@ -29,92 +38,25 @@ namespace MetricsUtility.Clients.Wpf
             InitializeComponent();
             DataContext = ViewModelEvaluator.Evaluate();
 
-            ux.WriteEvent += Write;
-            ux.WriteLineEvent += WriteLineEvent;
-            ux.ReadEvent += ReadEvent;
-            ux.AddOptionEvent += AddOptionEvent;
-            ux.DisplayBoolOptionEvent += DisplayBoolOptionEvent;
-            ux.AddOptionEvent += AddOptionEvent;
-            ux.AddOptionWithHeadingSpaceEvent += AddOptionWithHeadingSpaceEvent;
-            ux.DisplayOptionsEvent += DisplayOptionsEvent;
-            ux.ProgressEvent += ProgressEvent;
-            ux.ResetProgressEvent += ResetProgressEvent;
+            ux.ReadEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => inputPresenter.Present(sender, e, (ViewModel)DataContext)));
+            ux.WriteEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OutputPresenter.Write(sender, e, (ViewModel)DataContext)));
+            ux.ProgressEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => ProgressPresenter.Present(sender, e, (ViewModel)DataContext)));
+            ux.WriteLineEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OutputPresenter.WriteLine(sender, e, (ViewModel)DataContext)));
+            ux.AddOptionEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OptionsPresenter.AddOption(sender, e, (ViewModel)DataContext)));
+            ux.ResetProgressEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => ProgressPresenter.Reset(sender, e, (ViewModel)DataContext)));
+            ux.DisplayOptionsEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OptionsPresenter.DisplayOptions(sender, e, (ViewModel)DataContext))); ;
+            ux.DisplayBoolOptionEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => BoolOptionPresenter.Present(sender, e)));
+            ux.AddOptionWithHeadingSpaceEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OptionsPresenter.AddOptionWithHeadingSpace(sender, e, (ViewModel)DataContext)));
+
+#if DEBUG
+            ClearSettings();
+#endif
         }
 
-        private void ResetProgressEvent(object sender, EventArgs e)
+        private static void ClearSettings()
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                ((ViewModel)DataContext).ProgressValue = 0;
-            }));
-        }
-
-        private void ProgressEvent(object sender, int e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                ((ViewModel)DataContext).ProgressValue = e;
-            }));
-        }
-
-        private void DisplayOptionsEvent(object sender, string e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                MessageBox.Show("options");
-            }));
-        }
-
-        private void AddOptionWithHeadingSpaceEvent(object sender, AddOptionEventArgs e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-
-            }));
-        }
-
-        private void DisplayBoolOptionEvent(object sender, BoolOptionEventArgs e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                switch (MessageBox.Show(e.Question, "", MessageBoxButton.YesNo, MessageBoxImage.Question))
-                {
-                    case MessageBoxResult.Yes: if (e.ActionOnTrue != null) { e.ActionOnTrue(); } break;
-                    case MessageBoxResult.No: if (e.ActionOnFalse != null) { e.ActionOnFalse(); } break;
-                }
-            }));
-        }
-
-        private void AddOptionEvent(object sender, AddOptionEventArgs e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-
-            }));
-        }
-
-        private void ReadEvent(object sender, string e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                MessageBox.Show("Read");
-            }));
-        }
-
-        private void WriteLineEvent(object sender, string e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                ((ViewModel)DataContext).Output += string.Format("{0}{1}", e, Environment.NewLine);
-            }));
-        }
-
-        public void Write(object sender, string e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                ((ViewModel)DataContext).Output += e;
-            }));
+            Properties.Settings.Default.ResultsPath = null;
+            Properties.Settings.Default.InspectionPath = null;
         }
 
         private void ChooseSolution(object sender, RoutedEventArgs e)
@@ -126,13 +68,13 @@ namespace MetricsUtility.Clients.Wpf
         {
             Task.Run(() =>
             {
-                AllowInteractions(false);
+                ToggleInteractionPermission(false);
                 SolutionCssMetricsPresenter.View();
-                AllowInteractions(true);
+                ToggleInteractionPermission(true);
             });
         }
 
-        private void AllowInteractions(bool allow)
+        private void ToggleInteractionPermission(bool allow)
         {
             Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -142,7 +84,7 @@ namespace MetricsUtility.Clients.Wpf
 
         private void ChooseResultsLocation(object sender, RoutedEventArgs e)
         {
-            ResultsDirectoryChoicePresenter.Present((ViewModel)DataContext);            
+            ResultsDirectoryChoicePresenter.Present((ViewModel)DataContext);
         }
     }
 }

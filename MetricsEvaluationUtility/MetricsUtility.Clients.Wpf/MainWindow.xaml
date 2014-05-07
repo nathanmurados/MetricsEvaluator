@@ -30,14 +30,19 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid>
+            <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Margin="5">Solution:</Label>
                     <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
                     <Button Click="ChooseSolution" Content="Choose" Margin="5" IsEnabled="{Binding AllowInteractions}"/>
                     <Button Click="ViewSolutionCssMetrics" Content="Run" Visibility="{Binding EnableDiagnostics}" Margin="5" IsEnabled="{Binding AllowInteractions}"/>
                 </StackPanel>
-            </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="5">Results:</Label>
+                    <Label Content="{Binding ResultsDirectory}" Margin="5"/>
+                    <Button Click="ChooseResultsLocation" Content="Choose" Margin="5" IsEnabled="{Binding AllowInteractions}"/>
+                </StackPanel>
+            </StackPanel>
             <Grid Grid.Row="1">
                 <TextBox Text="{Binding Output}" />
             </Grid>

@@ -26,24 +26,24 @@ namespace MetricsUtility.Clients.Wpf.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SolutionToAnalyse {
+        public string InspectionPath {
             get {
-                return ((string)(this["SolutionToAnalyse"]));
+                return ((string)(this["InspectionPath"]));
             }
             set {
-                this["SolutionToAnalyse"] = value;
+                this["InspectionPath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ResultsDirectory {
+        public string ResultsPath {
             get {
-                return ((string)(this["ResultsDirectory"]));
+                return ((string)(this["ResultsPath"]));
             }
             set {
-                this["ResultsDirectory"] = value;
+                this["ResultsPath"] = value;
             }
         }
     }

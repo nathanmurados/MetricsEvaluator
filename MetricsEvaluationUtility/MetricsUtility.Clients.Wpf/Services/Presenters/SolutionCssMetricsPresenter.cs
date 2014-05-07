@@ -27,9 +27,9 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
 
         public void View()
         {
-            if (Directory.Exists(Properties.Settings.Default.SolutionToAnalyse))
+            if (Directory.Exists(Properties.Settings.Default.InspectionPath))
             {
-                var files = DirectoryFileEvaluator.GetFiles(Properties.Settings.Default.SolutionToAnalyse).OrderBy(x => x).ToList();
+                var files = DirectoryFileEvaluator.GetFiles(Properties.Settings.Default.InspectionPath).OrderBy(x => x).ToList();
 
                 var results = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
                 Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(results), null);

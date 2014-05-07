@@ -6,7 +6,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
     {
         public string Evaluate()
         {
-            return Properties.Settings.Default.ResultsDirectory;
+            return Properties.Settings.Default.ResultsPath;
         }
     }
 }

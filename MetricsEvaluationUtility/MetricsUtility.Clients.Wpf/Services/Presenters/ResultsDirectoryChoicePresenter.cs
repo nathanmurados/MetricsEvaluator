@@ -9,15 +9,15 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
         {
             var dialog = new FolderBrowserDialog
             {
-                SelectedPath = Properties.Settings.Default.ResultsDirectory,
+                SelectedPath = Properties.Settings.Default.ResultsPath,
                 Description = "Select results directory"
             };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Properties.Settings.Default.SolutionToAnalyse = dialog.SelectedPath;
+                Properties.Settings.Default.ResultsPath = dialog.SelectedPath;
                 Properties.Settings.Default.Save();
-                dataContext.SolutionToAnalyse = Properties.Settings.Default.ResultsDirectory;
+                dataContext.ResultsDirectory = Properties.Settings.Default.ResultsPath;
             }
         }
     }

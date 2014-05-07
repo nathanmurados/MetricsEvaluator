@@ -9,6 +9,7 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         private Visibility _enableDiagnostics;
         private bool _allowInteractions;
         private int _progressValue;
+        private string _resultsDirectory;
 
         public string SolutionToAnalyse
         {
@@ -38,6 +39,12 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         {
             get { return _progressValue; }
             set { _progressValue = value; OnPropertyChanged(); }
+        }
+
+        public string ResultsDirectory
+        {
+            get { return _resultsDirectory; }
+            set { _resultsDirectory = value; OnPropertyChanged(); }
         }
     }
 }

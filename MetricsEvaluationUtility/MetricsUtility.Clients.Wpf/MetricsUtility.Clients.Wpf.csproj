@@ -57,6 +57,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Presenters\IOptionsPresenter.cs" />
+    <Compile Include="Services\Presenters\OptionsPresenter.cs" />
+    <Compile Include="Services\Presenters\IInputPresenter.cs" />
+    <Compile Include="Services\Presenters\InputPresenter.cs" />
+    <Compile Include="Services\Presenters\IProgressPresenter.cs" />
+    <Compile Include="Services\Presenters\ProgressPresenter.cs" />
+    <Compile Include="Services\Presenters\IOutputPresenter.cs" />
+    <Compile Include="Services\Presenters\BoolOptionPresenter.cs" />
+    <Compile Include="Services\Presenters\IBoolOptionPresenter.cs" />
     <Compile Include="Services\Presenters\IResultsDirectoryChoicePresenter.cs" />
     <Compile Include="Services\Presenters\ResultsDirectoryChoicePresenter.cs" />
     <Compile Include="Services\Evaluators\ResultsDirectoryEvaluator.cs" />
@@ -68,6 +77,7 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Services\Evaluators\ViewModelEvaluator.cs" />
     <Compile Include="Services\WpfInterface.cs" />
+    <Compile Include="Services\Presenters\OutputPresenter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

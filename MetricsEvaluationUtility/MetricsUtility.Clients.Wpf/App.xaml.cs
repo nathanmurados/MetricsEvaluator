@@ -58,7 +58,14 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<ISolutionCssMetricsPresenter>().To<SolutionCssMetricsPresenter>();
             _container.Bind<ISolutionChoicePresenter>().To<SolutionChoicePresenter>();
             _container.Bind<IResultsDirectoryEvaluator>().To<ResultsDirectoryEvaluator>();
-            
+            _container.Bind<IResultsDirectoryChoicePresenter>().To<ResultsDirectoryChoicePresenter>();
+
+            _container.Bind<IBoolOptionPresenter>().To<BoolOptionPresenter>();
+            _container.Bind<IOutputPresenter>().To<OutputPresenter>();
+            _container.Bind<IProgressPresenter>().To<ProgressPresenter>();
+            _container.Bind<IInputPresenter>().To<InputPresenter>();
+            //_container.Bind<IResultsDirectoryChoicePresenter>().To<ResultsDirectoryChoicePresenter>();
+            //_container.Bind<IResultsDirectoryChoicePresenter>().To<ResultsDirectoryChoicePresenter>();
         }
 
         private void ComposeObjects()

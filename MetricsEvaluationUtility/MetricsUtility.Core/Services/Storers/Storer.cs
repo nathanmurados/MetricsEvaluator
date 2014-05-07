@@ -5,7 +5,12 @@ namespace MetricsUtility.Core.Services.Storers
 {
     public sealed class Storer : IStorer
     {
-        public IResultsDirectoryEvaluator ResultsDirectoryEvaluator { get; set; }
+        public IResultsDirectoryEvaluator ResultsDirectoryEvaluator { get; private set; }
+
+        public Storer(IResultsDirectoryEvaluator resultsDirectoryEvaluator)
+        {
+            ResultsDirectoryEvaluator = resultsDirectoryEvaluator;
+        }
 
         public void Store(StringBuilder stringBuilder, string fileName)
         {

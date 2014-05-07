@@ -8,9 +8,9 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
         {
             return new ViewModel
             {
-                SolutionToAnalyse = string.IsNullOrWhiteSpace(Properties.Settings.Default.SolutionToAnalyse) ? "(None)" : Properties.Settings.Default.SolutionToAnalyse,
-                AllowInteractions = true 
-                
+                SolutionToAnalyse = string.IsNullOrWhiteSpace(Properties.Settings.Default.InspectionPath) ? "(None)" : Properties.Settings.Default.InspectionPath,
+                AllowInteractions = true,
+                ResultsDirectory = string.IsNullOrWhiteSpace(Properties.Settings.Default.ResultsPath) ? "(None)" : Properties.Settings.Default.InspectionPath,
             };
         }
     }
