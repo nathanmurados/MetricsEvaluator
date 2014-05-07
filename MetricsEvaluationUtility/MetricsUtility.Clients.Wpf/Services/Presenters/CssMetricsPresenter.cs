@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Windows;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
@@ -30,20 +30,18 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
             Ux = ux;
         }
 
-        public void View()
+        public void View(List<string> files)
         {
-            var path = Properties.Settings.Default.InspectionPath;
-
-            if (FolderExistenceEvaluator.Evaluate(path))
+            if (FolderExistenceEvaluator.Evaluate(Properties.Settings.Default.InspectionPath))
             {
-                var files = DirectoryFileEvaluator.GetFiles(path).OrderBy(x => x).ToList();
-
                 var results = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
                 Ux.DisplayBoolOption("Store detailed CSS results to disk?", () =>
                 {
                     var filename = CssStatsStorer.Store(results);
                     FilePresenter.Present(filename);
                 }, null);
+
+                Ux.WriteLine("");
             }
             else
             {

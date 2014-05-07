@@ -1,7 +1,9 @@
-﻿namespace MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces
+﻿using System.Collections.Generic;
+
+namespace MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces
 {
     public interface ICssMetricsPresenter
     {
-        void View();
+        void View(List<string> files);
     }
 }
