@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using MetricsUtility.Core.Services.Evaluators;
+using MetricsUtility.Core.ViewModels;
 using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests

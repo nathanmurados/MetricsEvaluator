@@ -1,3 +1,4 @@
+using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests

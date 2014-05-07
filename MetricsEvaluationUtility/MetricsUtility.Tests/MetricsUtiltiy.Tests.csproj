@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetricsUtiltiy.Tests</RootNamespace>
     <AssemblyName>MetricsUtiltiy.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq">
@@ -63,6 +66,10 @@
     <ProjectReference Include="..\MetricsUtility.Clients.ConsoleApp\MetricsUtility.Clients.ConsoleApp.csproj">
       <Project>{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}</Project>
       <Name>MetricsUtility.Clients.ConsoleApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetricsUtility.Core\MetricsUtility.Core.csproj">
+      <Project>{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}</Project>
+      <Name>MetricsUtility.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

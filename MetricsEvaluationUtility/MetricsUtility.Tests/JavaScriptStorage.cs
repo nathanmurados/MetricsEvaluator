@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using MetricsUtility.Core.Services;
+using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.ViewModels;
 using Moq;
 using NUnit.Framework;
 

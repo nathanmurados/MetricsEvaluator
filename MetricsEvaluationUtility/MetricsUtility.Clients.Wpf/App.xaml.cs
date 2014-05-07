@@ -1,4 +1,10 @@
-﻿using Ninject;
+﻿using MetricsUtility.Core.Services;
+using MetricsUtility.Core.Services.Evaluators;
+using MetricsUtility.Core.Services.Evaluators.Css;
+using MetricsUtility.Core.Services.Evaluators.JavaScript;
+using MetricsUtility.Core.Services.Presenters;
+using MetricsUtility.Core.Services.Storers;
+using Ninject;
 using System.Windows;
 
 namespace MetricsUtility.Clients.Wpf
