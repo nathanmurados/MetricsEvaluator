@@ -42,7 +42,7 @@
             </MenuItem>
         </Menu>
 
-        <Expander Grid.Row="1" Header="Inspect file_s" Margin="5" >
+        <Expander Grid.Row="1" Header="Inspect individual file_s" Margin="5" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
