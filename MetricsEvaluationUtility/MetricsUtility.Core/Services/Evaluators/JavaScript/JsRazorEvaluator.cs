@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using MetricsUtility.Core.Services.Extensions;
+using MetricsUtility.Core.ViewModels;
+
+namespace MetricsUtility.Core.Services.Evaluators.JavaScript
+{
+    public class JsRazorEvaluator : IJsRazorEvaluator
+    {
+        public List<DetailedJavaScriptEvaluationResult> Evaluate(string content, IEnumerable<string> attributes)
+        {
+            var finalResults = new List<DetailedJavaScriptEvaluationResult>();
+
+            foreach (var tag in attributes)
+            {
+                if (content.Contains(tag, StringComparison.OrdinalIgnoreCase))
+                {
+                    var regex = new Regex(string.Format("{{[^>]+\\s*{0}\\s*=\\s*['\"]([^'\"]+)['\"][^>]*}}", tag), RegexOptions.Multiline | RegexOptions.IgnoreCase);
+
+                    var matches = regex.Matches(content);
+
+                    if (matches.Count > 0)
+                    {
+                        var result = new DetailedJavaScriptEvaluationResult
+                        {
+                            AttributeName = tag,
+                            InlineJavascriptTags = new List<JavascriptOccurenceResult>()
+                        };
+
+                        foreach (Match match in matches)
+                        {
+                            result.InlineJavascriptTags.Add(new JavascriptOccurenceResult { Value = match.Value });
+                        }
+
+                        finalResults.Add(result);
+                    }
+                }
+            }
+
+            return finalResults;
+        }
+    }
+
+    public interface IJsRazorEvaluator
+    {
+        List<DetailedJavaScriptEvaluationResult> Evaluate(string content, IEnumerable<string> attributes);
+    }
+}

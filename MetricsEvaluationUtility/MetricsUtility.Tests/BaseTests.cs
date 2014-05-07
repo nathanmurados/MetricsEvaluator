@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace MetricsEvaluationUtiltiyTests
+namespace MetricsUtiltiy.Tests
 {
     public abstract class BaseTests
     {

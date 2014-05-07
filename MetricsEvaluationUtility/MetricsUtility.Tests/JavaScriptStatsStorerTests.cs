@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using MetricsEvaluationUtility.Services;
-using MetricsEvaluationUtility.Services.Evaluators;
-using MetricsEvaluationUtility.Services.Storers;
-using MetricsEvaluationUtility.ViewModels;
 using Moq;
 using NUnit.Framework;
 
-namespace MetricsEvaluationUtiltiyTests
+namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
     public class CssStorage

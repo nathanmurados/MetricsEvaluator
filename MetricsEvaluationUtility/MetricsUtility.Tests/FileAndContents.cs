@@ -1,4 +1,4 @@
-﻿namespace MetricsEvaluationUtiltiyTests
+﻿namespace MetricsUtiltiy.Tests
 {
     public class FileAndContents
     {

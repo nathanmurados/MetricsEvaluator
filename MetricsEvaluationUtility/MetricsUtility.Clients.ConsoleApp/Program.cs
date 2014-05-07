@@ -1,13 +1,7 @@
-﻿using MetricsEvaluationUtility.Services;
-using MetricsEvaluationUtility.Services.Evaluators;
-using MetricsEvaluationUtility.Services.Evaluators.Css;
-using MetricsEvaluationUtility.Services.Evaluators.JavaScript;
-using MetricsEvaluationUtility.Services.Presenters;
-using MetricsEvaluationUtility.Services.Storers;
-using Ninject;
+﻿using Ninject;
 using Ninject.Modules;
 
-namespace MetricsEvaluationUtility
+namespace MetricsUtility.Clients.ConsoleApp
 {
     class Program
     {

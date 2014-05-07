@@ -1,7 +1,6 @@
-﻿using MetricsEvaluationUtility.Services.Evaluators.Css;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace MetricsEvaluationUtiltiyTests
+namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
     public class CssValidationTests : BaseTests

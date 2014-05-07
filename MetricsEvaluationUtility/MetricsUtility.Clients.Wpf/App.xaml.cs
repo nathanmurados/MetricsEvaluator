@@ -1,10 +1,4 @@
-﻿using MetricsEvaluationUtility.Services;
-using MetricsEvaluationUtility.Services.Evaluators;
-using MetricsEvaluationUtility.Services.Evaluators.Css;
-using MetricsEvaluationUtility.Services.Evaluators.JavaScript;
-using MetricsEvaluationUtility.Services.Presenters;
-using MetricsEvaluationUtility.Services.Storers;
-using Ninject;
+﻿using Ninject;
 using System.Windows;
 
 namespace MetricsUtility.Clients.Wpf
@@ -25,7 +19,7 @@ namespace MetricsUtility.Clients.Wpf
         private void ConfigureContainer()
         {
             _container = new StandardKernel();
-            _container.Bind<IHumanInterface>().To<ConsoleAppHumanInterface>();
+            //_container.Bind<IHumanInterface>().To<ConsoleAppHumanInterface>();
             _container.Bind<IFileExtensionPresenter>().To<FileExtensionsPresenter>();
             _container.Bind<IDirectoryFileEvaluator>().To<DirectoryFileEvaluator>();
             _container.Bind<IListPresenter>().To<ListPresenter>();

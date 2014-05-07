@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using MetricsEvaluationUtility.Services.Evaluators;
-using MetricsEvaluationUtility.ViewModels;
 using NUnit.Framework;
 
-namespace MetricsEvaluationUtiltiyTests
+namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
     public class RelevantAttributesEvaluatorTests

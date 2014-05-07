@@ -1,7 +1,6 @@
-using MetricsEvaluationUtility.Services.Evaluators.JavaScript;
 using NUnit.Framework;
 
-namespace MetricsEvaluationUtiltiyTests
+namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
     public class JavaScriptValidationTests : BaseTests

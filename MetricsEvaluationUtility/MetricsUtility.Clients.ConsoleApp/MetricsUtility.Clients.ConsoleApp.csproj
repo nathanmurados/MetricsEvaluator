@@ -74,48 +74,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\ISettingsValidator.cs" />
-    <Compile Include="Services\Evaluators\ISettingsEvaluator.cs" />
-    <Compile Include="Services\Presenters\IJavaScriptFileStatsPresenter.cs" />
-    <Compile Include="Services\Presenters\JavaScriptFileStatsPresenter.cs" />
-    <Compile Include="Services\DateTimeProvider.cs" />
-    <Compile Include="Services\Evaluators\JavaScript\JsAttributesProvider.cs" />
-    <Compile Include="Services\Evaluators\JavaScript\JsBlockEvaluator.cs" />
-    <Compile Include="Services\Evaluators\Css\CssBlockEvaluator.cs" />
-    <Compile Include="Services\Evaluators\JavaScript\JsValidationEvaluator.cs" />
-    <Compile Include="Services\Evaluators\Css\CssRazorEvaluator.cs" />
-    <Compile Include="Services\Evaluators\JavaScript\JsRazorEvaluator.cs" />
-    <Compile Include="Services\Evaluators\Css\CssPageEvaluator.cs" />
-    <Compile Include="Services\Evaluators\JavaScript\JsPageEvaluator.cs" />
-    <Compile Include="Services\Evaluators\JavaScript\JsReferencesEvaluator.cs" />
-    <Compile Include="Services\Presenters\JavascriptStatsPresenter.cs" />
-    <Compile Include="Services\Storers\JavascriptStatsStorer.cs" />
-    <Compile Include="Services\Evaluators\RelevantAttributesEvaluator.cs" />
-    <Compile Include="Services\Evaluators\SettingsEvaluator.cs" />
-    <Compile Include="Services\SettingsValidator.cs" />
-    <Compile Include="ViewModels\JavaScriptEvaluationResult.cs" />
-    <Compile Include="ViewModels\JavascriptOccurenceResult.cs" />
-    <Compile Include="ViewModels\DetailedJavaScriptEvaluationResult.cs" />
-    <Compile Include="Services\Storers\CssStatsStorer.cs" />
-    <Compile Include="Services\Storers\Storer.cs" />
-    <Compile Include="ViewModels\CssEvaluationResult.cs" />
-    <Compile Include="Services\Evaluators\Css\CssValidationEvaluator.cs" />
-    <Compile Include="ViewModels\DetailedCssEvaluationResult.cs" />
-    <Compile Include="Services\Extensions\StringExtensions.cs" />
-    <Compile Include="Services\Presenters\CssStatsPresenter.cs" />
-    <Compile Include="Services\IHasHumanInterface.cs" />
-    <Compile Include="Services\Presenters\FilteredExtensionsListPresenter.cs" />
-    <Compile Include="Services\Evaluators\FilteredFilesEvaluator.cs" />
-    <Compile Include="Services\ConsoleAppHumanInterface.cs" />
-    <Compile Include="Services\Evaluators\DirectoryFileEvaluator.cs" />
+    <Compile Include="ConsoleAppHumanInterface.cs" />
     <Compile Include="Executable.cs" />
-    <Compile Include="Services\Presenters\FileExtensionsPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Presenters\FilteredFilesStatsPresenter.cs" />
-    <Compile Include="Services\IHasListPresenter.cs" />
-    <Compile Include="Services\IPresenter.cs" />
-    <Compile Include="Services\Presenters\ListPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MetricsEvaluationUtility_TemporaryKey.pfx" />

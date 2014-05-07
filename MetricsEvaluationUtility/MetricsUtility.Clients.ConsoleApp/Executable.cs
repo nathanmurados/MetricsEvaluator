@@ -1,11 +1,6 @@
 using System;
-using System.Linq;
-using MetricsEvaluationUtility.Services;
-using MetricsEvaluationUtility.Services.Evaluators;
-using MetricsEvaluationUtility.Services.Presenters;
-using MetricsEvaluationUtility.Services.Storers;
 
-namespace MetricsEvaluationUtility
+namespace MetricsUtility.Clients.ConsoleApp
 {
     public class Executable
     {
