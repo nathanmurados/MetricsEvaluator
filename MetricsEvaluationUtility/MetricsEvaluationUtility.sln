@@ -1,9 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsEvaluationUtility", "MetricsEvaluationUtility\MetricsEvaluationUtility.csproj", "{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsUtility.Clients.Wpf", "MetricsUtility.Clients.Wpf\MetricsUtility.Clients.Wpf.csproj", "{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsEvaluationUtiltiyTests", "MetricsEvaluationUtiltiyTests\MetricsEvaluationUtiltiyTests.csproj", "{E8ADB90C-F5AB-4D2B-86EE-E8ED87CF768F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsUtility.Clients.ConsoleApp", "MetricsUtility.Clients.ConsoleApp\MetricsUtility.Clients.ConsoleApp.csproj", "{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsUtility.Core", "MetricsUtility.Core\MetricsUtility.Core.csproj", "{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsUtiltiy.Tests", "MetricsUtility.Tests\MetricsUtiltiy.Tests.csproj", "{E8ADB90C-F5AB-4D2B-86EE-E8ED87CF768F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,16 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}.Release|x86.ActiveCfg = Release|Any CPU
 		{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -25,6 +41,16 @@ Global
 		{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}.Release|Mixed Platforms.Build.0 = Release|x86
 		{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}.Release|x86.ActiveCfg = Release|x86
 		{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}.Release|x86.Build.0 = Release|x86
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}.Release|x86.ActiveCfg = Release|Any CPU
 		{E8ADB90C-F5AB-4D2B-86EE-E8ED87CF768F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E8ADB90C-F5AB-4D2B-86EE-E8ED87CF768F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8ADB90C-F5AB-4D2B-86EE-E8ED87CF768F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
