@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using MetricsUtility.Clients.Wpf.Services.Evaluators;
+using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 

@@ -64,9 +64,9 @@
     <Compile Include="InteractionPermissionToggler.cs" />
     <Compile Include="Services\ISettingsClearer.cs" />
     <Compile Include="Services\Evaluators\EnableDiagnosticsEvaluator.cs" />
-    <Compile Include="Services\Evaluators\IEnableDiagnosticsEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IEnableDiagnosticsEvaluator.cs" />
     <Compile Include="Services\Presenters\Interfaces\IOptionsPresenter.cs" />
-    <Compile Include="Services\Evaluators\IPathExistenceEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IPathExistenceEvaluator.cs" />
     <Compile Include="Services\Presenters\Interfaces\IJavaScriptMetricsPresenter.cs" />
     <Compile Include="Services\Presenters\OptionsPresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IInputPresenter.cs" />
@@ -99,7 +99,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Evaluators\IViewModelEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IViewModelEvaluator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

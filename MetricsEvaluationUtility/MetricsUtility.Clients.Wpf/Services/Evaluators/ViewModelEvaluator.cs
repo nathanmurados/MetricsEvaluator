@@ -1,3 +1,4 @@
+using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators

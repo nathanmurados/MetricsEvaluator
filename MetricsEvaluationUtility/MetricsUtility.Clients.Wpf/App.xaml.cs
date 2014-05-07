@@ -1,5 +1,6 @@
 ﻿using MetricsUtility.Clients.Wpf.Services;
 using MetricsUtility.Clients.Wpf.Services.Evaluators;
+using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Core.Services;

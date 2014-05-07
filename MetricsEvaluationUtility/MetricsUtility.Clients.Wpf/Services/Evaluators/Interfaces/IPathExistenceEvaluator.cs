@@ -1,4 +1,4 @@
-namespace MetricsUtility.Clients.Wpf.Services.Evaluators
+namespace MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces
 {
     public interface IPathExistenceEvaluator
     {

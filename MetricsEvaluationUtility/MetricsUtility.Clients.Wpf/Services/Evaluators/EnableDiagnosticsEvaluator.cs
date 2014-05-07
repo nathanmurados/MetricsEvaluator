@@ -1,4 +1,5 @@
 using System.IO;
+using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators
 {
