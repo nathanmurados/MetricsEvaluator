@@ -1,4 +1,5 @@
 using System.Windows;
+using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Core.Services;
 
 namespace MetricsUtility.Clients.Wpf.Services.Presenters

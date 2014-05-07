@@ -1,15 +1,18 @@
 ﻿using System.Windows.Forms;
 using MetricsUtility.Clients.Wpf.Services.Evaluators;
+using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
-    public class SolutionPathPresenter : ISolutionPathPresenter
+    public class InspectionPathPresenter : IInspectionPathPresenter
     {
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
+        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
 
-        public SolutionPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator)
+        public InspectionPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IPathExistenceEvaluator pathExistenceEvaluator)
         {
+            PathExistenceEvaluator = pathExistenceEvaluator;
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
         }
 
@@ -27,6 +30,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 Properties.Settings.Default.Save();
                 viewModel.SolutionToAnalyse = Properties.Settings.Default.InspectionPath;
                 viewModel.EnableDiagnostics = EnableDiagnosticsEvaluator.Evaluate();
+                viewModel.IsValidInspectionDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath);
             }
         }
     }

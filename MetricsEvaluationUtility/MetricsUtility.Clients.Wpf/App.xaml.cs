@@ -1,6 +1,7 @@
 ﻿using MetricsUtility.Clients.Wpf.Services;
 using MetricsUtility.Clients.Wpf.Services.Evaluators;
 using MetricsUtility.Clients.Wpf.Services.Presenters;
+using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
@@ -55,8 +56,8 @@ namespace MetricsUtility.Clients.Wpf
             //_container.Bind<ISettingsValidator>().To<SettingsValidator>();
             _container.Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
             _container.Bind<IViewModelEvaluator>().To<ViewModelEvaluator>();
-            _container.Bind<ISolutionCssMetricsPresenter>().To<SolutionCssMetricsPresenter>();
-            _container.Bind<ISolutionPathPresenter>().To<SolutionPathPresenter>();
+            _container.Bind<ICssMetricsPresenter>().To<CssMetricsPresenter>();
+            _container.Bind<IInspectionPathPresenter>().To<InspectionPathPresenter>();
             _container.Bind<IResultsDirectoryEvaluator>().To<ResultsDirectoryEvaluator>();
             _container.Bind<IResultsPathPresenter>().To<ResultsPathPresenter>();
 
@@ -68,8 +69,13 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IOptionsPresenter>().To<OptionsPresenter>();
             _container.Bind<ISettingsClearer>().To<SettingsClearer>();
             _container.Bind<IInteractionPermissionToggler>().To<InteractionPermissionToggler>();
-            _container.Bind<ISolutionJavaScriptMetricsPresenter>().To<SolutionJavaScriptMetricsPresenter>();
-            //_container.Bind<IResultsPathPresenter>().To<ResultsPathPresenter>();
+            _container.Bind<IJavaScriptMetricsPresenter>().To<JavaScriptMetricsPresenter>();
+            _container.Bind<IFolderPresenter>().To<FolderPresenter>();
+            _container.Bind<IPathExistenceEvaluator>().To<PathExistenceEvaluator>();
+            _container.Bind<ICssStatsFileNameEvaluator>().To<CssStatsFileNameEvaluator>();
+            //_container.Bind<IFolderPresenter>().To<FolderPresenter>();
+            //_container.Bind<IFolderPresenter>().To<FolderPresenter>();
+            
         }
 
         private void ComposeObjects()

@@ -10,9 +10,11 @@ namespace MetricsUtility.Core.Services.Storers
         public IHumanInterface Ux { get; private set; }
         public IDateTimeProvider DateTimeProvider { get; private set; }
         public IStorer Storer { get; private set; }
+        public ICssStatsFileNameEvaluator CssStatsFileNameEvaluator { get; private set; }
 
-        public CssStatsStorer(IStorer storer, IDateTimeProvider dateTimeProvider, IHumanInterface ux)
+        public CssStatsStorer(IStorer storer, IDateTimeProvider dateTimeProvider, IHumanInterface ux, ICssStatsFileNameEvaluator cssStatsFileNameEvaluator)
         {
+            CssStatsFileNameEvaluator = cssStatsFileNameEvaluator;
             Ux = ux;
             DateTimeProvider = dateTimeProvider;
             Storer = storer;
@@ -48,7 +50,7 @@ namespace MetricsUtility.Core.Services.Storers
                 results.Sum(x => x.Razor.Sum(y => y.Value.Length))
             );
 
-            Storer.Store(sb, "CssValidationResults " + DateTimeProvider.Now.ToString("yy-MM-dd HH.mm.ss") + ".csv");
+            Storer.Store(sb,CssStatsFileNameEvaluator.Evaluate());
 
             Ux.WriteLine("Saved.");
         }

@@ -1,7 +1,7 @@
 using MetricsUtility.Clients.Wpf.ViewModels;
 using MetricsUtility.Core.Services;
 
-namespace MetricsUtility.Clients.Wpf.Services.Presenters
+namespace MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces
 {
     public interface IOptionsPresenter
     {

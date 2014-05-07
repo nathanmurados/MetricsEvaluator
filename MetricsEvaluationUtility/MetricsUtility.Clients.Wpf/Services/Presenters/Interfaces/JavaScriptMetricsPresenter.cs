@@ -6,33 +6,33 @@ using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Presenters;
 using MetricsUtility.Core.Services.Storers;
 
-namespace MetricsUtility.Clients.Wpf.Services.Presenters
+namespace MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces
 {
-    public class SolutionCssMetricsPresenter : ISolutionCssMetricsPresenter, IHasHumanInterface
+    public class JavaScriptMetricsPresenter : IJavaScriptMetricsPresenter, IHasHumanInterface
     {
         public IDirectoryFileEvaluator DirectoryFileEvaluator { get; private set; }
-        public ICssStatsPresenter CssStatsPresenter { get; private set; }
+        public IJavaScriptStatsPresenter JavaScriptStatsPresenter { get; private set; }
         public IFilteredFilesEvaluator FilteredFilesEvaluator { get; private set; }
-        public ICssStatsStorer CssStatsStorer { get; private set; }
+        public IJavaScriptStatsStorer CssJavaScriptStorer { get; private set; }
         public IHumanInterface Ux { get; private set; }
 
-        public SolutionCssMetricsPresenter(IHumanInterface ux, IDirectoryFileEvaluator directoryFileEvaluator, ICssStatsPresenter cssStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, ICssStatsStorer cssStatsStorer)
+        public JavaScriptMetricsPresenter(IHumanInterface ux, IDirectoryFileEvaluator directoryFileEvaluator, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, IJavaScriptStatsStorer cssJavaScriptStorer)
         {
-            CssStatsStorer = cssStatsStorer;
+            CssJavaScriptStorer = cssJavaScriptStorer;
             FilteredFilesEvaluator = filteredFilesEvaluator;
-            CssStatsPresenter = cssStatsPresenter;
+            JavaScriptStatsPresenter = javaScriptStatsPresenter;
             DirectoryFileEvaluator = directoryFileEvaluator;
             Ux = ux;
         }
-        
+
         public void View()
         {
             if (Directory.Exists(Properties.Settings.Default.InspectionPath))
             {
                 var files = DirectoryFileEvaluator.GetFiles(Properties.Settings.Default.InspectionPath).OrderBy(x => x).ToList();
 
-                var results = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
-                Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(results), null);
+                var results = JavaScriptStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
+                Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () => CssJavaScriptStorer.Store(results), null);
             }
             else
             {

@@ -43,6 +43,7 @@ namespace MetricsUtility.Clients.ConsoleApp
                 Bind<ISettingsValidator>().To<SettingsValidator>();
                 Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
                 Bind<IResultsDirectoryEvaluator>().To<ResultsDirectoryEvaluator>();
+                Bind<ICssStatsFileNameEvaluator>().To<CssStatsFileNameEvaluator>();
             }
         }
 

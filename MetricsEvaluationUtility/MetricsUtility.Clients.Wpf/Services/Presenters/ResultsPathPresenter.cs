@@ -1,5 +1,6 @@
 using System.Windows.Forms;
 using MetricsUtility.Clients.Wpf.Services.Evaluators;
+using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Presenters
@@ -7,9 +8,11 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
     public class ResultsPathPresenter : IResultsPathPresenter
     {
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
+        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
 
-        public ResultsPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator)
+        public ResultsPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IPathExistenceEvaluator pathExistenceEvaluator)
         {
+            PathExistenceEvaluator = pathExistenceEvaluator;
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
         }
 
@@ -27,8 +30,8 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 Properties.Settings.Default.Save();
                 viewModel.ResultsDirectory = Properties.Settings.Default.ResultsPath;
                 viewModel.EnableDiagnostics = EnableDiagnosticsEvaluator.Evaluate();
+                viewModel.IsValidResultsDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath);
             }
         }
-
     }
 }

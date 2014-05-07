@@ -4,6 +4,7 @@ using System.Windows;
 using MetricsUtility.Clients.Wpf.Services;
 using MetricsUtility.Clients.Wpf.Services.Evaluators;
 using MetricsUtility.Clients.Wpf.Services.Presenters;
+using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 using MetricsUtility.Core.Services;
 
@@ -16,8 +17,8 @@ namespace MetricsUtility.Clients.Wpf
     {
         public IViewModelEvaluator ViewModelEvaluator { get; private set; }
         public IHumanInterface Ux { get; private set; }
-        public ISolutionCssMetricsPresenter SolutionCssMetricsPresenter { get; private set; }
-        public ISolutionPathPresenter SolutionPathPresenter { get; private set; }
+        public ICssMetricsPresenter CssMetricsPresenter { get; private set; }
+        public IInspectionPathPresenter InspectionPathPresenter { get; private set; }
         public IResultsPathPresenter ResultsPathPresenter { get; private set; }
         public IBoolOptionPresenter BoolOptionPresenter { get; private set; }
         public IOutputPresenter OutputPresenter { get; private set; }
@@ -26,11 +27,13 @@ namespace MetricsUtility.Clients.Wpf
         public IOptionsPresenter OptionsPresenter { get; private set; }
         public ISettingsClearer SettingsClearer { get; private set; }
         public IInteractionPermissionToggler InteractionPermissionToggler { get; private set; }
-        public ISolutionJavaScriptMetricsPresenter SolutionJavaScriptMetricsPresenter { get; private set; }
+        public IJavaScriptMetricsPresenter JavaScriptMetricsPresenter { get; private set; }
+        public IFolderPresenter FolderPresenter { get; private set; }
 
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ISolutionCssMetricsPresenter solutionCssMetricsPresenter, IHumanInterface ux, ISolutionPathPresenter solutionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, ISolutionJavaScriptMetricsPresenter solutionJavaScriptMetricsPresenter)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter)
         {
-            SolutionJavaScriptMetricsPresenter = solutionJavaScriptMetricsPresenter;
+            FolderPresenter = folderPresenter;
+            JavaScriptMetricsPresenter = javaScriptMetricsPresenter;
             InteractionPermissionToggler = interactionPermissionToggler;
             SettingsClearer = settingsClearer;
             OptionsPresenter = optionsPresenter;
@@ -40,8 +43,8 @@ namespace MetricsUtility.Clients.Wpf
             ProgressPresenter = progressPresenter;
             ViewModelEvaluator = viewModelEvaluator;
             BoolOptionPresenter = boolOptionPresenter;
-            SolutionPathPresenter = solutionPathPresenter;
-            SolutionCssMetricsPresenter = solutionCssMetricsPresenter;
+            InspectionPathPresenter = inspectionPathPresenter;
+            CssMetricsPresenter = cssMetricsPresenter;
             ResultsPathPresenter = resultsPathPresenter;
 
             InitializeComponent();
@@ -56,12 +59,26 @@ namespace MetricsUtility.Clients.Wpf
             ux.DisplayBoolOptionEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => BoolOptionPresenter.Present(sender, e)));
             ux.AddOptionWithHeadingSpaceEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OptionsPresenter.AddOptionWithHeadingSpace(sender, e, (ViewModel)DataContext)));
 
+//#if DEBUG
+//          SettingsClearer.Clear();
+//#endif
+
             DataContext = ViewModelEvaluator.Evaluate();
         }
 
-        private void ChooseSolution(object sender, RoutedEventArgs e)
+        private void OpenResultsFolder(object sender, RoutedEventArgs e)
         {
-            SolutionPathPresenter.Present((ViewModel)DataContext);
+            FolderPresenter.Present(Properties.Settings.Default.ResultsPath);
+        }
+
+        private void ChangeInspectionPath(object sender, RoutedEventArgs e)
+        {
+            InspectionPathPresenter.Present((ViewModel)DataContext);
+        }
+
+        private void ChangeResultsPath(object sender, RoutedEventArgs e)
+        {
+            ResultsPathPresenter.Present((ViewModel)DataContext);
         }
 
         private void ViewSolutionCssMetrics(object sender, RoutedEventArgs e)
@@ -70,24 +87,18 @@ namespace MetricsUtility.Clients.Wpf
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(false, (ViewModel) DataContext)));
 
-                SolutionCssMetricsPresenter.View();
+                CssMetricsPresenter.View();
 
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext)));
             });
         }
-
-        private void ChooseResultsLocation(object sender, RoutedEventArgs e)
-        {
-            ResultsPathPresenter.Present((ViewModel)DataContext);
-        }
-
         private void ViewSolutionJavaScriptMetrics(object sender, RoutedEventArgs e)
         {
             Task.Run(() =>
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(false, (ViewModel)DataContext)));
 
-                SolutionJavaScriptMetricsPresenter.View();
+                JavaScriptMetricsPresenter.View();
 
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext)));
             });

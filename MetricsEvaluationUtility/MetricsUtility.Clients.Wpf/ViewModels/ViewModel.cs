@@ -1,5 +1,3 @@
-using System.Windows;
-
 namespace MetricsUtility.Clients.Wpf.ViewModels
 {
     public class ViewModel : ViewModelBase
@@ -10,6 +8,8 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         private bool _allowInteractions;
         private int _progressValue;
         private string _resultsDirectory;
+        private bool _isValidResultsDirectory;
+        private bool _isValidInspectionDirectory;
 
         public string SolutionToAnalyse
         {
@@ -45,6 +45,18 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         {
             get { return _resultsDirectory; }
             set { _resultsDirectory = value; OnPropertyChanged(); }
+        }
+
+        public bool IsValidResultsDirectory
+        {
+            get { return _isValidResultsDirectory; }
+            set { _isValidResultsDirectory = value; OnPropertyChanged(); }
+        }
+
+        public bool IsValidInspectionDirectory
+        {
+            get { return _isValidInspectionDirectory; }
+            set { _isValidInspectionDirectory = value; OnPropertyChanged(); }
         }
     }
 }
