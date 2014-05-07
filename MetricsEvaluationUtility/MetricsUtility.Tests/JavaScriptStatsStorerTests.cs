@@ -22,6 +22,7 @@ namespace MetricsUtiltiy.Tests
             var mockHumanInterface = new Mock<IHumanInterface>();
             var mockDateTimeProvider = new Mock<IDateTimeProvider>();
             var mockStorer = new Mock<IStorer>();
+            var mockNamer = new Mock<IJavaScriptStatsFileNameEvaluator>();
 
             mockRelevantAttributesEvaluator.Setup(x => x.Evaluate(It.IsAny<List<JavaScriptEvaluationResult>>())).Returns(() => new List<string> { "onclick", "onblur", "ondblclick" });
 
@@ -33,7 +34,7 @@ namespace MetricsUtiltiy.Tests
                 Assert.AreEqual(2, Regex.Matches(str, Environment.NewLine).Count);
             });
 
-            var evaluator = new JavaScriptStatsStorer(mockStorer.Object, mockDateTimeProvider.Object, mockHumanInterface.Object, mockRelevantAttributesEvaluator.Object);
+            var evaluator = new JavaScriptStatsStorer(mockStorer.Object, mockDateTimeProvider.Object, mockHumanInterface.Object, mockRelevantAttributesEvaluator.Object, mockNamer.Object);
 
             var testData = new List<JavaScriptEvaluationResult>
             {
@@ -41,8 +42,8 @@ namespace MetricsUtiltiy.Tests
                 {
                     Block = new List<DetailedJavaScriptEvaluationResult>
                     {
-                        new DetailedJavaScriptEvaluationResult { AttributeName = "onclick" },
-                        new DetailedJavaScriptEvaluationResult { AttributeName = "onblur" },
+                        new DetailedJavaScriptEvaluationResult { AttributeName = "onclick",InlineJavascriptTags = new List<JavascriptOccurenceResult>()},
+                        new DetailedJavaScriptEvaluationResult { AttributeName = "onblur" ,InlineJavascriptTags = new List<JavascriptOccurenceResult>()},
                     },
                     Razor = new List<DetailedJavaScriptEvaluationResult>
                     {

@@ -4,23 +4,23 @@ using System.Linq;
 
 namespace MetricsUtility.Core.Services.Evaluators
 {
-    public class DirectoryFileEvaluator : IDirectoryFileEvaluator
+    public class DirectoryDescendentFilesEvaluator : IDirectoryDescendentFilesEvaluator
     {
-        public IEnumerable<string> GetFiles(string directory)
+        public IEnumerable<string> Evaluate(string directory)
         {
             var files = Directory.GetFiles(directory).ToList();
 
             foreach (var childDirectory in Directory.GetDirectories(directory))
             {
-                files.AddRange(GetFiles(childDirectory));
+                files.AddRange(Evaluate(childDirectory));
             }
 
             return files;
         }
     }
 
-    public interface IDirectoryFileEvaluator
+    public interface IDirectoryDescendentFilesEvaluator
     {
-        IEnumerable<string> GetFiles(string directory);
+        IEnumerable<string> Evaluate(string directory);
     }
 }

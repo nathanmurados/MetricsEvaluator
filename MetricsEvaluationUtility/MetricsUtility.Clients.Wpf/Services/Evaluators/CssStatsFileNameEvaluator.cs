@@ -14,7 +14,16 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
 
         public string Evaluate()
         {
-            return string.Format("CSS Results {0} {1}.csv", Properties.Settings.Default.InspectionPath.Replace("\\", "~").Replace(":", ""), DateTimeProvider.Now.ToString("yyMMddHHmmss"));
+            return Evaluate("");
+        }
+
+        public string Evaluate(string groupName)
+        {
+            return string.Format("CSS Results{0}{1} {2}.csv",
+                string.IsNullOrWhiteSpace(groupName) ? "" : string.Format(" {0} ", groupName),
+                Properties.Settings.Default.InspectionPath.Replace("\\", "~").Replace(":", ""),
+                DateTimeProvider.Now.ToString("yyMMddHHmmss")
+            );
         }
     }
 }

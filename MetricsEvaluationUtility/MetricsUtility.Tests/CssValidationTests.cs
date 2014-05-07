@@ -34,7 +34,6 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("<td style=\"width: 140px\" align=\"left\">", result[0].Value);
         }
 
-
         [Test]
         public void Razor()
         {

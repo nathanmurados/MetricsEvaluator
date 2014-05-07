@@ -6,16 +6,16 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
     public class FolderPresenter : IFolderPresenter
     {
-        public IFolderExistenceEvaluator FolderExistenceEvaluator { get; private set; }
+        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
 
-        public FolderPresenter(IFolderExistenceEvaluator folderExistenceEvaluator)
+        public FolderPresenter(IPathExistenceEvaluator pathExistenceEvaluator)
         {
-            FolderExistenceEvaluator = folderExistenceEvaluator;
+            PathExistenceEvaluator = pathExistenceEvaluator;
         }
 
         public void Present(string path)
         {
-            if (FolderExistenceEvaluator.Evaluate(path))
+            if (PathExistenceEvaluator.Evaluate(path))
             {
                 var explorerWindowProcess = new Process
                 {

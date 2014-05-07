@@ -32,7 +32,7 @@ namespace MetricsUtility.Clients.Wpf
             _container = new StandardKernel();
             _container.Bind<IHumanInterface>().To<WpfInterface>().InSingletonScope();
             _container.Bind<IFileExtensionPresenter>().To<FileExtensionsPresenter>();
-            _container.Bind<IDirectoryFileEvaluator>().To<DirectoryFileEvaluator>();
+            _container.Bind<IDirectoryDescendentFilesEvaluator>().To<DirectoryDescendentFilesEvaluator>();
             _container.Bind<IListPresenter>().To<ListPresenter>();
             _container.Bind<IFilteredFilesPresenter>().To<FilteredFilesPresenter>();
             _container.Bind<IFilteredFilesEvaluator>().To<FilteredFilesEvaluator>();
@@ -72,11 +72,22 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IInteractionPermissionToggler>().To<InteractionPermissionToggler>();
             _container.Bind<IJavaScriptMetricsPresenter>().To<JavaScriptMetricsPresenter>();
             _container.Bind<IFolderPresenter>().To<FolderPresenter>();
-            _container.Bind<IFolderExistenceEvaluator>().To<FolderExistenceEvaluator>();
+            _container.Bind<IPathExistenceEvaluator>().To<PathExistenceEvaluator>();
             _container.Bind<ICssStatsFileNameEvaluator>().To<CssStatsFileNameEvaluator>();
             _container.Bind<IFilePresenter>().To<FilePresenter>();
             _container.Bind<IFileExistenceEvaluator>().To<FileExistenceEvaluator>();
             _container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            _container.Bind<IChildDirectoryCountEvaluator>().To<ChildDirectoryCountEvaluator>();
+            _container.Bind<IGroupedCssEvaluator>().To<GroupedCssEvaluator>();
+            _container.Bind<IFoldersPerGroupEvaluator>().To<FoldersPerGroupEvaluator>();
+            _container.Bind<IDirectoryGroupEvaluator>().To<DirectoryGroupEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+        
         }
 
         private void ComposeObjects()

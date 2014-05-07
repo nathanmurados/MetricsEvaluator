@@ -57,8 +57,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Evaluators\GroupedCssEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IGroupedCssEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IFoldersPerGroupEvaluator.cs" />
+    <Compile Include="Services\Evaluators\FoldersPerGroupEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IDirectoryGroupEvaluator.cs" />
+    <Compile Include="Services\Evaluators\DirectoryGroupEvaluator.cs" />
     <Compile Include="Services\Evaluators\CssStatsFileNameEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IChildDirectoryCountEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScriptStatsFileNameEvaluator.cs" />
+    <Compile Include="Services\Evaluators\ChildDirectoryCountEvaluator.cs" />
     <Compile Include="Services\Presenters\FilePresenter.cs" />
     <Compile Include="Services\Presenters\FolderPresenter.cs" />
     <Compile Include="Services\Evaluators\FileExistenceEvaluator.cs" />
@@ -71,13 +79,13 @@
     <Compile Include="Services\Evaluators\EnableDiagnosticsEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IEnableDiagnosticsEvaluator.cs" />
     <Compile Include="Services\Presenters\Interfaces\IOptionsPresenter.cs" />
-    <Compile Include="Services\Evaluators\Interfaces\IFolderExistenceEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IPathExistenceEvaluator.cs" />
     <Compile Include="Services\Presenters\Interfaces\IJavaScriptMetricsPresenter.cs" />
     <Compile Include="Services\Presenters\OptionsPresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IInputPresenter.cs" />
     <Compile Include="Services\Presenters\InputPresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IProgressPresenter.cs" />
-    <Compile Include="Services\Evaluators\FolderExistenceEvaluator.cs" />
+    <Compile Include="Services\Evaluators\PathExistenceEvaluator.cs" />
     <Compile Include="Services\Presenters\ProgressPresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IOutputPresenter.cs" />
     <Compile Include="Services\Presenters\BoolOptionPresenter.cs" />

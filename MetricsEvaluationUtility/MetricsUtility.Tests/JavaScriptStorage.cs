@@ -20,6 +20,7 @@ namespace MetricsUtiltiy.Tests
             var mockHumanInterface = new Mock<IHumanInterface>();
             var mockDateTimeProvider = new Mock<IDateTimeProvider>();
             var mockStorer = new Mock<IStorer>();
+            var mockNamer = new Mock<ICssStatsFileNameEvaluator>();
 
             mockStorer.Setup(x => x.Store(It.IsAny<StringBuilder>(), It.IsAny<string>())).Callback<StringBuilder, string>((sb, title) =>
             {
@@ -29,7 +30,7 @@ namespace MetricsUtiltiy.Tests
                 Assert.AreEqual(2, Regex.Matches(str, Environment.NewLine).Count);
             });
 
-            var evaluator = new CssStatsStorer(mockStorer.Object, mockDateTimeProvider.Object, mockHumanInterface.Object);
+            var evaluator = new CssStatsStorer(mockStorer.Object, mockDateTimeProvider.Object, mockHumanInterface.Object, mockNamer.Object);
 
             var testData = new List<CssEvaluationResult>
             {

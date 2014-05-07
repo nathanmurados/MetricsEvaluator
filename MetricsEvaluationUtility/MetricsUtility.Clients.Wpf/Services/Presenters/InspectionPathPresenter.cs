@@ -8,11 +8,13 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
     public class InspectionPathPresenter : IInspectionPathPresenter
     {
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
-        public IFolderExistenceEvaluator FolderExistenceEvaluator { get; private set; }
+        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
+        public IChildDirectoryCountEvaluator ChildDirectoryCountEvaluator { get; private set; }
 
-        public InspectionPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IFolderExistenceEvaluator folderExistenceEvaluator)
+        public InspectionPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator)
         {
-            FolderExistenceEvaluator = folderExistenceEvaluator;
+            ChildDirectoryCountEvaluator = childDirectoryCountEvaluator;
+            PathExistenceEvaluator = pathExistenceEvaluator;
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
         }
 
@@ -29,8 +31,9 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 Properties.Settings.Default.InspectionPath = dialog.SelectedPath;
                 Properties.Settings.Default.Save();
                 viewModel.SolutionToAnalyse = Properties.Settings.Default.InspectionPath;
-                viewModel.EnableDiagnostics = EnableDiagnosticsEvaluator.Evaluate();
-                viewModel.IsValidInspectionDirectory = FolderExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath);
+                viewModel.IsIdle = EnableDiagnosticsEvaluator.Evaluate();
+                viewModel.IsValidInspectionDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath);
+                viewModel.ChildDirectoryCount = ChildDirectoryCountEvaluator.Evaluate();
             }
         }
     }

@@ -13,7 +13,7 @@ namespace MetricsUtility.Clients.ConsoleApp
         public IHumanInterface Ux { get; private set; }
         public IListPresenter ListPresenter { get; private set; }
         public IFileExtensionPresenter FileExtensionPresenter { get; private set; }
-        public IDirectoryFileEvaluator DirectoryFileEvaluator { get; private set; }
+        public IDirectoryDescendentFilesEvaluator DirectoryDescendentFilesEvaluator { get; private set; }
         public IFilteredFilesPresenter FilteredFilesPresenter { get; private set; }
         public ICssStatsPresenter CssStatsPresenter { get; private set; }
         public IFilteredFilesStatsPresenter FilteredFilesStatsPresenter { get; private set; }
@@ -25,7 +25,7 @@ namespace MetricsUtility.Clients.ConsoleApp
         public IJavaScriptStatsStorer JavaScriptStatsStorer { get; private set; }
         public ICssStatsStorer CssStatsStorer { get; private set; }
 
-        public Executable(IHumanInterface ux, IFileExtensionPresenter fileExtensionPresenter, IDirectoryFileEvaluator directoryFileEvaluator, IListPresenter listPresenter, IFilteredFilesPresenter filteredFilesPresenter, IFilteredFilesStatsPresenter filteredFilesStatsPresenter, ICssStatsPresenter cssStatsPresenter, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, IJavaScriptFileStatsPresenter javaScriptFileStatsPresenter, ISettingsValidator settingsValidator, ISettingsEvaluator settingsEvaluator, IJavaScriptStatsStorer javaScriptStatsStorer, ICssStatsStorer cssStatsStorer)
+        public Executable(IHumanInterface ux, IFileExtensionPresenter fileExtensionPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IListPresenter listPresenter, IFilteredFilesPresenter filteredFilesPresenter, IFilteredFilesStatsPresenter filteredFilesStatsPresenter, ICssStatsPresenter cssStatsPresenter, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, IJavaScriptFileStatsPresenter javaScriptFileStatsPresenter, ISettingsValidator settingsValidator, ISettingsEvaluator settingsEvaluator, IJavaScriptStatsStorer javaScriptStatsStorer, ICssStatsStorer cssStatsStorer)
         {
             CssStatsStorer = cssStatsStorer;
             JavaScriptStatsStorer = javaScriptStatsStorer;
@@ -41,7 +41,7 @@ namespace MetricsUtility.Clients.ConsoleApp
 
             FilteredFilesPresenter = filteredFilesPresenter;
             ListPresenter = listPresenter;
-            DirectoryFileEvaluator = directoryFileEvaluator;
+            DirectoryDescendentFilesEvaluator = directoryDescendentFilesEvaluator;
             FileExtensionPresenter = fileExtensionPresenter;
             Ux = ux;
         }
@@ -52,7 +52,7 @@ namespace MetricsUtility.Clients.ConsoleApp
 
             var directory = SettingsEvaluator.GetApTwoDirectory();
 
-            var files = DirectoryFileEvaluator.GetFiles(directory).OrderBy(x => x).ToList();
+            var files = DirectoryDescendentFilesEvaluator.Evaluate(directory).OrderBy(x => x).ToList();
 
             var loop = true;
             while (loop)

@@ -5,12 +5,14 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
 {
     public class ViewModelEvaluator : IViewModelEvaluator
     {
+        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
-        public IFolderExistenceEvaluator FolderExistenceEvaluator { get; private set; }
+        public IChildDirectoryCountEvaluator ChildDirectoryCountEvaluator { get; private set; }
 
-        public ViewModelEvaluator(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IFolderExistenceEvaluator folderExistenceEvaluator)
+        public ViewModelEvaluator(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator)
         {
-            FolderExistenceEvaluator = folderExistenceEvaluator;
+            PathExistenceEvaluator = pathExistenceEvaluator;
+            ChildDirectoryCountEvaluator = childDirectoryCountEvaluator;
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
         }
 
@@ -19,11 +21,13 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
             return new ViewModel
             {
                 SolutionToAnalyse = string.IsNullOrWhiteSpace(Properties.Settings.Default.InspectionPath) ? "(None)" : Properties.Settings.Default.InspectionPath,
-                AllowInteractions = true,
-                EnableDiagnostics = EnableDiagnosticsEvaluator.Evaluate(),
+                AllowFolderChanges = true,
+                IsIdle = EnableDiagnosticsEvaluator.Evaluate(),
                 ResultsDirectory = string.IsNullOrWhiteSpace(Properties.Settings.Default.ResultsPath) ? "(None)" : Properties.Settings.Default.ResultsPath,
-                IsValidResultsDirectory = FolderExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath),
-                IsValidInspectionDirectory = FolderExistenceEvaluator.Evaluate(Properties.Settings.Default.InspectionPath)
+                IsValidResultsDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath),
+                IsValidInspectionDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.InspectionPath),
+                GroupCount = 1,
+                ChildDirectoryCount = ChildDirectoryCountEvaluator.Evaluate()
             };
         }
     }

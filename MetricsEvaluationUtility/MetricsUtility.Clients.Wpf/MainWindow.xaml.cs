@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using MetricsUtility.Clients.Wpf.Services;
+using MetricsUtility.Clients.Wpf.Services.Evaluators;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
@@ -31,12 +35,19 @@ namespace MetricsUtility.Clients.Wpf
         public IInteractionPermissionToggler InteractionPermissionToggler { get; private set; }
         public IJavaScriptMetricsPresenter JavaScriptMetricsPresenter { get; private set; }
         public IFolderPresenter FolderPresenter { get; private set; }
-        public IDirectoryFileEvaluator DirectoryFileEvaluator { get; private set; }
+        public IDirectoryDescendentFilesEvaluator DirectoryDescendentFilesEvaluator { get; private set; }
+        public IGroupedCssEvaluator GroupedCssEvaluator { get; private set; }
+        public IFoldersPerGroupEvaluator FoldersPerGroupEvaluator { get; private set; }
+        public IChildDirectoryCountEvaluator ChildDirectoryCountEvaluator { get; private set; }
+        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
 
-
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryFileEvaluator directoryFileEvaluator)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator)
         {
-            DirectoryFileEvaluator = directoryFileEvaluator;
+            PathExistenceEvaluator = pathExistenceEvaluator;
+            ChildDirectoryCountEvaluator = childDirectoryCountEvaluator;
+            FoldersPerGroupEvaluator = foldersPerGroupEvaluator;
+            GroupedCssEvaluator = groupedCssEvaluator;
+            DirectoryDescendentFilesEvaluator = directoryDescendentFilesEvaluator;
             FolderPresenter = folderPresenter;
             JavaScriptMetricsPresenter = javaScriptMetricsPresenter;
             InteractionPermissionToggler = interactionPermissionToggler;
@@ -108,17 +119,48 @@ namespace MetricsUtility.Clients.Wpf
 
         private void InspectFolderCss(object sender, RoutedEventArgs e)
         {
-            DoAction(() => CssMetricsPresenter.View(DirectoryFileEvaluator.GetFiles(Properties.Settings.Default.InspectionPath).OrderBy(x => x).ToList()));
+            DoAction(() => CssMetricsPresenter.View(DirectoryDescendentFilesEvaluator.Evaluate(Properties.Settings.Default.InspectionPath).OrderBy(x => x).ToList()));
         }
         private void InspectFolderJavaScript(object sender, RoutedEventArgs e)
         {
-            DoAction(() => JavaScriptMetricsPresenter.View(DirectoryFileEvaluator.GetFiles(Properties.Settings.Default.InspectionPath).OrderBy(x => x).ToList()));
+            DoAction(() => JavaScriptMetricsPresenter.View(DirectoryDescendentFilesEvaluator.Evaluate(Properties.Settings.Default.InspectionPath).OrderBy(x => x).ToList()));
         }
 
         private void DoAction(Action action)
         {
             InteractionPermissionToggler.Toggle(false, (ViewModel)DataContext);
-            Task.Run(() => { action(); Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); txtOutput.ScrollToEnd(); })); });
+            Task.Run(() =>
+            {
+                action();
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); txtOutput.ScrollToEnd(); }));
+            });
+        }
+
+        private void InspectGroupCss(object sender, RoutedEventArgs e)
+        {
+            var path = Properties.Settings.Default.InspectionPath;
+            if (PathExistenceEvaluator.Evaluate(path))
+            {
+                GroupedCssEvaluator.Evaluate(((ViewModel)DataContext).GroupCount, Directory.GetDirectories(path));
+            }
+            
+            //DoAction(() =>
+            //{
+            //    var path = Properties.Settings.Default.InspectionPath;
+            //    if (PathExistenceEvaluator.Evaluate(path))
+            //    {
+            //        GroupedCssEvaluator.Evaluate(((ViewModel)DataContext).GroupCount, Directory.GetDirectories(path));
+            //    }
+            //});
+        }
+        private void InspectGroupJavaScript(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void NumberOfGroupsChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ((ViewModel)DataContext).FoldersPerGroup = FoldersPerGroupEvaluator.Evaluate(ChildDirectoryCountEvaluator.Evaluate(), ((ViewModel)DataContext).GroupCount);
         }
     }
 }

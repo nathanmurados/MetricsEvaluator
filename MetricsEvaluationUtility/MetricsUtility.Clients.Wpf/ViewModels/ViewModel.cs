@@ -4,12 +4,16 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
     {
         private string _solutionToAnalyse;
         private string _output;
-        private bool _enableDiagnostics;
-        private bool _allowInteractions;
+        private bool _isIdle;
+        private bool _allowFolderChanges;
         private int _progressValue;
         private string _resultsDirectory;
         private bool _isValidResultsDirectory;
         private bool _isValidInspectionDirectory;
+        private int _childDirectoryCount;
+        private int _groupCount;
+        private int _foldersPerGroup;
+        private bool _isValidInspectionDirectoryAndIsIdle;
 
         public string SolutionToAnalyse
         {
@@ -23,16 +27,25 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
             set { _output = value; OnPropertyChanged(); }
         }
 
-        public bool EnableDiagnostics
+        public bool IsIdle
         {
-            get { return _enableDiagnostics; }
-            set { _enableDiagnostics = value; OnPropertyChanged(); }
+            get { return _isIdle; }
+            set
+            {
+                _isIdle = value; OnPropertyChanged();
+                IsValidInspectionDirectoryAndIsIdle = IsValidInspectionDirectory && IsIdle;
+            }
         }
 
-        public bool AllowInteractions
+        public bool AllowFolderChanges
         {
-            get { return _allowInteractions; }
-            set { _allowInteractions = value; OnPropertyChanged(); }
+            get { return _allowFolderChanges; }
+            set
+            {
+                _allowFolderChanges = value; 
+                OnPropertyChanged();
+
+            }
         }
 
         public int ProgressValue
@@ -56,7 +69,35 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         public bool IsValidInspectionDirectory
         {
             get { return _isValidInspectionDirectory; }
-            set { _isValidInspectionDirectory = value; OnPropertyChanged(); }
+            set
+            {
+                _isValidInspectionDirectory = value; OnPropertyChanged();
+                IsValidInspectionDirectoryAndIsIdle = IsValidInspectionDirectory && IsIdle;
+            }
+        }
+
+        public bool IsValidInspectionDirectoryAndIsIdle
+        {
+            get { return _isValidInspectionDirectoryAndIsIdle; }
+            set { _isValidInspectionDirectoryAndIsIdle = value; OnPropertyChanged(); }
+        }
+
+        public int ChildDirectoryCount
+        {
+            get { return _childDirectoryCount; }
+            set { _childDirectoryCount = value; OnPropertyChanged(); }
+        }
+
+        public int GroupCount
+        {
+            get { return _groupCount; }
+            set { _groupCount = value; OnPropertyChanged(); }
+        }
+
+        public int FoldersPerGroup
+        {
+            get { return _foldersPerGroup; }
+            set { _foldersPerGroup = value; OnPropertyChanged(); }
         }
     }
 }

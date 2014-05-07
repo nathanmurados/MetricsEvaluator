@@ -18,7 +18,7 @@ namespace MetricsUtility.Clients.ConsoleApp
             {
                 Bind<IHumanInterface>().To<ConsoleAppHumanInterface>();
                 Bind<IFileExtensionPresenter>().To<FileExtensionsPresenter>();
-                Bind<IDirectoryFileEvaluator>().To<DirectoryFileEvaluator>();
+                Bind<IDirectoryDescendentFilesEvaluator>().To<DirectoryDescendentFilesEvaluator>();
                 Bind<IListPresenter>().To<ListPresenter>();
                 Bind<IFilteredFilesPresenter>().To<FilteredFilesPresenter>();
                 Bind<IFilteredFilesEvaluator>().To<FilteredFilesEvaluator>();
@@ -55,7 +55,7 @@ namespace MetricsUtility.Clients.ConsoleApp
             var prog = new Executable(
                 kernel.Get<IHumanInterface>(),
                 kernel.Get<IFileExtensionPresenter>(),
-                kernel.Get<IDirectoryFileEvaluator>(),
+                kernel.Get<IDirectoryDescendentFilesEvaluator>(),
                 kernel.Get<IListPresenter>(),
                 kernel.Get<IFilteredFilesPresenter>(),
                 kernel.Get<IFilteredFilesStatsPresenter>(),

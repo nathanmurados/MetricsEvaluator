@@ -6,8 +6,8 @@ namespace MetricsUtility.Clients.Wpf
     {
         public void Toggle(bool allow, ViewModel viewModel)
         {
-            viewModel.AllowInteractions = allow;
-            viewModel.EnableDiagnostics = allow;
+            viewModel.AllowFolderChanges = allow;
+            viewModel.IsIdle = allow;
         }
     }
 }
