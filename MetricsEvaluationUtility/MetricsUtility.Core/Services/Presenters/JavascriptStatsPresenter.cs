@@ -50,7 +50,7 @@ namespace MetricsUtility.Core.Services.Presenters
 
                     if (newPercentage != oldPercentage/* && newPercentage % 5 == 0*/)
                     {
-                        Ux.WriteLine(string.Format("{0}% ", newPercentage));
+                        Ux.UpdateProgress((int)newPercentage);
                         oldPercentage = newPercentage;
                     }
                 }

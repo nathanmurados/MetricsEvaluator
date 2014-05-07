@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using MetricsUtility.Clients.Wpf.Services;
 using MetricsUtility.Clients.Wpf.Services.Evaluators;
 using MetricsUtility.Clients.Wpf.Services.Presenters;
 using MetricsUtility.Clients.Wpf.ViewModels;
@@ -16,27 +17,34 @@ namespace MetricsUtility.Clients.Wpf
         public IViewModelEvaluator ViewModelEvaluator { get; private set; }
         public IHumanInterface Ux { get; private set; }
         public ISolutionCssMetricsPresenter SolutionCssMetricsPresenter { get; private set; }
-        public ISolutionChoicePresenter SolutionChoicePresenter { get; private set; }
-        public IResultsDirectoryChoicePresenter ResultsDirectoryChoicePresenter { get; private set; }
+        public ISolutionPathPresenter SolutionPathPresenter { get; private set; }
+        public IResultsPathPresenter ResultsPathPresenter { get; private set; }
         public IBoolOptionPresenter BoolOptionPresenter { get; private set; }
         public IOutputPresenter OutputPresenter { get; private set; }
         public IProgressPresenter ProgressPresenter { get; private set; }
         public IInputPresenter InputPresenter { get; private set; }
-        public IOptionsPresenter OptionsPresenter { get; set; }
+        public IOptionsPresenter OptionsPresenter { get; private set; }
+        public ISettingsClearer SettingsClearer { get; private set; }
+        public IInteractionPermissionToggler InteractionPermissionToggler { get; private set; }
+        public ISolutionJavaScriptMetricsPresenter SolutionJavaScriptMetricsPresenter { get; private set; }
 
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ISolutionCssMetricsPresenter solutionCssMetricsPresenter, IHumanInterface ux, ISolutionChoicePresenter solutionChoicePresenter, IResultsDirectoryChoicePresenter resultsDirectoryChoicePresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ISolutionCssMetricsPresenter solutionCssMetricsPresenter, IHumanInterface ux, ISolutionPathPresenter solutionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, ISolutionJavaScriptMetricsPresenter solutionJavaScriptMetricsPresenter)
         {
-            InputPresenter = inputPresenter;
-            ProgressPresenter = progressPresenter;
-            OutputPresenter = outputPresenter;
-            BoolOptionPresenter = boolOptionPresenter;
-            ResultsDirectoryChoicePresenter = resultsDirectoryChoicePresenter;
-            SolutionChoicePresenter = solutionChoicePresenter;
+            SolutionJavaScriptMetricsPresenter = solutionJavaScriptMetricsPresenter;
+            InteractionPermissionToggler = interactionPermissionToggler;
+            SettingsClearer = settingsClearer;
+            OptionsPresenter = optionsPresenter;
             Ux = ux;
-            SolutionCssMetricsPresenter = solutionCssMetricsPresenter;
+            InputPresenter = inputPresenter;
+            OutputPresenter = outputPresenter;
+            ProgressPresenter = progressPresenter;
             ViewModelEvaluator = viewModelEvaluator;
+            BoolOptionPresenter = boolOptionPresenter;
+            SolutionPathPresenter = solutionPathPresenter;
+            SolutionCssMetricsPresenter = solutionCssMetricsPresenter;
+            ResultsPathPresenter = resultsPathPresenter;
+
             InitializeComponent();
-            DataContext = ViewModelEvaluator.Evaluate();
 
             ux.ReadEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => inputPresenter.Present(sender, e, (ViewModel)DataContext)));
             ux.WriteEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OutputPresenter.Write(sender, e, (ViewModel)DataContext)));
@@ -48,43 +56,41 @@ namespace MetricsUtility.Clients.Wpf
             ux.DisplayBoolOptionEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => BoolOptionPresenter.Present(sender, e)));
             ux.AddOptionWithHeadingSpaceEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OptionsPresenter.AddOptionWithHeadingSpace(sender, e, (ViewModel)DataContext)));
 
-#if DEBUG
-            ClearSettings();
-#endif
-        }
-
-        private static void ClearSettings()
-        {
-            Properties.Settings.Default.ResultsPath = null;
-            Properties.Settings.Default.InspectionPath = null;
+            DataContext = ViewModelEvaluator.Evaluate();
         }
 
         private void ChooseSolution(object sender, RoutedEventArgs e)
         {
-            SolutionChoicePresenter.Present((ViewModel)DataContext);
+            SolutionPathPresenter.Present((ViewModel)DataContext);
         }
 
         private void ViewSolutionCssMetrics(object sender, RoutedEventArgs e)
         {
             Task.Run(() =>
             {
-                ToggleInteractionPermission(false);
-                SolutionCssMetricsPresenter.View();
-                ToggleInteractionPermission(true);
-            });
-        }
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(false, (ViewModel) DataContext)));
 
-        private void ToggleInteractionPermission(bool allow)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                ((ViewModel)DataContext).AllowInteractions = allow;
-            }));
+                SolutionCssMetricsPresenter.View();
+
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext)));
+            });
         }
 
         private void ChooseResultsLocation(object sender, RoutedEventArgs e)
         {
-            ResultsDirectoryChoicePresenter.Present((ViewModel)DataContext);
+            ResultsPathPresenter.Present((ViewModel)DataContext);
+        }
+
+        private void ViewSolutionJavaScriptMetrics(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(false, (ViewModel)DataContext)));
+
+                SolutionJavaScriptMetricsPresenter.View();
+
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext)));
+            });
         }
     }
 }

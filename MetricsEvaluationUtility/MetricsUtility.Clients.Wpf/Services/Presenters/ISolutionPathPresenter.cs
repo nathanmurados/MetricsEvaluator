@@ -2,8 +2,8 @@
 
 namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
-    public interface ISolutionChoicePresenter
+    public interface ISolutionPathPresenter
     {
-        void Present(ViewModel dataContext);
+        void Present(ViewModel viewModel);
     }
 }

@@ -56,16 +56,20 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
             _container.Bind<IViewModelEvaluator>().To<ViewModelEvaluator>();
             _container.Bind<ISolutionCssMetricsPresenter>().To<SolutionCssMetricsPresenter>();
-            _container.Bind<ISolutionChoicePresenter>().To<SolutionChoicePresenter>();
+            _container.Bind<ISolutionPathPresenter>().To<SolutionPathPresenter>();
             _container.Bind<IResultsDirectoryEvaluator>().To<ResultsDirectoryEvaluator>();
-            _container.Bind<IResultsDirectoryChoicePresenter>().To<ResultsDirectoryChoicePresenter>();
+            _container.Bind<IResultsPathPresenter>().To<ResultsPathPresenter>();
 
             _container.Bind<IBoolOptionPresenter>().To<BoolOptionPresenter>();
             _container.Bind<IOutputPresenter>().To<OutputPresenter>();
             _container.Bind<IProgressPresenter>().To<ProgressPresenter>();
             _container.Bind<IInputPresenter>().To<InputPresenter>();
-            //_container.Bind<IResultsDirectoryChoicePresenter>().To<ResultsDirectoryChoicePresenter>();
-            //_container.Bind<IResultsDirectoryChoicePresenter>().To<ResultsDirectoryChoicePresenter>();
+            _container.Bind<IEnableDiagnosticsEvaluator>().To<EnableDiagnosticsEvaluator>();
+            _container.Bind<IOptionsPresenter>().To<OptionsPresenter>();
+            _container.Bind<ISettingsClearer>().To<SettingsClearer>();
+            _container.Bind<IInteractionPermissionToggler>().To<InteractionPermissionToggler>();
+            _container.Bind<ISolutionJavaScriptMetricsPresenter>().To<SolutionJavaScriptMetricsPresenter>();
+            //_container.Bind<IResultsPathPresenter>().To<ResultsPathPresenter>();
         }
 
         private void ComposeObjects()

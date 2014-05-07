@@ -2,8 +2,8 @@ using MetricsUtility.Clients.Wpf.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
-    public interface IResultsDirectoryChoicePresenter
+    public interface IResultsPathPresenter
     {
-        void Present(ViewModel dataContext);
+        void Present(ViewModel viewModel);
     }
 }

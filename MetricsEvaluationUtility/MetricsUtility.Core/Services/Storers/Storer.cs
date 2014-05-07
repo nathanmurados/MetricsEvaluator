@@ -16,12 +16,14 @@ namespace MetricsUtility.Core.Services.Storers
         {
             var root = ResultsDirectoryEvaluator.Evaluate();
 
-            if (!Directory.Exists(root))
+            if (!string.IsNullOrWhiteSpace(root))
             {
-                Directory.CreateDirectory(root);
+                if (!Directory.Exists(root))
+                {
+                    Directory.CreateDirectory(root);
+                }
+                File.WriteAllText(root + "\\" + fileName, stringBuilder.ToString());
             }
-
-            File.WriteAllText(root + fileName, stringBuilder.ToString());
         }
     }
 

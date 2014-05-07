@@ -57,7 +57,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IInteractionPermissionToggler.cs" />
+    <Compile Include="InteractionPermissionToggler.cs" />
+    <Compile Include="Services\ISettingsClearer.cs" />
+    <Compile Include="Services\Evaluators\EnableDiagnosticsEvaluator.cs" />
+    <Compile Include="Services\Evaluators\IEnableDiagnosticsEvaluator.cs" />
     <Compile Include="Services\Presenters\IOptionsPresenter.cs" />
+    <Compile Include="Services\Presenters\ISolutionJavaScriptMetricsPresenter.cs" />
     <Compile Include="Services\Presenters\OptionsPresenter.cs" />
     <Compile Include="Services\Presenters\IInputPresenter.cs" />
     <Compile Include="Services\Presenters\InputPresenter.cs" />
@@ -66,13 +72,15 @@
     <Compile Include="Services\Presenters\IOutputPresenter.cs" />
     <Compile Include="Services\Presenters\BoolOptionPresenter.cs" />
     <Compile Include="Services\Presenters\IBoolOptionPresenter.cs" />
-    <Compile Include="Services\Presenters\IResultsDirectoryChoicePresenter.cs" />
-    <Compile Include="Services\Presenters\ResultsDirectoryChoicePresenter.cs" />
+    <Compile Include="Services\Presenters\IResultsPathPresenter.cs" />
+    <Compile Include="Services\Presenters\ResultsPathPresenter.cs" />
     <Compile Include="Services\Evaluators\ResultsDirectoryEvaluator.cs" />
-    <Compile Include="Services\Presenters\ISolutionChoicePresenter.cs" />
+    <Compile Include="Services\Presenters\ISolutionPathPresenter.cs" />
     <Compile Include="Services\Presenters\ISolutionCssMetricsPresenter.cs" />
     <Compile Include="Services\Presenters\SolutionCssMetricsPresenter.cs" />
-    <Compile Include="Services\Presenters\SolutionChoicePresenter.cs" />
+    <Compile Include="Services\Presenters\SolutionJavaScriptMetricsPresenter.cs" />
+    <Compile Include="Services\Presenters\SolutionPathPresenter.cs" />
+    <Compile Include="Services\SettingsClearer.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Services\Evaluators\ViewModelEvaluator.cs" />

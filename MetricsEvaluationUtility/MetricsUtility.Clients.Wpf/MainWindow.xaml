@@ -18,8 +18,9 @@
             <MenuItem Header="File">
                 <MenuItem Header="Choose solution to inspect..." Click="ChooseSolution" IsEnabled="{Binding AllowInteractions}"/>
             </MenuItem>
-            <MenuItem Header="CSS">
-                <MenuItem Click="ViewSolutionCssMetrics" Header="View solution CSS metrics"  IsEnabled="{Binding AllowInteractions}"/>
+            <MenuItem Header="Actions">
+                <MenuItem Click="ViewSolutionCssMetrics" Header="View solution CSS metrics"  IsEnabled="{Binding EnableDiagnostics}"/>
+                <MenuItem Click="ViewSolutionJavaScriptMetrics" Header="View solution JavaScript metrics"  IsEnabled="{Binding EnableDiagnostics}"/>
             </MenuItem>
             <MenuItem Header="Settings">
                 <MenuItem Header="Choose results location..." Click="ChooseResultsLocation" IsEnabled="{Binding AllowInteractions}"/>
@@ -32,15 +33,16 @@
             </Grid.RowDefinitions>
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Margin="5">Solution:</Label>
-                    <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
-                    <Button Click="ChooseSolution" Content="Choose" Margin="5" IsEnabled="{Binding AllowInteractions}"/>
-                    <Button Click="ViewSolutionCssMetrics" Content="Run" Visibility="{Binding EnableDiagnostics}" Margin="5" IsEnabled="{Binding AllowInteractions}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
                     <Label Margin="5">Results:</Label>
                     <Label Content="{Binding ResultsDirectory}" Margin="5"/>
-                    <Button Click="ChooseResultsLocation" Content="Choose" Margin="5" IsEnabled="{Binding AllowInteractions}"/>
+                    <Button Click="ChooseResultsLocation" Content="Change..." Margin="5" IsEnabled="{Binding AllowInteractions}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="5">Solution:</Label>
+                    <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
+                    <Button Click="ChooseSolution" Content="Change..." Margin="5" IsEnabled="{Binding AllowInteractions}"/>
+                    <Button Click="ViewSolutionCssMetrics" Content="Inspect CSS" Margin="5" IsEnabled="{Binding EnableDiagnostics}"/>
+                    <Button Click="ViewSolutionJavaScriptMetrics" Content="Inspect JavaScript" Margin="5" IsEnabled="{Binding EnableDiagnostics}"/>
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="1">
