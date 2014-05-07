@@ -98,6 +98,14 @@ namespace MetricsUtility.Clients.ConsoleApp
             DisplayOptions(question);
         }
 
+        public event EventHandler<string> WriteEvent;
+        public event EventHandler<string> WriteLineEvent;
+        public event EventHandler<string> ReadEvent;
+        public event EventHandler<AddOptionEventArgs> AddOptionEvent;
+        public event EventHandler<string> DisplayOptionsEvent;
+        public event EventHandler<AddOptionEventArgs> AddOptionWithHeadingSpaceEvent;
+        public event EventHandler<BoolOptionEventArgs> DisplayBoolOptionEvent;
+
         private void ClearOptions()
         {
             _options = new List<Option>();

@@ -1,9 +1,12 @@
+using System.Windows;
+
 namespace MetricsUtility.Clients.Wpf.ViewModels
 {
     public class ViewModel : ViewModelBase
     {
         private string _solutionToAnalyse;
         private string _output;
+        private Visibility _enableDiagnostics;
 
         public string SolutionToAnalyse
         {
@@ -15,6 +18,12 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         {
             get { return _output; }
             set { _output = value; OnPropertyChanged(); }
+        }
+
+        public Visibility EnableDiagnostics
+        {
+            get { return _enableDiagnostics; }
+            set { _enableDiagnostics = value; OnPropertyChanged(); }
         }
     }
 }

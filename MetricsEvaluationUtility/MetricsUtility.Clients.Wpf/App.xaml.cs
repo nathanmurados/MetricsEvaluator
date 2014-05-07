@@ -1,5 +1,6 @@
-﻿using MetricsUtility.Clients.Wpf.Services.Evaluators;
-using MetricsUtility.Clients.Wpf.ViewModels;
+﻿using MetricsUtility.Clients.Wpf.Services;
+using MetricsUtility.Clients.Wpf.Services.Evaluators;
+using MetricsUtility.Clients.Wpf.Services.Presenters;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
@@ -27,7 +28,7 @@ namespace MetricsUtility.Clients.Wpf
         private void ConfigureContainer()
         {
             _container = new StandardKernel();
-            //_container.Bind<IHumanInterface>().To<ConsoleAppHumanInterface>();
+            _container.Bind<IHumanInterface>().To<WpfInterface>().InSingletonScope();
             _container.Bind<IFileExtensionPresenter>().To<FileExtensionsPresenter>();
             _container.Bind<IDirectoryFileEvaluator>().To<DirectoryFileEvaluator>();
             _container.Bind<IListPresenter>().To<ListPresenter>();
@@ -54,6 +55,9 @@ namespace MetricsUtility.Clients.Wpf
             //_container.Bind<ISettingsValidator>().To<SettingsValidator>();
             _container.Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
             _container.Bind<IViewModelEvaluator>().To<ViewModelEvaluator>();
+            _container.Bind<ISolutionCssMetricsPresenter>().To<SolutionCssMetricsPresenter>();
+            _container.Bind<ISolutionChoicePresenter>().To<SolutionChoicePresenter>();
+            
         }
 
         private void ComposeObjects()

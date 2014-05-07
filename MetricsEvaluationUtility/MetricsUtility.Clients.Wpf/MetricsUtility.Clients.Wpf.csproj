@@ -57,9 +57,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Presenters\ISolutionChoicePresenter.cs" />
+    <Compile Include="Services\Presenters\ISolutionCssMetricsPresenter.cs" />
+    <Compile Include="Services\Presenters\SolutionCssMetricsPresenter.cs" />
+    <Compile Include="Services\Presenters\SolutionChoicePresenter.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Services\Evaluators\ViewModelEvaluator.cs" />
+    <Compile Include="Services\WpfInterface.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
