@@ -12,7 +12,7 @@ namespace MetricsUtility.Core.Services.Storers
             ResultsDirectoryEvaluator = resultsDirectoryEvaluator;
         }
 
-        public void Store(StringBuilder stringBuilder, string fileName)
+        public string Store(StringBuilder stringBuilder, string fileName)
         {
             var root = ResultsDirectoryEvaluator.Evaluate();
 
@@ -22,13 +22,17 @@ namespace MetricsUtility.Core.Services.Storers
                 {
                     Directory.CreateDirectory(root);
                 }
-                File.WriteAllText(root + "\\" + fileName, stringBuilder.ToString());
+                var filename = root + "\\" + fileName;
+                File.WriteAllText(filename, stringBuilder.ToString());
+                return filename;
             }
+
+            return null;
         }
     }
 
     public interface IStorer
     {
-        void Store(StringBuilder stringBuilder, string fileName);
+        string Store(StringBuilder stringBuilder, string fileName);
     }
 }

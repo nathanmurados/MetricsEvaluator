@@ -58,7 +58,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\Evaluators\CssStatsFileNameEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScriptStatsFileNameEvaluator.cs" />
+    <Compile Include="Services\Presenters\FilePresenter.cs" />
     <Compile Include="Services\Presenters\FolderPresenter.cs" />
+    <Compile Include="Services\Evaluators\FileExistenceEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IFileExistenceEvaluator.cs" />
+    <Compile Include="Services\Presenters\Interfaces\IFilePresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IFolderPresenter.cs" />
     <Compile Include="IInteractionPermissionToggler.cs" />
     <Compile Include="InteractionPermissionToggler.cs" />
@@ -66,13 +71,13 @@
     <Compile Include="Services\Evaluators\EnableDiagnosticsEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IEnableDiagnosticsEvaluator.cs" />
     <Compile Include="Services\Presenters\Interfaces\IOptionsPresenter.cs" />
-    <Compile Include="Services\Evaluators\Interfaces\IPathExistenceEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IFolderExistenceEvaluator.cs" />
     <Compile Include="Services\Presenters\Interfaces\IJavaScriptMetricsPresenter.cs" />
     <Compile Include="Services\Presenters\OptionsPresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IInputPresenter.cs" />
     <Compile Include="Services\Presenters\InputPresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IProgressPresenter.cs" />
-    <Compile Include="Services\Evaluators\PathExistenceEvaluator.cs" />
+    <Compile Include="Services\Evaluators\FolderExistenceEvaluator.cs" />
     <Compile Include="Services\Presenters\ProgressPresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IOutputPresenter.cs" />
     <Compile Include="Services\Presenters\BoolOptionPresenter.cs" />
@@ -83,7 +88,7 @@
     <Compile Include="Services\Presenters\Interfaces\IInspectionPathPresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\ICssMetricsPresenter.cs" />
     <Compile Include="Services\Presenters\CssMetricsPresenter.cs" />
-    <Compile Include="Services\Presenters\Interfaces\JavaScriptMetricsPresenter.cs" />
+    <Compile Include="Services\Presenters\JavaScriptMetricsPresenter.cs" />
     <Compile Include="Services\Presenters\InspectionPathPresenter.cs" />
     <Compile Include="Services\SettingsClearer.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />

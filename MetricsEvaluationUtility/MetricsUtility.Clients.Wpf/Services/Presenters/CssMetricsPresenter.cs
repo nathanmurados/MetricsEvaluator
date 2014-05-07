@@ -18,13 +18,13 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
         public IFilteredFilesEvaluator FilteredFilesEvaluator { get; private set; }
         public ICssStatsStorer CssStatsStorer { get; private set; }
         public IHumanInterface Ux { get; private set; }
-        public IFolderPresenter FolderPresenter { get; private set; }
-        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
+        public IFolderExistenceEvaluator FolderExistenceEvaluator { get; private set; }
+        public IFilePresenter FilePresenter { get; private set; }
 
-        public CssMetricsPresenter(IHumanInterface ux, IDirectoryFileEvaluator directoryFileEvaluator, ICssStatsPresenter cssStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, ICssStatsStorer cssStatsStorer, IFolderPresenter folderPresenter, IPathExistenceEvaluator pathExistenceEvaluator)
+        public CssMetricsPresenter(IHumanInterface ux, IDirectoryFileEvaluator directoryFileEvaluator, ICssStatsPresenter cssStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, ICssStatsStorer cssStatsStorer, IFolderExistenceEvaluator folderExistenceEvaluator, IFilePresenter filePresenter)
         {
-            PathExistenceEvaluator = pathExistenceEvaluator;
-            FolderPresenter = folderPresenter;
+            FilePresenter = filePresenter;
+            FolderExistenceEvaluator = folderExistenceEvaluator;
             CssStatsStorer = cssStatsStorer;
             FilteredFilesEvaluator = filteredFilesEvaluator;
             CssStatsPresenter = cssStatsPresenter;
@@ -36,20 +36,20 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
         {
             var path = Properties.Settings.Default.InspectionPath;
 
-            if (PathExistenceEvaluator.Evaluate(path))
+            if (FolderExistenceEvaluator.Evaluate(path))
             {
                 var files = DirectoryFileEvaluator.GetFiles(path).OrderBy(x => x).ToList();
 
                 var results = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
                 Ux.DisplayBoolOption("Store detailed CSS results to disk?", () =>
                 {
-                    CssStatsStorer.Store(results);
-                    FolderPresenter.Present(path);
+                    var filename = CssStatsStorer.Store(results);
+                    FilePresenter.Present(filename);
                 }, null);
             }
             else
             {
-                MessageBox.Show("Please specify the results folder first.","Invalid Directory");
+                MessageBox.Show("Please specify the results folder first.", "Invalid Directory");
             }
         }
     }

@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using MetricsUtility.Clients.Wpf.Services.Evaluators;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 
@@ -7,18 +6,27 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
     public class FolderPresenter : IFolderPresenter
     {
-        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
+        public IFolderExistenceEvaluator FolderExistenceEvaluator { get; private set; }
 
-        public FolderPresenter(IPathExistenceEvaluator pathExistenceEvaluator)
+        public FolderPresenter(IFolderExistenceEvaluator folderExistenceEvaluator)
         {
-            PathExistenceEvaluator = pathExistenceEvaluator;
+            FolderExistenceEvaluator = folderExistenceEvaluator;
         }
 
         public void Present(string path)
         {
-            if (PathExistenceEvaluator.Evaluate(path))
+            if (FolderExistenceEvaluator.Evaluate(path))
             {
-                Process.Start(path);
+                var explorerWindowProcess = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = "explorer.exe", 
+                        Arguments = path
+                    }
+                };
+
+                explorerWindowProcess.Start();
             }
         }
     }

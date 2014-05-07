@@ -9,11 +9,11 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
     public class ResultsPathPresenter : IResultsPathPresenter
     {
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
-        public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
+        public IFolderExistenceEvaluator FolderExistenceEvaluator { get; private set; }
 
-        public ResultsPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IPathExistenceEvaluator pathExistenceEvaluator)
+        public ResultsPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IFolderExistenceEvaluator folderExistenceEvaluator)
         {
-            PathExistenceEvaluator = pathExistenceEvaluator;
+            FolderExistenceEvaluator = folderExistenceEvaluator;
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
         }
 
@@ -31,7 +31,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 Properties.Settings.Default.Save();
                 viewModel.ResultsDirectory = Properties.Settings.Default.ResultsPath;
                 viewModel.EnableDiagnostics = EnableDiagnosticsEvaluator.Evaluate();
-                viewModel.IsValidResultsDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath);
+                viewModel.IsValidResultsDirectory = FolderExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath);
             }
         }
     }

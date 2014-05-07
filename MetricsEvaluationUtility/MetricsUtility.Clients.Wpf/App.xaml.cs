@@ -72,17 +72,17 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IInteractionPermissionToggler>().To<InteractionPermissionToggler>();
             _container.Bind<IJavaScriptMetricsPresenter>().To<JavaScriptMetricsPresenter>();
             _container.Bind<IFolderPresenter>().To<FolderPresenter>();
-            _container.Bind<IPathExistenceEvaluator>().To<PathExistenceEvaluator>();
+            _container.Bind<IFolderExistenceEvaluator>().To<FolderExistenceEvaluator>();
             _container.Bind<ICssStatsFileNameEvaluator>().To<CssStatsFileNameEvaluator>();
-            //_container.Bind<IFolderPresenter>().To<FolderPresenter>();
-            //_container.Bind<IFolderPresenter>().To<FolderPresenter>();
-            
+            _container.Bind<IFilePresenter>().To<FilePresenter>();
+            _container.Bind<IFileExistenceEvaluator>().To<FileExistenceEvaluator>();
+            _container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
         }
 
         private void ComposeObjects()
         {
             Current.MainWindow = _container.Get<MainWindow>();
-            Current.MainWindow.Title = "DI with Ninject";
+            Current.MainWindow.Title = "Metrics Evaluation Utility";
         }
     }
 }

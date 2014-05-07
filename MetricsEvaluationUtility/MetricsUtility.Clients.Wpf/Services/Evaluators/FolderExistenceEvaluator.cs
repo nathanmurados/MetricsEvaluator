@@ -3,7 +3,7 @@ using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators
 {
-    public class PathExistenceEvaluator : IPathExistenceEvaluator
+    public class FolderExistenceEvaluator : IFolderExistenceEvaluator
     {
         public bool Evaluate(string path)
         {

@@ -20,7 +20,12 @@ namespace MetricsUtility.Core.Services.Storers
             Storer = storer;
         }
 
-        public void Store(List<CssEvaluationResult> results)
+        /// <summary>
+        /// Stores the results and returns the filename
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
+        public string Store(List<CssEvaluationResult> results)
         {
             var sb = new StringBuilder();
 
@@ -50,14 +55,16 @@ namespace MetricsUtility.Core.Services.Storers
                 results.Sum(x => x.Razor.Sum(y => y.Value.Length))
             );
 
-            Storer.Store(sb,CssStatsFileNameEvaluator.Evaluate());
+            var filename = Storer.Store(sb, CssStatsFileNameEvaluator.Evaluate());
 
             Ux.WriteLine("Saved.");
+
+            return filename;
         }
     }
 
     public interface ICssStatsStorer
     {
-        void Store(List<CssEvaluationResult> results);
+        string Store(List<CssEvaluationResult> results);
     }
 }

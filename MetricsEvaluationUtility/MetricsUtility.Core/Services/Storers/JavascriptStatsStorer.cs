@@ -13,16 +13,18 @@ namespace MetricsUtility.Core.Services.Storers
         public IHumanInterface Ux { get; private set; }
         public IDateTimeProvider DateTimeProvider { get; private set; }
         public IStorer Storer { get; private set; }
+        public IJavaScriptStatsFileNameEvaluator JavaScriptStatsFileNameEvaluator { get; private set; }
 
-        public JavaScriptStatsStorer(IStorer storer, IDateTimeProvider dateTimeProvider, IHumanInterface ux, IRelevantAttributesEvaluator relevantAttributesEvaluator)
+        public JavaScriptStatsStorer(IStorer storer, IDateTimeProvider dateTimeProvider, IHumanInterface ux, IRelevantAttributesEvaluator relevantAttributesEvaluator, IJavaScriptStatsFileNameEvaluator javaScriptStatsFileNameEvaluator)
         {
+            JavaScriptStatsFileNameEvaluator = javaScriptStatsFileNameEvaluator;
             Storer = storer;
             DateTimeProvider = dateTimeProvider;
             Ux = ux;
             RelevantAttributesEvaluator = relevantAttributesEvaluator;
         }
 
-        public void Store(List<JavaScriptEvaluationResult> results)
+        public string Store(List<JavaScriptEvaluationResult> results)
         {
             var attributeTotals = new List<AttributeTotal>();
 
@@ -72,9 +74,11 @@ namespace MetricsUtility.Core.Services.Storers
 
             sb.AppendFormat(",{0},{1}", attributeTotals.Sum(x => x.BlockCount), attributeTotals.Sum(x => x.RazorCount));
 
-            Storer.Store(sb, "JavaScriptValidationResults " + DateTimeProvider.Now.ToString("yy-MM-dd HH.mm.ss") + ".csv");
+            var filename = Storer.Store(sb, JavaScriptStatsFileNameEvaluator.Evaluate());
 
             Ux.WriteLine("Saved.");
+
+            return filename;
         }
 
     }
@@ -88,6 +92,6 @@ namespace MetricsUtility.Core.Services.Storers
 
     public interface IJavaScriptStatsStorer
     {
-        void Store(List<JavaScriptEvaluationResult> results);
+        string Store(List<JavaScriptEvaluationResult> results);
     }
 }

@@ -44,6 +44,7 @@ namespace MetricsUtility.Clients.ConsoleApp
                 Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
                 Bind<IResultsDirectoryEvaluator>().To<ResultsDirectoryEvaluator>();
                 Bind<ICssStatsFileNameEvaluator>().To<CssStatsFileNameEvaluator>();
+                Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             }
         }
 

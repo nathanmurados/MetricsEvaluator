@@ -17,15 +17,15 @@
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu IsMainMenu="True" VerticalAlignment="Top">
-            <MenuItem Header="Actions">
-                <MenuItem Header="Choose results location..." Click="ChangeResultsPath" IsEnabled="{Binding AllowInteractions}"/>
-                <MenuItem Header="Choose solution to inspect..." Click="ChangeInspectionPath" IsEnabled="{Binding AllowInteractions}"/>
+            <MenuItem Header="_Actions">
+                <MenuItem Header="Set _solution to inspect..." Click="ChangeInspectionPath" IsEnabled="{Binding AllowInteractions}"/>
+                <MenuItem Header="Set _results location..." Click="ChangeResultsPath" IsEnabled="{Binding AllowInteractions}"/>
                 <Separator />
-                <MenuItem Click="OpenResultsFolder" Header="Open results folder" IsEnabled="{Binding IsValidResultsDirectory}"/>
-                <MenuItem Click="OpenInspectionFolder" Header="Open results folder" IsEnabled="{Binding IsValidInspectionDirectory}"/>
+                <MenuItem Click="ViewSolutionCssMetrics" Header="Inspect _CSS"  IsEnabled="{Binding EnableDiagnostics}"/>
+                <MenuItem Click="ViewSolutionJavaScriptMetrics" Header="Inspect _JavaScript"  IsEnabled="{Binding EnableDiagnostics}"/>
                 <Separator />
-                <MenuItem Click="ViewSolutionCssMetrics" Header="Inspect CSS"  IsEnabled="{Binding EnableDiagnostics}"/>
-                <MenuItem Click="ViewSolutionJavaScriptMetrics" Header="Inspect JavaScript"  IsEnabled="{Binding EnableDiagnostics}"/>
+                <MenuItem Click="OpenInspectionFolder" Header="Open solution _folder" IsEnabled="{Binding IsValidInspectionDirectory}"/>
+                <MenuItem Click="OpenResultsFolder" Header="_Open results folder" IsEnabled="{Binding IsValidResultsDirectory}"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">

@@ -1,9 +1,9 @@
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Storers;
 
-namespace MetricsUtility.Clients.Wpf.Services.Evaluators
+namespace MetricsUtility.Clients.ConsoleApp.Services
 {
-    public class CssStatsFileNameEvaluator : ICssStatsFileNameEvaluator, IHasDateTimeProvider
+    public class CssStatsFileNameEvaluator : ICssStatsFileNameEvaluator ,IHasDateTimeProvider
     {
         public IDateTimeProvider DateTimeProvider { get; private set; }
 
@@ -11,10 +11,10 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
         {
             DateTimeProvider = dateTimeProvider;
         }
-
+        
         public string Evaluate()
         {
-            return string.Format("CSS Results {0} {1}.csv", Properties.Settings.Default.InspectionPath.Replace("\\", "~").Replace(":", ""), DateTimeProvider.Now.ToString("yyMMddHHmmss"));
+            return "Css Validation Results " + DateTimeProvider.Now.ToString("yy-MM-dd HH.mm.ss") + ".csv";
         }
     }
 }

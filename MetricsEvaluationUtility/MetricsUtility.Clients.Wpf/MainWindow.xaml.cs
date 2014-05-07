@@ -2,9 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using MetricsUtility.Clients.Wpf.Services;
-using MetricsUtility.Clients.Wpf.Services.Evaluators;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
-using MetricsUtility.Clients.Wpf.Services.Presenters;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 using MetricsUtility.Core.Services;
@@ -61,7 +59,7 @@ namespace MetricsUtility.Clients.Wpf
             ux.AddOptionWithHeadingSpaceEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OptionsPresenter.AddOptionWithHeadingSpace(sender, e, (ViewModel)DataContext)));
 
 //#if DEBUG
-//          SettingsClearer.Clear();
+//            SettingsClearer.Clear();
 //#endif
 
             DataContext = ViewModelEvaluator.Evaluate();
@@ -70,6 +68,11 @@ namespace MetricsUtility.Clients.Wpf
         private void OpenResultsFolder(object sender, RoutedEventArgs e)
         {
             FolderPresenter.Present(Properties.Settings.Default.ResultsPath);
+        }
+
+        private void OpenInspectionFolder(object sender, RoutedEventArgs e)
+        {
+            FolderPresenter.Present(Properties.Settings.Default.InspectionPath);
         }
 
         private void ChangeInspectionPath(object sender, RoutedEventArgs e)

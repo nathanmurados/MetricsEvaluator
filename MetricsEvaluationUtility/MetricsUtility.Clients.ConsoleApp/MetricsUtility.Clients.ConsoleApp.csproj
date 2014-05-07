@@ -81,6 +81,8 @@
     <Compile Include="Executable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CssStatsFileNameEvaluator - Copy.cs" />
+    <Compile Include="Services\CssStatsFileNameEvaluator.cs" />
     <Compile Include="Services\SettingsValidator.cs" />
     <Compile Include="Services\ResultsDirectoryEvaluator.cs" />
   </ItemGroup>
