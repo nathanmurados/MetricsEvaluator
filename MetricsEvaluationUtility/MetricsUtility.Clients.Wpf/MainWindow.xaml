@@ -31,7 +31,7 @@
                     <Label Margin="5">Solution:</Label>
                     <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
                     <Button Click="ChooseSolution" Content="Choose" Margin="5"/>
-                    <Button Click="ChooseSolution" Content="Run" Visibility="{Binding EnableDiagnostics}" Margin="5"/>
+                    <Button Click="ViewSolutionCssMetrics" Content="Run" Visibility="{Binding EnableDiagnostics}" Margin="5"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">

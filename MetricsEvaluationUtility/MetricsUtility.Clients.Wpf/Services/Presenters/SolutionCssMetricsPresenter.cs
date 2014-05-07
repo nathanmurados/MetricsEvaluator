@@ -10,8 +10,12 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
     public class SolutionCssMetricsPresenter : ISolutionCssMetricsPresenter, IHasHumanInterface
     {
-        public SolutionCssMetricsPresenter(IHumanInterface ux)
+        public SolutionCssMetricsPresenter(IHumanInterface ux, IDirectoryFileEvaluator directoryFileEvaluator, ICssStatsPresenter cssStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, ICssStatsStorer cssStatsStorer)
         {
+            CssStatsStorer = cssStatsStorer;
+            FilteredFilesEvaluator = filteredFilesEvaluator;
+            CssStatsPresenter = cssStatsPresenter;
+            DirectoryFileEvaluator = directoryFileEvaluator;
             Ux = ux;
         }
 
@@ -20,15 +24,12 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
         public IFilteredFilesEvaluator FilteredFilesEvaluator { get; private set; }
         public ICssStatsStorer CssStatsStorer { get; private set; }
         public IHumanInterface Ux { get; private set; }
-        
+
         public void View()
         {
-            if (File.Exists(Properties.Settings.Default.SolutionToAnalyse))
+            if (Directory.Exists(Properties.Settings.Default.SolutionToAnalyse))
             {
-                var files =
-                    DirectoryFileEvaluator.GetFiles(Properties.Settings.Default.SolutionToAnalyse)
-                        .OrderBy(x => x)
-                        .ToList();
+                var files = DirectoryFileEvaluator.GetFiles(Properties.Settings.Default.SolutionToAnalyse).OrderBy(x => x).ToList();
 
                 var results = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
                 Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(results), null);

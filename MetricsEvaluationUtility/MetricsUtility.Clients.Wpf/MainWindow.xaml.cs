@@ -26,18 +26,72 @@ namespace MetricsUtility.Clients.Wpf
             InitializeComponent();
             DataContext = ViewModelEvaluator.Evaluate();
 
-            ux.WriteEvent += (sender, s) => { throw new NotImplementedException(); };
-            ux.WriteLineEvent += (sender, s) => { throw new NotImplementedException(); };
-            ux.ReadEvent += (sender, s) => { throw new NotImplementedException(); };
-            ux.AddOptionEvent += (sender, s) => { throw new NotImplementedException(); };
-            ux.DisplayBoolOptionEvent += (sender, s) => { throw new NotImplementedException(); };
-            ux.AddOptionEvent += (sender, s) => { throw new NotImplementedException(); };
-            ux.AddOptionWithHeadingSpaceEvent += (sender, s) => { throw new NotImplementedException(); };
+            ux.WriteEvent += Write;
+            ux.WriteLineEvent += WriteLineEvent;
+            ux.ReadEvent += ReadEvent;
+            ux.AddOptionEvent += AddOptionEvent;
+            ux.DisplayBoolOptionEvent += DisplayBoolOptionEvent;
+            ux.AddOptionEvent += AddOptionEvent;
+            ux.AddOptionWithHeadingSpaceEvent += AddOptionWithHeadingSpaceEvent;
+            ux.DisplayOptionsEvent += DisplayOptionsEvent;
+        }
+
+        private void DisplayOptionsEvent(object sender, string e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                MessageBox.Show("options");
+            }));
+        }
+
+        private void AddOptionWithHeadingSpaceEvent(object sender, AddOptionEventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+
+            }));
+        }
+
+        private void DisplayBoolOptionEvent(object sender, BoolOptionEventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => MessageBox.Show("Yes no")));
+        }
+
+        private void AddOptionEvent(object sender, AddOptionEventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+
+            }));
+        }
+
+        private void ReadEvent(object sender, string e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                MessageBox.Show("Read");
+            }));
+        }
+
+        private void WriteLineEvent(object sender, string e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                ((ViewModel)DataContext).Output += string.Format("{0}{1}", e, Environment.NewLine);
+            }));
+        }
+
+        public void Write(object sender, string e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                ((ViewModel)DataContext).Output += e;
+            }));
         }
 
         private void ChooseSolution(object sender, RoutedEventArgs e)
         {
-            SolutionChoicePresenter.Present((ViewModel) DataContext);
+            SolutionChoicePresenter.Present((ViewModel)DataContext);
         }
 
         private void ViewSolutionCssMetrics(object sender, RoutedEventArgs e)

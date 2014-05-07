@@ -15,6 +15,7 @@ namespace MetricsUtility.Core.Services.Presenters
         public IHumanInterface Ux { get; private set; }
         public ICssValidationEvaluator CssValidationEvaluator { get; private set; }
         public ICssStatsStorer CssStatsStorer { get; private set; }
+        public static object Lock = new object();
 
         public CssStatsPresenter(IHumanInterface ux, ICssValidationEvaluator cssValidationEvaluator, ICssStatsStorer cssStatsStorer)
         {
@@ -31,7 +32,6 @@ namespace MetricsUtility.Core.Services.Presenters
             var count = files.Count();
             double oldPercentage = 0;
 
-            var lockTarget = new object();
 
             Parallel.ForEach(files, file =>
             {
@@ -45,7 +45,7 @@ namespace MetricsUtility.Core.Services.Presenters
 
                 Interlocked.Increment(ref i);
 
-                lock (lockTarget)
+                lock (Lock)
                 {
                     var newPercentage = (double)Math.Round((100m / count) * i);
 
