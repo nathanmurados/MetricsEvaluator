@@ -85,24 +85,26 @@ namespace MetricsUtility.Clients.Wpf
             ResultsPathPresenter.Present((ViewModel)DataContext);
         }
 
-        private void ViewSolutionCssMetrics(object sender, RoutedEventArgs e)
+        private void InspectCss(object sender, RoutedEventArgs e)
         {
             Task.Run(() =>
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(false, (ViewModel) DataContext)));
 
                 CssMetricsPresenter.View();
+                Ux.WriteLine("");
 
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext)));
             });
         }
-        private void ViewSolutionJavaScriptMetrics(object sender, RoutedEventArgs e)
+        private void InspectJavaScript(object sender, RoutedEventArgs e)
         {
             Task.Run(() =>
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(false, (ViewModel)DataContext)));
 
                 JavaScriptMetricsPresenter.View();
+                Ux.WriteLine("");
 
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext)));
             });

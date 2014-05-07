@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using MetricsUtility.Core.Services.Evaluators;
@@ -76,7 +77,7 @@ namespace MetricsUtility.Core.Services.Storers
 
             var filename = Storer.Store(sb, JavaScriptStatsFileNameEvaluator.Evaluate());
 
-            Ux.WriteLine("Saved.");
+            Ux.WriteLine(string.Format("Saved to {0}", filename));
 
             return filename;
         }

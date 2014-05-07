@@ -57,7 +57,7 @@ namespace MetricsUtility.Core.Services.Storers
 
             var filename = Storer.Store(sb, CssStatsFileNameEvaluator.Evaluate());
 
-            Ux.WriteLine("Saved.");
+            Ux.WriteLine(string.Format("Saved to {0}", filename));
 
             return filename;
         }

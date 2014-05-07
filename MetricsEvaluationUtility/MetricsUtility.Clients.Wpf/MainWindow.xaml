@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModels="clr-namespace:MetricsUtility.Clients.Wpf.ViewModels"
         Title="MainWindow"
-        Width="500"
+        Width="700"
         Height="400"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
 
@@ -14,39 +14,48 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu IsMainMenu="True" VerticalAlignment="Top">
             <MenuItem Header="_Actions">
-                <MenuItem Header="Set _solution to inspect..." Click="ChangeInspectionPath" IsEnabled="{Binding AllowInteractions}"/>
-                <MenuItem Header="Set _results location..." Click="ChangeResultsPath" IsEnabled="{Binding AllowInteractions}"/>
+                <MenuItem Header="Set folder to _inspect..." Click="ChangeInspectionPath" IsEnabled="{Binding AllowInteractions}"/>
+                <MenuItem Header="Set _results folder..." Click="ChangeResultsPath" IsEnabled="{Binding AllowInteractions}"/>
                 <Separator />
-                <MenuItem Click="ViewSolutionCssMetrics" Header="Inspect _CSS"  IsEnabled="{Binding EnableDiagnostics}"/>
-                <MenuItem Click="ViewSolutionJavaScriptMetrics" Header="Inspect _JavaScript"  IsEnabled="{Binding EnableDiagnostics}"/>
+                <MenuItem Click="InspectCss" Header="Inspect _CSS"  IsEnabled="{Binding EnableDiagnostics}"/>
+                <MenuItem Click="InspectJavaScript" Header="Inspect _JavaScript"  IsEnabled="{Binding EnableDiagnostics}"/>
                 <Separator />
-                <MenuItem Click="OpenInspectionFolder" Header="Open solution _folder" IsEnabled="{Binding IsValidInspectionDirectory}"/>
+                <MenuItem Click="OpenInspectionFolder" Header="Open inspection _folder" IsEnabled="{Binding IsValidInspectionDirectory}"/>
                 <MenuItem Click="OpenResultsFolder" Header="_Open results folder" IsEnabled="{Binding IsValidResultsDirectory}"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Margin="5">Results Path:</Label>
-                    <Label Content="{Binding ResultsDirectory}" Margin="5"/>
+                    <Label Margin="5">Folder to inspect:</Label>
+                    <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Margin="5">Path to inspect:</Label>
-                    <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
+                    <Label Margin="5">Results folder:</Label>
+                    <Label Content="{Binding ResultsDirectory}" Margin="5"/>
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="1">
-                <TextBox Text="{Binding Output}" Margin="5" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Content="Inspect _CSS" Click="InspectCss" IsEnabled="{Binding EnableDiagnostics}" Margin="5"/>
+                <Button Grid.Column="1" Content="Inspect _JavaScript" Click="InspectJavaScript" IsEnabled="{Binding EnableDiagnostics}" Margin="5"/>
+                <ProgressBar Grid.Column="2" Minimum="0" Maximum="100" Value="{Binding ProgressValue}" Margin="5" />
+            </Grid>
+            <Grid Grid.Row="2">
+                <TextBox Text="{Binding Output}" Margin="5" VerticalScrollBarVisibility="Visible" />
             </Grid>
         </Grid>
-        <ProgressBar Grid.Row="2" Maximum="100" Value="{Binding ProgressValue}" Margin="5" />
     </Grid>
 </Window>

@@ -32,36 +32,10 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 return null;
             }
 
-            var stopWatch = new Stopwatch();
-
-            Debug.WriteLine("Filename: {0}", filename);
-            Debug.WriteLine("Size: {0}", joinedString.Length);
-            stopWatch.Start();
             var pageLevel = JsPageEvaluator.Evaluate(contents, joinedString);
-            stopWatch.Stop();
-            Debug.WriteLine("PageInstances: {1}r {0}t, {2}r/t", stopWatch.ElapsedTicks, pageLevel.Sum(x => x),(double) pageLevel.Sum(x => x) / stopWatch.ElapsedTicks);
-            stopWatch.Reset();
-
-            stopWatch.Start();
             var references = JsReferencesEvaluator.Evaluate(joinedString);
-            stopWatch.Stop();
-            Debug.WriteLine("References: {1}r {0}t, {2}r/t", stopWatch.ElapsedTicks, references, (double)references / stopWatch.ElapsedTicks);
-            stopWatch.Reset();
-
-            stopWatch.Start();
             var block = JsBlockEvaluator.Evaluate(joinedString, attributes);
-            stopWatch.Stop();
-            Debug.WriteLine("Inline: {1}r {0}t, {2}r/t", stopWatch.ElapsedTicks, block.Sum(x => x.InlineJavascriptTags.Count), (double)block.Sum(x => x.InlineJavascriptTags.Count) / stopWatch.ElapsedTicks);
-            stopWatch.Reset();
-
-            stopWatch.Start();
             var razor = JsRazorEvaluator.Evaluate(joinedString, attributes);
-            stopWatch.Stop();
-            Debug.WriteLine("Razor: {1}r {0}t, {2}r/t", stopWatch.ElapsedTicks, razor.Sum(x => x.InlineJavascriptTags.Count), (double)razor.Sum(x => x.InlineJavascriptTags.Count) / stopWatch.ElapsedTicks);
-            stopWatch.Reset();
-
-            Debug.WriteLine("---");
-            Debug.WriteLine("");
 
             if (pageLevel.Any() || references > 0 || block.Any() || razor.Any())
             {

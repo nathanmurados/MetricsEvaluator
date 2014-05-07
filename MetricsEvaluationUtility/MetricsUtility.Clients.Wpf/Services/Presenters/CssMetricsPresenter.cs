@@ -1,7 +1,5 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
-using MetricsUtility.Clients.Wpf.Services.Evaluators;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Core.Services;
