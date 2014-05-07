@@ -42,12 +42,24 @@ namespace MetricsUtility.Clients.Wpf.Services
             DisplayBoolOptionEvent(null, new BoolOptionEventArgs { ActionOnFalse = actionOnFalse, ActionOnTrue = actionOnTrue, Question = question });
         }
 
+        public void UpdateProgress(int value)
+        {
+            ProgressEvent(null, value);
+        }
+
+        public void ResetProgress()
+        {
+            ResetProgressEvent(null,null);
+        }
+
         public event EventHandler<string> WriteEvent;
         public event EventHandler<string> WriteLineEvent;
+        public event EventHandler<int> ProgressEvent;
         public event EventHandler<string> ReadEvent;
         public event EventHandler<AddOptionEventArgs> AddOptionEvent;
         public event EventHandler<string> DisplayOptionsEvent;
         public event EventHandler<AddOptionEventArgs> AddOptionWithHeadingSpaceEvent;
         public event EventHandler<BoolOptionEventArgs> DisplayBoolOptionEvent;
+        public event EventHandler ResetProgressEvent;
     }
 }

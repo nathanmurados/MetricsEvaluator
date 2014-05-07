@@ -12,13 +12,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu IsMainMenu="True" VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Choose solution..." Click="ChooseSolution"/>
+                <MenuItem Header="Choose solution..." Click="ChooseSolution" IsEnabled="{Binding AllowInteractions}"/>
             </MenuItem>
             <MenuItem Header="CSS">
-                <MenuItem Click="ViewSolutionCssMetrics" Header="View solution CSS metrics" />
+                <MenuItem Click="ViewSolutionCssMetrics" Header="View solution CSS metrics"  IsEnabled="{Binding AllowInteractions}"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
@@ -30,13 +31,14 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Margin="5">Solution:</Label>
                     <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
-                    <Button Click="ChooseSolution" Content="Choose" Margin="5"/>
-                    <Button Click="ViewSolutionCssMetrics" Content="Run" Visibility="{Binding EnableDiagnostics}" Margin="5"/>
+                    <Button Click="ChooseSolution" Content="Choose" Margin="5" IsEnabled="{Binding AllowInteractions}"/>
+                    <Button Click="ViewSolutionCssMetrics" Content="Run" Visibility="{Binding EnableDiagnostics}" Margin="5" IsEnabled="{Binding AllowInteractions}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <TextBox></TextBox>
+                <TextBox Text="{Binding Output}" />
             </Grid>
         </Grid>
+        <ProgressBar Grid.Row="2" Maximum="100" Value="{Binding ProgressValue}" />
     </Grid>
 </Window>

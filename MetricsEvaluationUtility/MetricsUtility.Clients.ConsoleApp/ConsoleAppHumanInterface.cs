@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using MetricsUtility.Core.Services;
 
 namespace MetricsUtility.Clients.ConsoleApp
@@ -98,13 +99,25 @@ namespace MetricsUtility.Clients.ConsoleApp
             DisplayOptions(question);
         }
 
+        public void UpdateProgress(int value)
+        {
+            WriteLine(string.Format("{0}%", value));
+        }
+
+        public void ResetProgress()
+        {
+            //Nothing
+        }
+
         public event EventHandler<string> WriteEvent;
         public event EventHandler<string> WriteLineEvent;
+        public event EventHandler<int> ProgressEvent;
         public event EventHandler<string> ReadEvent;
         public event EventHandler<AddOptionEventArgs> AddOptionEvent;
         public event EventHandler<string> DisplayOptionsEvent;
         public event EventHandler<AddOptionEventArgs> AddOptionWithHeadingSpaceEvent;
         public event EventHandler<BoolOptionEventArgs> DisplayBoolOptionEvent;
+        public event EventHandler ResetProgressEvent;
 
         private void ClearOptions()
         {

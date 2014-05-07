@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using MetricsUtility.Clients.Wpf.Services.Evaluators;
 using MetricsUtility.Clients.Wpf.Services.Presenters;
@@ -34,6 +35,24 @@ namespace MetricsUtility.Clients.Wpf
             ux.AddOptionEvent += AddOptionEvent;
             ux.AddOptionWithHeadingSpaceEvent += AddOptionWithHeadingSpaceEvent;
             ux.DisplayOptionsEvent += DisplayOptionsEvent;
+            ux.ProgressEvent += ProgressEvent;
+            ux.ResetProgressEvent += ResetProgressEvent;
+        }
+
+        private void ResetProgressEvent(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                ((ViewModel)DataContext).ProgressValue = 0;
+            }));
+        }
+
+        private void ProgressEvent(object sender, int e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                ((ViewModel) DataContext).ProgressValue = e;
+            }));
         }
 
         private void DisplayOptionsEvent(object sender, string e)
@@ -96,7 +115,20 @@ namespace MetricsUtility.Clients.Wpf
 
         private void ViewSolutionCssMetrics(object sender, RoutedEventArgs e)
         {
-            SolutionCssMetricsPresenter.View();
+            Task.Run(() =>
+            {
+                AllowInteractions(false);
+                SolutionCssMetricsPresenter.View();
+                AllowInteractions(true);
+            });
+        }
+
+        private void AllowInteractions(bool allow)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                ((ViewModel)DataContext).AllowInteractions = allow;
+            }));
         }
     }
 }

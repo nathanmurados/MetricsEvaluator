@@ -49,9 +49,9 @@ namespace MetricsUtility.Core.Services.Presenters
                 {
                     var newPercentage = (double)Math.Round((100m / count) * i);
 
-                    if (newPercentage != oldPercentage && newPercentage % 5 == 0)
+                    if (newPercentage != oldPercentage /* && newPercentage % 5 == 0*/)
                     {
-                        Ux.WriteLine(string.Format("{0}% ", newPercentage));
+                        Ux.UpdateProgress((int)newPercentage);
                         oldPercentage = newPercentage;
                     }
                 }
@@ -61,6 +61,7 @@ namespace MetricsUtility.Core.Services.Presenters
             Ux.WriteLine(string.Format("Inline Inline Level CSS Lines Of Code: {0}", results.Sum(x => x.Page.Sum(y => y))));
             Ux.WriteLine(string.Format("Total Inline Level CSS Instances: {0}", results.Sum(x => x.Inline.Count)));
             Ux.WriteLine(string.Format("Total Razor Level CSS Instances: {0}", results.Sum(x => x.Razor.Count)));
+            Ux.ResetProgress();
 
             return results;
         }
