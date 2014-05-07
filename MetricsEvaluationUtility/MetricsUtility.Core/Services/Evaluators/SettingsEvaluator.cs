@@ -5,6 +5,13 @@ namespace MetricsUtility.Core.Services.Evaluators
 {
     public class SettingsEvaluator : ISettingsEvaluator
     {
+        public ISettingsValidator SettingsValidator { get; private set; }
+
+        public SettingsEvaluator(ISettingsValidator settingsEvaluator)
+        {
+            SettingsValidator = settingsEvaluator;
+        }
+
         public string GetApTwoDirectory()
         {
             var lines = File.ReadAllLines(SettingsValidator.SettingsPath);

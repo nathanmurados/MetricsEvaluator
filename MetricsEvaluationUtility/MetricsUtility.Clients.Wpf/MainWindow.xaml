@@ -1,8 +1,42 @@
 ﻿<Window x:Class="MetricsUtility.Clients.Wpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:wpf="clr-namespace:MetricsUtility.Clients.Wpf"
+        xmlns:viewModels="clr-namespace:MetricsUtility.Clients.Wpf.ViewModels"
+        Title="MainWindow"
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+
+    <Window.DataContext>
+        <viewModels:ViewModel />
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu IsMainMenu="True" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Choose solution..." Click="ChooseSolution"/>
+            </MenuItem>
+            <MenuItem Header="CSS">
+                <MenuItem Click="ViewSolutionCssMetrics" Header="View solution CSS metrics" />
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Solution:</Label>
+                    <Label Content="{Binding SolutionToAnalyse}" />
+                    <Button Click="ChooseSolution" Content="Choose"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <TextBox></TextBox>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

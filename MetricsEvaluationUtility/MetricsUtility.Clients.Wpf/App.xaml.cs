@@ -1,4 +1,6 @@
-﻿using MetricsUtility.Core.Services;
+﻿using MetricsUtility.Clients.Wpf.Services.Evaluators;
+using MetricsUtility.Clients.Wpf.ViewModels;
+using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
@@ -49,8 +51,9 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IRelevantAttributesEvaluator>().To<RelevantAttributesEvaluator>();
             _container.Bind<IStorer>().To<Storer>();
             _container.Bind<IJavaScriptFileStatsPresenter>().To<JavaScriptFileStatsPresenter>();
-            _container.Bind<ISettingsValidator>().To<SettingsValidator>();
+            //_container.Bind<ISettingsValidator>().To<SettingsValidator>();
             _container.Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
+            _container.Bind<IViewModelEvaluator>().To<ViewModelEvaluator>();
         }
 
         private void ComposeObjects()

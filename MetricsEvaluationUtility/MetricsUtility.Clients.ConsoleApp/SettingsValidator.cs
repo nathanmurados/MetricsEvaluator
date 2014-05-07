@@ -1,16 +1,16 @@
 using System.IO;
 using System.Text;
+using MetricsUtility.Core.Services;
 
-namespace MetricsUtility.Core.Services
+namespace MetricsUtility.Clients.ConsoleApp
 {
     public class SettingsValidator : ISettingsValidator
     {
-        public const string Dir = @"C:\MetricsEvaluationUtility\Settings\";
-        public const string SettingsFile = "settings.dat";
-        public const string SettingsPath = Dir + SettingsFile;
-
-        public const string SettingsHeader = "Specific files to inspect:";
-        public const string Ap2SolutionHeader = "AP2 Solution path:";
+        public string Dir { get { return @"C:\MetricsEvaluationUtility\Settings\"; } }
+        public string SettingsFile { get { return "settings.dat"; } }
+        public string SettingsPath { get { return Dir + SettingsFile; } }
+        public string SettingsHeader { get { return "Specific files to inspect:"; } }
+        public string Ap2SolutionHeader { get { return "AP2 Solution path:"; } }
 
         public void Validate()
         {
