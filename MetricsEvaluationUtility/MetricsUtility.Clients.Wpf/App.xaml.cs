@@ -57,6 +57,7 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IViewModelEvaluator>().To<ViewModelEvaluator>();
             _container.Bind<ISolutionCssMetricsPresenter>().To<SolutionCssMetricsPresenter>();
             _container.Bind<ISolutionChoicePresenter>().To<SolutionChoicePresenter>();
+            _container.Bind<IResultsDirectoryEvaluator>().To<ResultsDirectoryEvaluator>();
             
         }
 

@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using MetricsUtility.Core.Services;
 
-namespace MetricsUtility.Clients.ConsoleApp
+namespace MetricsUtility.Clients.ConsoleApp.Services
 {
     public class SettingsValidator : ISettingsValidator
     {

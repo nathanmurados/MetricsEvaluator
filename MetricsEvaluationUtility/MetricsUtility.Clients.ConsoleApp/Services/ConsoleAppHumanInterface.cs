@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Xml.Schema;
 using MetricsUtility.Core.Services;
 
-namespace MetricsUtility.Clients.ConsoleApp
+namespace MetricsUtility.Clients.ConsoleApp.Services
 {
     public class ConsoleAppHumanInterface : IHumanInterface
     {

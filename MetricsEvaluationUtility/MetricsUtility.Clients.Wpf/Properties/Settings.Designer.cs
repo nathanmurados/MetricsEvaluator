@@ -34,5 +34,17 @@ namespace MetricsUtility.Clients.Wpf.Properties {
                 this["SolutionToAnalyse"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ResultsDirectory {
+            get {
+                return ((string)(this["ResultsDirectory"]));
+            }
+            set {
+                this["ResultsDirectory"] = value;
+            }
+        }
     }
 }

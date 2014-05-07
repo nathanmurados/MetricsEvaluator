@@ -16,10 +16,13 @@
         </Grid.RowDefinitions>
         <Menu IsMainMenu="True" VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Choose solution..." Click="ChooseSolution" IsEnabled="{Binding AllowInteractions}"/>
+                <MenuItem Header="Choose solution to inspect..." Click="ChooseSolution" IsEnabled="{Binding AllowInteractions}"/>
             </MenuItem>
             <MenuItem Header="CSS">
                 <MenuItem Click="ViewSolutionCssMetrics" Header="View solution CSS metrics"  IsEnabled="{Binding AllowInteractions}"/>
+            </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Choose results location..." Click="ChooseResultsLocation" IsEnabled="{Binding AllowInteractions}"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">

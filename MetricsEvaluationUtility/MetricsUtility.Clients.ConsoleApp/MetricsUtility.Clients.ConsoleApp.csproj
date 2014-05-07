@@ -77,11 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleAppHumanInterface.cs" />
+    <Compile Include="Services\ConsoleAppHumanInterface.cs" />
     <Compile Include="Executable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsValidator.cs" />
+    <Compile Include="Services\SettingsValidator.cs" />
+    <Compile Include="Services\ResultsDirectoryEvaluator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

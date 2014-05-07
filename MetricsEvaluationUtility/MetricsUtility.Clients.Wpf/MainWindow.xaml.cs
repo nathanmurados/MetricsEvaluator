@@ -17,9 +17,11 @@ namespace MetricsUtility.Clients.Wpf
         public IHumanInterface Ux { get; private set; }
         public ISolutionCssMetricsPresenter SolutionCssMetricsPresenter { get; private set; }
         public ISolutionChoicePresenter SolutionChoicePresenter { get; private set; }
+        public IResultsDirectoryChoicePresenter ResultsDirectoryChoicePresenter { get; private set; }
 
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ISolutionCssMetricsPresenter solutionCssMetricsPresenter, IHumanInterface ux, ISolutionChoicePresenter solutionChoicePresenter)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ISolutionCssMetricsPresenter solutionCssMetricsPresenter, IHumanInterface ux, ISolutionChoicePresenter solutionChoicePresenter, IResultsDirectoryChoicePresenter resultsDirectoryChoicePresenter)
         {
+            ResultsDirectoryChoicePresenter = resultsDirectoryChoicePresenter;
             SolutionChoicePresenter = solutionChoicePresenter;
             Ux = ux;
             SolutionCssMetricsPresenter = solutionCssMetricsPresenter;
@@ -51,7 +53,7 @@ namespace MetricsUtility.Clients.Wpf
         {
             Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
-                ((ViewModel) DataContext).ProgressValue = e;
+                ((ViewModel)DataContext).ProgressValue = e;
             }));
         }
 
@@ -73,7 +75,14 @@ namespace MetricsUtility.Clients.Wpf
 
         private void DisplayBoolOptionEvent(object sender, BoolOptionEventArgs e)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() => MessageBox.Show("Yes no")));
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                switch (MessageBox.Show(e.Question, "", MessageBoxButton.YesNo, MessageBoxImage.Question))
+                {
+                    case MessageBoxResult.Yes: if (e.ActionOnTrue != null) { e.ActionOnTrue(); } break;
+                    case MessageBoxResult.No: if (e.ActionOnFalse != null) { e.ActionOnFalse(); } break;
+                }
+            }));
         }
 
         private void AddOptionEvent(object sender, AddOptionEventArgs e)
@@ -129,6 +138,11 @@ namespace MetricsUtility.Clients.Wpf
             {
                 ((ViewModel)DataContext).AllowInteractions = allow;
             }));
+        }
+
+        private void ChooseResultsLocation(object sender, RoutedEventArgs e)
+        {
+            ResultsDirectoryChoicePresenter.Present((ViewModel)DataContext);            
         }
     }
 }

@@ -5,29 +5,22 @@ namespace MetricsUtility.Core.Services.Storers
 {
     public sealed class Storer : IStorer
     {
-        public IHumanInterface Ux { get; private set; }
-        public IDateTimeProvider DateTimeProvider { get; private set; }
-
-        public Storer(IHumanInterface ux, IDateTimeProvider dateTimeProvider)
-        {
-            DateTimeProvider = dateTimeProvider;
-            Ux = ux;
-        }
-
-        private const string Root = @"C:\MetricsEvaluationUtility\";
+        public IResultsDirectoryEvaluator ResultsDirectoryEvaluator { get; set; }
 
         public void Store(StringBuilder stringBuilder, string fileName)
         {
-            if (!Directory.Exists(Root))
+            var root = ResultsDirectoryEvaluator.Evaluate();
+
+            if (!Directory.Exists(root))
             {
-                Directory.CreateDirectory(Root);
+                Directory.CreateDirectory(root);
             }
 
-            File.WriteAllText(Root + fileName, stringBuilder.ToString());
+            File.WriteAllText(root + fileName, stringBuilder.ToString());
         }
     }
 
-    public interface IStorer : IHasHumanInterface, IHasDateTimeProvider
+    public interface IStorer
     {
         void Store(StringBuilder stringBuilder, string fileName);
     }

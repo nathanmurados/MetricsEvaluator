@@ -1,4 +1,5 @@
-﻿using MetricsUtility.Core.Services;
+﻿using MetricsUtility.Clients.ConsoleApp.Services;
+using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
@@ -41,6 +42,7 @@ namespace MetricsUtility.Clients.ConsoleApp
                 Bind<IJavaScriptFileStatsPresenter>().To<JavaScriptFileStatsPresenter>();
                 Bind<ISettingsValidator>().To<SettingsValidator>();
                 Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
+                Bind<IResultsDirectoryEvaluator>().To<ResultsDirectoryEvaluator>();
             }
         }
 

@@ -57,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Presenters\IResultsDirectoryChoicePresenter.cs" />
+    <Compile Include="Services\Presenters\ResultsDirectoryChoicePresenter.cs" />
+    <Compile Include="Services\Evaluators\ResultsDirectoryEvaluator.cs" />
     <Compile Include="Services\Presenters\ISolutionChoicePresenter.cs" />
     <Compile Include="Services\Presenters\ISolutionCssMetricsPresenter.cs" />
     <Compile Include="Services\Presenters\SolutionCssMetricsPresenter.cs" />
