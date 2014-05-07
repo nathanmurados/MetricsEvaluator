@@ -37,7 +37,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 var results = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
                 Ux.DisplayBoolOption("Store detailed CSS results to disk?", () =>
                 {
-                    var filename = CssStatsStorer.Store(results);
+                    var filename = CssStatsStorer.Store(results, string.Empty);
                     FilePresenter.Present(filename);
                 }, null);
 

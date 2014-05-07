@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Documents;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
@@ -18,6 +19,8 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
         public ICssStatsPresenter CssStatsPresenter { get; private set; }
         public ICssStatsStorer CssStatsStorer { get; private set; }
         public IFolderPresenter FolderPresenter { get; private set; }
+        public event EventHandler ScrollDown;
+
 
         public GroupedCssEvaluator(IPathExistenceEvaluator pathExistenceEvaluator, IDirectoryGroupEvaluator directoryGroupEvaluator, IHumanInterface ux, ICssStatsPresenter cssStatsPresenter, ICssStatsStorer cssStatsStorer, IFolderPresenter folderPresenter)
         {
@@ -34,21 +37,30 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
             var groupedFilesList = DirectoryGroupEvaluator.Evaluate(numberOfGroups, directories);
 
             var groupedResults = new List<List<CssEvaluationResult>>();
-            
+
+            var i = 1;
             foreach (var fileList in groupedFilesList)
             {
+                Ux.WriteLine(string.Format("Group{0}", i));
                 groupedResults.Add(CssStatsPresenter.Present(fileList));
+                Ux.WriteLine("");
+                ScrollDown(null, null);
+                i++;
             }
 
             Ux.DisplayBoolOption("Store detailed CSS results to disk?", () =>
             {
+                i = 1;
                 foreach (var resultGroup in groupedResults)
                 {
-                    CssStatsStorer.Store(resultGroup);
+                    CssStatsStorer.Store(resultGroup, string.Format("Group {0}", i));
+                    ScrollDown(null, null);
+                    i++;
                 }
+                //FolderPresenter.Present(Properties.Settings.Default.ResultsPath);
+
             }, null);
 
-            FolderPresenter.Present(Properties.Settings.Default.ResultsPath);
             Ux.WriteLine("");
         }
     }

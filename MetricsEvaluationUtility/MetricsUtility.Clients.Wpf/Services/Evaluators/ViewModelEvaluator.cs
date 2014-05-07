@@ -8,9 +8,11 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
         public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
         public IChildDirectoryCountEvaluator ChildDirectoryCountEvaluator { get; private set; }
+        public IFoldersPerGroupEvaluator FoldersPerGroupEvaluator { get; private set; }
 
-        public ViewModelEvaluator(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator)
+        public ViewModelEvaluator(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator)
         {
+            FoldersPerGroupEvaluator = foldersPerGroupEvaluator;
             PathExistenceEvaluator = pathExistenceEvaluator;
             ChildDirectoryCountEvaluator = childDirectoryCountEvaluator;
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
@@ -27,7 +29,8 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
                 IsValidResultsDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath),
                 IsValidInspectionDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.InspectionPath),
                 GroupCount = 1,
-                ChildDirectoryCount = ChildDirectoryCountEvaluator.Evaluate()
+                ChildDirectoryCount = ChildDirectoryCountEvaluator.Evaluate(),
+                FoldersPerGroup = FoldersPerGroupEvaluator.Evaluate(ChildDirectoryCountEvaluator.Evaluate(), 1)
             };
         }
     }

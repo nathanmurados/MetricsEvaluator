@@ -31,7 +31,7 @@ namespace MetricsUtility.Core.Services.Presenters
             var cssResults = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(SettingsEvaluator.GetSpecificFiles()));
 
             Ux.DisplayBoolOption("Store detailed Javascript results to disk?", () => JavaScriptStatsStorer.Store(jsResults), null);
-            Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(cssResults), null);
+            Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(cssResults,string.Empty), null);
         }
     }
 }

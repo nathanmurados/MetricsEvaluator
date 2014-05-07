@@ -33,7 +33,7 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
             set
             {
                 _isIdle = value; OnPropertyChanged();
-                IsValidInspectionDirectoryAndIsIdle = IsValidInspectionDirectory && IsIdle;
+                IsValidInspectionDirectoryAndIsIdle = IsValidInspectionDirectory && value;
             }
         }
 
@@ -72,7 +72,7 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
             set
             {
                 _isValidInspectionDirectory = value; OnPropertyChanged();
-                IsValidInspectionDirectoryAndIsIdle = IsValidInspectionDirectory && IsIdle;
+                IsValidInspectionDirectoryAndIsIdle = value && IsIdle;
             }
         }
 

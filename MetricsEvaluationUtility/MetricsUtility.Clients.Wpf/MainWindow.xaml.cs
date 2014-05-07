@@ -75,6 +75,8 @@ namespace MetricsUtility.Clients.Wpf
             ux.DisplayBoolOptionEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => BoolOptionPresenter.Present(sender, e)));
             ux.AddOptionWithHeadingSpaceEvent += (sender, e) => Application.Current.Dispatcher.BeginInvoke(new Action(() => OptionsPresenter.AddOptionWithHeadingSpace(sender, e, (ViewModel)DataContext)));
 
+            GroupedCssEvaluator.ScrollDown += (a,b)=> Application.Current.Dispatcher.BeginInvoke(new Action(() => txtOutput.ScrollToEnd())); ;
+            
             //#if DEBUG
             //            SettingsClearer.Clear();
             //#endif
@@ -138,20 +140,18 @@ namespace MetricsUtility.Clients.Wpf
 
         private void InspectGroupCss(object sender, RoutedEventArgs e)
         {
-            var path = Properties.Settings.Default.InspectionPath;
-            if (PathExistenceEvaluator.Evaluate(path))
+            InteractionPermissionToggler.Toggle(false, (ViewModel)DataContext);
+            var groupCount = ((ViewModel)DataContext).GroupCount;
+
+            Task.Run(() =>
             {
-                GroupedCssEvaluator.Evaluate(((ViewModel)DataContext).GroupCount, Directory.GetDirectories(path));
-            }
-            
-            //DoAction(() =>
-            //{
-            //    var path = Properties.Settings.Default.InspectionPath;
-            //    if (PathExistenceEvaluator.Evaluate(path))
-            //    {
-            //        GroupedCssEvaluator.Evaluate(((ViewModel)DataContext).GroupCount, Directory.GetDirectories(path));
-            //    }
-            //});
+                var path = Properties.Settings.Default.InspectionPath;
+                if (PathExistenceEvaluator.Evaluate(path))
+                {
+                    GroupedCssEvaluator.Evaluate(groupCount, Directory.GetDirectories(path));
+                }
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); txtOutput.ScrollToEnd(); }));
+            });
         }
         private void InspectGroupJavaScript(object sender, RoutedEventArgs e)
         {
@@ -161,6 +161,11 @@ namespace MetricsUtility.Clients.Wpf
         private void NumberOfGroupsChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ((ViewModel)DataContext).FoldersPerGroup = FoldersPerGroupEvaluator.Evaluate(ChildDirectoryCountEvaluator.Evaluate(), ((ViewModel)DataContext).GroupCount);
+        }
+
+        private void ClearOutput(object sender, RoutedEventArgs e)
+        {
+            txtOutput.Text = string.Empty;
         }
     }
 }

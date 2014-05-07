@@ -7,6 +7,8 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
     {
         public int Evaluate(int directoryCount, int numberOfGroups)
         {
+            if (directoryCount == 0) return 0;
+
             return (int)Math.Round((double)directoryCount / numberOfGroups);
         }
     }

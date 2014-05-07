@@ -20,6 +20,7 @@
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Menu IsMainMenu="True" VerticalAlignment="Top">
@@ -114,12 +115,26 @@
 
         <TextBox Grid.Row="5" Name="txtOutput" Text="{Binding Output}" Margin="5" VerticalScrollBarVisibility="Visible" />
 
-        <StackPanel Grid.Row="6" Orientation="Horizontal">
-            <Label Margin="5">Results folder:</Label>
-            <Label Content="{Binding ResultsDirectory}" Margin="5"/>
-        </StackPanel>
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Content="Clear Output" Margin="5"  Click="ClearOutput"/>
+        </Grid>
 
-
+        <Grid Grid.Row="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="5">Results folder:</Label>
+                <Label Content="{Binding ResultsDirectory}" Margin="5"/>
+            </StackPanel>
+            <Button Grid.Column="2" Content="View Results Folder" Margin="5" Click="OpenResultsDirectory"/>
+        </Grid>
 
     </Grid>
 </Window>

@@ -24,8 +24,9 @@ namespace MetricsUtility.Core.Services.Storers
         /// Stores the results and returns the filename
         /// </summary>
         /// <param name="results"></param>
+        /// <param name="groupName"></param>
         /// <returns></returns>
-        public string Store(List<CssEvaluationResult> results)
+        public string Store(List<CssEvaluationResult> results, string groupName)
         {
             var sb = new StringBuilder();
 
@@ -55,7 +56,7 @@ namespace MetricsUtility.Core.Services.Storers
                 results.Sum(x => x.Razor.Sum(y => y.Value.Length))
             );
 
-            var filename = Storer.Store(sb, CssStatsFileNameEvaluator.Evaluate());
+            var filename = Storer.Store(sb, CssStatsFileNameEvaluator.Evaluate(groupName));
 
             Ux.WriteLine(string.Format("Saved to {0}", filename));
             Ux.WriteLine("");
@@ -66,6 +67,6 @@ namespace MetricsUtility.Core.Services.Storers
 
     public interface ICssStatsStorer
     {
-        string Store(List<CssEvaluationResult> results);
+        string Store(List<CssEvaluationResult> results, string groupName);
     }
 }

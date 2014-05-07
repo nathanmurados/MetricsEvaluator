@@ -78,7 +78,7 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IFileExistenceEvaluator>().To<FileExistenceEvaluator>();
             _container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             _container.Bind<IChildDirectoryCountEvaluator>().To<ChildDirectoryCountEvaluator>();
-            _container.Bind<IGroupedCssEvaluator>().To<GroupedCssEvaluator>();
+            _container.Bind<IGroupedCssEvaluator>().To<GroupedCssEvaluator>().InSingletonScope();
             _container.Bind<IFoldersPerGroupEvaluator>().To<FoldersPerGroupEvaluator>();
             _container.Bind<IDirectoryGroupEvaluator>().To<DirectoryGroupEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();

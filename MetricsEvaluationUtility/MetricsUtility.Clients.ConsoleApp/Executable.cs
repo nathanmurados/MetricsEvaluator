@@ -70,7 +70,7 @@ namespace MetricsUtility.Clients.ConsoleApp
                 Ux.AddOptionWithHeadingSpace("Count inline CSS on filtered files", () =>
                 {
                     var results = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
-                    Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(results), null);
+                    Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(results, string.Empty), null);
                 });
 
                 Ux.AddOptionWithHeadingSpace("Count inline Javascript on filtered files", () =>
