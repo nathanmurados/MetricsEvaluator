@@ -33,7 +33,7 @@ namespace MetricsUtility.Core.Services.Storers
             //sb.AppendLine("Filename,PageInstances level LOC,Inline level instances,Inline level character count,Razor level instances,Razor level character count");
             sb.AppendLine("Filename,Block Level Instances,Block Level Lines Of Code,Inline Instances,Inline Character Count,Razor Instances, Razor Character Count");
 
-            foreach (var result in results)
+            foreach (var result in results.OrderBy(x=>x.FileName))
             {
                 sb.AppendLine(string.Format("{0},{1},{2},{3},{4},{5},{6}",
                     result.FileName,

@@ -54,7 +54,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
                 i = 1;
                 foreach (var resultGroup in groupedResults)
                 {
-                    JavaScriptStatsStorer.Store(resultGroup, string.Format("Group {0}", i));
+                    JavaScriptStatsStorer.Store(resultGroup, string.Format("Group {0}", specificGroup > 0 ? specificGroup : i));
                     ScrollDown(null, null);
                     i++;
                 }

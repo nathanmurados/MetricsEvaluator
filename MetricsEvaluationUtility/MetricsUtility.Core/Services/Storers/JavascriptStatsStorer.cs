@@ -43,7 +43,7 @@ namespace MetricsUtility.Core.Services.Storers
 
             sb.AppendLine(",Total Inline Instances,Total Razor Instances");
 
-            foreach (var result in results)
+            foreach (var result in results.OrderBy(x => x.FileName))
             {
                 sb.AppendFormat("{0},{1},{2}", result.FileName, result.PageInstances.Count, result.PageInstances.Sum(x => x));
 
