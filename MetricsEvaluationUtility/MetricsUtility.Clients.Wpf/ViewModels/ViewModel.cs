@@ -13,7 +13,7 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         private int _childDirectoryCount;
         private int _groupCount;
         private int _foldersPerGroup;
-        private bool _isValidInspectionDirectoryAndIsIdle;
+        private bool _enableGroupSelecting;
 
         public string SolutionToAnalyse
         {
@@ -30,22 +30,13 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         public bool IsIdle
         {
             get { return _isIdle; }
-            set
-            {
-                _isIdle = value; OnPropertyChanged();
-                IsValidInspectionDirectoryAndIsIdle = IsValidInspectionDirectory && value;
-            }
+            set { _isIdle = value; OnPropertyChanged(); }
         }
 
         public bool AllowFolderChanges
         {
             get { return _allowFolderChanges; }
-            set
-            {
-                _allowFolderChanges = value; 
-                OnPropertyChanged();
-
-            }
+            set { _allowFolderChanges = value; OnPropertyChanged(); }
         }
 
         public int ProgressValue
@@ -69,17 +60,13 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         public bool IsValidInspectionDirectory
         {
             get { return _isValidInspectionDirectory; }
-            set
-            {
-                _isValidInspectionDirectory = value; OnPropertyChanged();
-                IsValidInspectionDirectoryAndIsIdle = value && IsIdle;
-            }
+            set { _isValidInspectionDirectory = value; OnPropertyChanged(); }
         }
 
-        public bool IsValidInspectionDirectoryAndIsIdle
+        public bool EnableGroupSelecting
         {
-            get { return _isValidInspectionDirectoryAndIsIdle; }
-            set { _isValidInspectionDirectoryAndIsIdle = value; OnPropertyChanged(); }
+            get { return _enableGroupSelecting; }
+            set { _enableGroupSelecting = value; OnPropertyChanged(); }
         }
 
         public int ChildDirectoryCount

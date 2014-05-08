@@ -9,9 +9,13 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
     {
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
         public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
+        public IChildDirectoryCountEvaluator ChildDirectoryCountEvaluator { get; private set; }
+        public IEnableGroupingEvaluator EnableGroupingEvaluator { get; private set; }
 
-        public ResultsPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IPathExistenceEvaluator pathExistenceEvaluator)
+        public ResultsPathPresenter(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IEnableGroupingEvaluator enableGroupingEvaluator)
         {
+            EnableGroupingEvaluator = enableGroupingEvaluator;
+            ChildDirectoryCountEvaluator = childDirectoryCountEvaluator;
             PathExistenceEvaluator = pathExistenceEvaluator;
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
         }
@@ -31,6 +35,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 viewModel.ResultsDirectory = Properties.Settings.Default.ResultsPath;
                 viewModel.IsIdle = EnableDiagnosticsEvaluator.Evaluate();
                 viewModel.IsValidResultsDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath);
+                viewModel.EnableGroupSelecting = EnableGroupingEvaluator.Evaluate(viewModel);
             }
         }
     }

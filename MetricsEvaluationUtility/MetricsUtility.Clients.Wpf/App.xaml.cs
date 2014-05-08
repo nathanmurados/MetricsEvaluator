@@ -82,7 +82,7 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IFoldersPerGroupEvaluator>().To<FoldersPerGroupEvaluator>();
             _container.Bind<IDirectoryGroupEvaluator>().To<DirectoryGroupEvaluator>();
             _container.Bind<IGroupedJavaScriptEvaluator>().To<GroupedJavaScriptEvaluator>();
-            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            _container.Bind<IEnableGroupingEvaluator>().To<EnableGroupingEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();

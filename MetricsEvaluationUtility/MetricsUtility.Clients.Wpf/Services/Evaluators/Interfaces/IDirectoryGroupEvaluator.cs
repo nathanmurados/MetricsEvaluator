@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using MetricsUtility.Clients.Wpf.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces
 {
     public interface IDirectoryGroupEvaluator
     {
-        List<List<string>> Evaluate(int numberOfGroups, string[] directories);
+        List<GroupedFilesViewModel> Evaluate(int numberOfGroups, string[] directories);
     }
 }

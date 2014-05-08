@@ -31,10 +31,10 @@ namespace MetricsUtiltiy.Tests
             var result = obj.Evaluate(4, dirs);
 
             Assert.AreEqual(4, result.Count);
-            Assert.AreEqual(3, result[0].Count);
-            Assert.AreEqual(3, result[1].Count);
-            Assert.AreEqual(3, result[2].Count);
-            Assert.AreEqual(3, result[3].Count);
+            Assert.AreEqual(3, result[0].Files.Count);
+            Assert.AreEqual(3, result[1].Files.Count);
+            Assert.AreEqual(3, result[2].Files.Count);
+            Assert.AreEqual(3, result[3].Files.Count);
         }
 
         [Test]
@@ -58,10 +58,10 @@ namespace MetricsUtiltiy.Tests
             var result = obj.Evaluate(4, dirs);
 
             Assert.AreEqual(4, result.Count);
-            Assert.AreEqual(3, result[0].Count);
-            Assert.AreEqual(3, result[1].Count);
-            Assert.AreEqual(3, result[2].Count);
-            Assert.AreEqual(2, result[3].Count);
+            Assert.AreEqual(3, result[0].Files.Count);
+            Assert.AreEqual(3, result[1].Files.Count);
+            Assert.AreEqual(3, result[2].Files.Count);
+            Assert.AreEqual(2, result[3].Files.Count);
         }
 
 
@@ -86,10 +86,10 @@ namespace MetricsUtiltiy.Tests
             var result = obj.Evaluate(4, dirs);
 
             Assert.AreEqual(4, result.Count);
-            Assert.AreEqual(3, result[0].Count);
-            Assert.AreEqual(3, result[1].Count);
-            Assert.AreEqual(3, result[2].Count);
-            Assert.AreEqual(4, result[3].Count);
+            Assert.AreEqual(3, result[0].Files.Count);
+            Assert.AreEqual(3, result[1].Files.Count);
+            Assert.AreEqual(3, result[2].Files.Count);
+            Assert.AreEqual(4, result[3].Files.Count);
         }
     }
 }

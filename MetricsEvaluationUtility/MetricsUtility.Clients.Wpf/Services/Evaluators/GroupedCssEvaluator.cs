@@ -34,15 +34,15 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
 
         public void Evaluate(int numberOfGroups, string[] directories)
         {
-            var groupedFilesList = DirectoryGroupEvaluator.Evaluate(numberOfGroups, directories);
+            var groupedFilesViewModels = DirectoryGroupEvaluator.Evaluate(numberOfGroups, directories);
 
             var groupedResults = new List<List<CssEvaluationResult>>();
 
             var i = 1;
-            foreach (var fileList in groupedFilesList)
+            foreach (var fileList in groupedFilesViewModels)
             {
-                Ux.WriteLine(string.Format("Group{0}", i));
-                groupedResults.Add(CssStatsPresenter.Present(fileList));
+                Ux.WriteLine(string.Format("Group{0} ({1} - {2})", i, fileList.StartDir, fileList.EndDir));
+                groupedResults.Add(CssStatsPresenter.Present(fileList.Files));
                 Ux.WriteLine("");
                 ScrollDown(null, null);
                 i++;
