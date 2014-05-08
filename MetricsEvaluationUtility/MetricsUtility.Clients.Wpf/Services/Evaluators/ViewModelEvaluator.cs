@@ -37,7 +37,8 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
                 ChildDirectoryCount = ChildDirectoryCountEvaluator.Evaluate(),
                 FoldersPerGroup = FoldersPerGroupEvaluator.Evaluate(ChildDirectoryCountEvaluator.Evaluate(), 1),
                 EnableGroupSelecting = EnableGroupingEvaluator.Evaluate(new ViewModel { IsValidResultsDirectory = isValidResultsDirectory, IsIdle = isIdle }),
-                EnableSpecificGroup = false
+                EnableSpecificGroup = false,
+                SpecificGroupToInspect = 1
             };
         }
     }
