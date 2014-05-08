@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Documents;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Core.Services;
@@ -32,7 +30,13 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
             PathExistenceEvaluator = pathExistenceEvaluator;
         }
 
-        public void Evaluate(int numberOfGroups, string[] directories)
+        /// <summary>
+        /// Evaluates css for a group of files
+        /// </summary>
+        /// <param name="numberOfGroups"></param>
+        /// <param name="directories"></param>
+        /// <param name="specificGroup">Not zero indexed - 1 means group 1, 0 means all</param>
+        public void Evaluate(int numberOfGroups, string[] directories, int specificGroup)
         {
             var groupedFilesViewModels = DirectoryGroupEvaluator.Evaluate(numberOfGroups, directories);
 
@@ -41,10 +45,13 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
             var i = 1;
             foreach (var fileList in groupedFilesViewModels)
             {
-                Ux.WriteLine(string.Format("Group{0} ({1} - {2})", i, fileList.StartDir, fileList.EndDir));
-                groupedResults.Add(CssStatsPresenter.Present(fileList.Files));
-                Ux.WriteLine("");
-                ScrollDown(null, null);
+                if (specificGroup == 0 || i == specificGroup)
+                {
+                    Ux.WriteLine(string.Format("Group{0} ({1} - {2})", i, fileList.StartDir, fileList.EndDir));
+                    groupedResults.Add(CssStatsPresenter.Present(fileList.Files));
+                    Ux.WriteLine("");
+                    ScrollDown(null, null);
+                }
                 i++;
             }
 

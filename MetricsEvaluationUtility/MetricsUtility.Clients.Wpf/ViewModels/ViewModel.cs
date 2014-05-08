@@ -1,3 +1,5 @@
+using System.Windows.Controls;
+
 namespace MetricsUtility.Clients.Wpf.ViewModels
 {
     public class ViewModel : ViewModelBase
@@ -14,6 +16,8 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         private int _groupCount;
         private int _foldersPerGroup;
         private bool _enableGroupSelecting;
+        private bool? _enableSpecificGroup;
+        private int _specificGroupToInspect;
 
         public string SolutionToAnalyse
         {
@@ -85,6 +89,21 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         {
             get { return _foldersPerGroup; }
             set { _foldersPerGroup = value; OnPropertyChanged(); }
+        }
+
+        public bool? EnableSpecificGroup
+        {
+            get { return _enableSpecificGroup; }
+            set
+            {
+                _enableSpecificGroup = value; OnPropertyChanged();
+            }
+        }
+
+        public int SpecificGroupToInspect
+        {
+            get { return _specificGroupToInspect; }
+            set { _specificGroupToInspect = value; OnPropertyChanged(); }
         }
     }
 }

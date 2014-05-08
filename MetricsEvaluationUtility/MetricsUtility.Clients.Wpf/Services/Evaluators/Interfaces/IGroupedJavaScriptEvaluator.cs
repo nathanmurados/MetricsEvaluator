@@ -6,6 +6,6 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces
     {
         event EventHandler ScrollDown;
 
-        void Evaluate(int numberOfGroups, string[] directories);
+        void Evaluate(int numberOfGroups, string[] directories, int specificGroup);
     }
 }

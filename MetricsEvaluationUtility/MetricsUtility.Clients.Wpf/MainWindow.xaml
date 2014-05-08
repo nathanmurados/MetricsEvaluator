@@ -99,6 +99,24 @@
                     <Label Grid.Column="1" Content="{Binding GroupCount}" Margin="5" />
                     <Slider Grid.Column="2" ValueChanged="ChangeNumberOfGroups" Maximum="{Binding ChildDirectoryCount}" Minimum="1" Interval="1" Margin="5" IsEnabled="{Binding EnableGroupSelecting}" Value="{Binding GroupCount,Mode=TwoWay}" />
                 </Grid>
+                <GroupBox Header="Group specific options" IsEnabled="{Binding EnableGroupSelecting}">
+                    <StackPanel>
+                        <CheckBox Content="Only inspect single group" Margin="5" IsChecked="{Binding EnableSpecificGroup,Mode=TwoWay}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="1" Content="Group to inspect:" Margin="5" />
+                            <Label Grid.Column="2" Content="{Binding SpecificGroupToInspect}" Margin="5" />
+                            <Slider Grid.Column="3" ValueChanged="ChangeNumberOfGroups" Maximum="{Binding GroupCount}"
+                                    Minimum="1" Interval="1" Margin="5" IsEnabled="{Binding EnableSpecificGroup}" Value="{Binding SpecificGroupToInspect,Mode=TwoWay}" />
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Folders per group (aprx.):" Margin="5,5,0,5" />
                     <Label Content="{Binding FoldersPerGroup}" Margin="0,5,5,5" />
@@ -112,7 +130,7 @@
 
         <ProgressBar Grid.Row="4" Minimum="0" Maximum="100" Value="{Binding ProgressValue}" Margin="5" />
 
-        <TextBox Grid.Row="5" Name="txtOutput" Text="{Binding Output}" Margin="5" VerticalScrollBarVisibility="Visible" />
+        <TextBox Grid.Row="5" Name="TxtOutput" Text="{Binding Output}" Margin="5" VerticalScrollBarVisibility="Visible" />
 
         <Grid Grid.Row="5" Height="30" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>

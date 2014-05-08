@@ -30,7 +30,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
             PathExistenceEvaluator = pathExistenceEvaluator;
         }
 
-        public void Evaluate(int numberOfGroups, string[] directories)
+        public void Evaluate(int numberOfGroups, string[] directories, int specificGroup)
         {
             var groupedFilesList = DirectoryGroupEvaluator.Evaluate(numberOfGroups, directories);
 
@@ -39,10 +39,13 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
             var i = 1;
             foreach (var fileList in groupedFilesList)
             {
-                Ux.WriteLine(string.Format("Group{0} ({1} {2})", i, fileList.StartDir, fileList.EndDir));
-                groupedResults.Add(JavaScriptStatsPresenter.Present(fileList.Files));
-                Ux.WriteLine("");
-                ScrollDown(null, null);
+                if (specificGroup == 0 || i == specificGroup)
+                {
+                    Ux.WriteLine(string.Format("Group{0} ({1} {2})", i, fileList.StartDir, fileList.EndDir));
+                    groupedResults.Add(JavaScriptStatsPresenter.Present(fileList.Files));
+                    Ux.WriteLine("");
+                    ScrollDown(null, null);
+                }
                 i++;
             }
 

@@ -41,9 +41,11 @@ namespace MetricsUtility.Clients.Wpf
         public IFoldersPerGroupEvaluator FoldersPerGroupEvaluator { get; private set; }
         public IChildDirectoryCountEvaluator ChildDirectoryCountEvaluator { get; private set; }
         public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
+        public ISpecificGroupEvaluator SpecificGroupEvaluator { get; private set; }
 
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IGroupedJavaScriptEvaluator groupedJavaScriptEvaluator)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IGroupedJavaScriptEvaluator groupedJavaScriptEvaluator, ISpecificGroupEvaluator specificGroupEvaluator)
         {
+            SpecificGroupEvaluator = specificGroupEvaluator;
             GroupedJavaScriptEvaluator = groupedJavaScriptEvaluator;
             PathExistenceEvaluator = pathExistenceEvaluator;
             ChildDirectoryCountEvaluator = childDirectoryCountEvaluator;
@@ -79,7 +81,7 @@ namespace MetricsUtility.Clients.Wpf
 
             GroupedCssEvaluator.ScrollDown += ScrollDown;
             GroupedJavaScriptEvaluator.ScrollDown += ScrollDown;
-            
+
             //#if DEBUG
             //            SettingsClearer.Clear();
             //#endif
@@ -135,30 +137,32 @@ namespace MetricsUtility.Clients.Wpf
         {
             InteractionPermissionToggler.Toggle(false, (ViewModel)DataContext);
             var groupCount = ((ViewModel)DataContext).GroupCount;
+            var specificGroup = SpecificGroupEvaluator.Evaluate((ViewModel) DataContext);
 
             Task.Run(() =>
             {
                 var path = Properties.Settings.Default.InspectionPath;
                 if (PathExistenceEvaluator.Evaluate(path))
                 {
-                    GroupedCssEvaluator.Evaluate(groupCount, Directory.GetDirectories(path));
+                    GroupedCssEvaluator.Evaluate(groupCount, Directory.GetDirectories(path), specificGroup);
                 }
-                Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); txtOutput.ScrollToEnd(); }));
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); TxtOutput.ScrollToEnd(); }));
             });
         }
         private void InspectGroupJavaScript(object sender, RoutedEventArgs e)
         {
             InteractionPermissionToggler.Toggle(false, (ViewModel)DataContext);
             var groupCount = ((ViewModel)DataContext).GroupCount;
+            var specificGroup = SpecificGroupEvaluator.Evaluate((ViewModel)DataContext);
 
             Task.Run(() =>
             {
                 var path = Properties.Settings.Default.InspectionPath;
                 if (PathExistenceEvaluator.Evaluate(path))
                 {
-                    GroupedJavaScriptEvaluator.Evaluate(groupCount, Directory.GetDirectories(path));
+                    GroupedJavaScriptEvaluator.Evaluate(groupCount, Directory.GetDirectories(path), specificGroup);
                 }
-                Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); txtOutput.ScrollToEnd(); }));
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); TxtOutput.ScrollToEnd(); }));
             });
         }
 
@@ -168,10 +172,10 @@ namespace MetricsUtility.Clients.Wpf
             Task.Run(() =>
             {
                 action();
-                Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); txtOutput.ScrollToEnd(); }));
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); TxtOutput.ScrollToEnd(); }));
             });
         }
-        
+
         private void ChangeNumberOfGroups(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ((ViewModel)DataContext).FoldersPerGroup = FoldersPerGroupEvaluator.Evaluate(ChildDirectoryCountEvaluator.Evaluate(), ((ViewModel)DataContext).GroupCount);
@@ -179,12 +183,25 @@ namespace MetricsUtility.Clients.Wpf
 
         private void ClearOutput(object sender, RoutedEventArgs e)
         {
-            txtOutput.Text = string.Empty;
+            TxtOutput.Text = string.Empty;
         }
 
         private void ScrollDown(object sender, EventArgs e)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() => txtOutput.ScrollToEnd()));
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => TxtOutput.ScrollToEnd()));
         }
+    }
+
+    public class SpecificGroupEvaluator : ISpecificGroupEvaluator
+    {
+        public int Evaluate(ViewModel viewModel)
+        {
+            return viewModel.EnableSpecificGroup == true ? viewModel.SpecificGroupToInspect : 0;
+        }
+    }
+
+    public interface ISpecificGroupEvaluator
+    {
+        int Evaluate(ViewModel viewModel);
     }
 }
