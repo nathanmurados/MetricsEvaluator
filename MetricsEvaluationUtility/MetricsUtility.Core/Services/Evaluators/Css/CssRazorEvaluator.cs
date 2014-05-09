@@ -20,9 +20,4 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 }).ToList();
         }
     }
-
-    public interface ICssRazorEvaluator
-    {
-        List<DetailedCssEvaluationResult> Evaluate(string content);
-    }
 }

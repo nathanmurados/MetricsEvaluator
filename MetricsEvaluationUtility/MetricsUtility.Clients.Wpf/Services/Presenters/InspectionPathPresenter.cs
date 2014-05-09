@@ -32,7 +32,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
             {
                 Properties.Settings.Default.InspectionPath = dialog.SelectedPath;
                 Properties.Settings.Default.Save();
-                viewModel.SolutionToAnalyse = Properties.Settings.Default.InspectionPath;
+                viewModel.InspectionDirectory = Properties.Settings.Default.InspectionPath;
                 viewModel.IsIdle = EnableDiagnosticsEvaluator.Evaluate();
                 viewModel.IsValidInspectionDirectory = PathExistenceEvaluator.Evaluate(Properties.Settings.Default.ResultsPath);
                 viewModel.ChildDirectoryCount = ChildDirectoryCountEvaluator.Evaluate();

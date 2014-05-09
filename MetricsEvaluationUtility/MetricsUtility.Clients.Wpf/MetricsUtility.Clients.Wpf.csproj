@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -85,7 +85,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Evaluators\HasLastFilesAndIsIdleEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IHasLastFilesAndIsIdleEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\ISpecificGroupEvaluator.cs" />
     <Compile Include="Services\Evaluators\GroupedCssEvaluator.cs" />
+    <Compile Include="SpecificGroupEvaluator.cs" />
     <Compile Include="ViewModels\GroupedFilesViewModel.cs" />
     <Compile Include="Services\Evaluators\GroupedJavaScriptEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IGroupedCssEvaluator.cs" />
@@ -106,8 +110,8 @@
     <Compile Include="Services\Evaluators\Interfaces\IEnableGroupingEvaluator.cs" />
     <Compile Include="Services\Presenters\Interfaces\IFilePresenter.cs" />
     <Compile Include="Services\Presenters\Interfaces\IFolderPresenter.cs" />
-    <Compile Include="IInteractionPermissionToggler.cs" />
-    <Compile Include="InteractionPermissionToggler.cs" />
+    <Compile Include="Services\IInteractionPermissionToggler.cs" />
+    <Compile Include="Services\InteractionPermissionToggler.cs" />
     <Compile Include="Services\ISettingsClearer.cs" />
     <Compile Include="Services\Evaluators\EnableDiagnosticsEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IEnableDiagnosticsEvaluator.cs" />

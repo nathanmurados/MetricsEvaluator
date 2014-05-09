@@ -27,7 +27,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
 
             return new ViewModel
             {
-                SolutionToAnalyse = string.IsNullOrWhiteSpace(Properties.Settings.Default.InspectionPath) ? "(None)" : Properties.Settings.Default.InspectionPath,
+                InspectionDirectory = string.IsNullOrWhiteSpace(Properties.Settings.Default.InspectionPath) ? "(None)" : Properties.Settings.Default.InspectionPath,
                 AllowFolderChanges = true,
                 IsIdle = isIdle,
                 ResultsDirectory = string.IsNullOrWhiteSpace(Properties.Settings.Default.ResultsPath) ? "(None)" : Properties.Settings.Default.ResultsPath,
@@ -38,7 +38,8 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
                 FoldersPerGroup = FoldersPerGroupEvaluator.Evaluate(ChildDirectoryCountEvaluator.Evaluate(), 1),
                 EnableGroupSelecting = EnableGroupingEvaluator.Evaluate(new ViewModel { IsValidResultsDirectory = isValidResultsDirectory, IsIdle = isIdle }),
                 EnableSpecificGroup = false,
-                SpecificGroupToInspect = 1
+                SpecificGroupToInspect = 1,
+                HasLastFilesAndIsIdle = !string.IsNullOrWhiteSpace(Properties.Settings.Default.LastFiles) 
             };
         }
     }

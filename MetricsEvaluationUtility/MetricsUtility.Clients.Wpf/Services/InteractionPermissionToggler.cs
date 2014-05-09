@@ -1,7 +1,7 @@
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 
-namespace MetricsUtility.Clients.Wpf
+namespace MetricsUtility.Clients.Wpf.Services
 {
     public class InteractionPermissionToggler : IInteractionPermissionToggler
     {
@@ -17,6 +17,7 @@ namespace MetricsUtility.Clients.Wpf
             viewModel.AllowFolderChanges = allow;
             viewModel.IsIdle = allow;
             viewModel.EnableGroupSelecting = EnableGroupingEvaluator.Evaluate(viewModel);
+            viewModel.HasLastFilesAndIsIdle = allow;
         }
     }
 }

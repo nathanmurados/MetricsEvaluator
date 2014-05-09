@@ -44,9 +44,4 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
             return matches;
         }
     }
-
-    public interface ICssPageEvaluator
-    {
-        List<int> Evaluate(IEnumerable<string> contents);
-    }
 }

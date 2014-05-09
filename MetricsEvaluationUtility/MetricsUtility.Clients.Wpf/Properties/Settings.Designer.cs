@@ -46,5 +46,17 @@ namespace MetricsUtility.Clients.Wpf.Properties {
                 this["ResultsPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastFiles {
+            get {
+                return ((string)(this["LastFiles"]));
+            }
+            set {
+                this["LastFiles"] = value;
+            }
+        }
     }
 }

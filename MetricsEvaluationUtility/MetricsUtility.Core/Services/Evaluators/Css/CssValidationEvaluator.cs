@@ -45,9 +45,4 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
             return null;
         }
     }
-
-    public interface ICssValidationEvaluator
-    {
-        CssEvaluationResult Evaluate(string fileName, string[] contents);
-    }
 }

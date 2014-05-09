@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -42,22 +43,14 @@
             </MenuItem>
         </Menu>
 
-        <Expander Grid.Row="1" Header="Inspect individual file_s" Margin="5" >
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button Content="Inspect _CSS..." Click="InspectFileCss" IsEnabled="{Binding IsIdle}" Margin="5"/>
-                    <Button Grid.Column="1" Content="Inspect _JavaScript..." Click="InspectFileJavaScript" IsEnabled="{Binding IsIdle}" Margin="5"/>
-                </Grid>
-            </Grid>
+        <Expander Grid.Row="1" Header="Individual file_s" Margin="5" >
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Inspect _CSS..." Click="InspectFileCss" IsEnabled="{Binding IsIdle}" Margin="5"/>
+                <Button Content="Inspect _JavaScript..." Click="InspectFileJavaScript" IsEnabled="{Binding IsIdle}" Margin="5"/>
+
+                <Button Content="Inspect CSS of last file(s)" Click="ReRunCss" IsEnabled="{Binding HasLastFilesAndIsIdle}" Margin="5"/>
+                <Button Content="Inspect JavaScript of last file(s)" Click="ReRunJavaScript" IsEnabled="{Binding HasLastFilesAndIsIdle}" Margin="5"/>
+            </StackPanel>
         </Expander>
 
         <Expander Grid.Row="2" Header="Inspect _folder" Margin="5">
@@ -68,7 +61,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <Label Margin="5">Folder to inspect:</Label>
-                    <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
+                    <Label Content="{Binding InspectionDirectory}" Margin="5"/>
                 </StackPanel>
 
                 <Grid Grid.Row="1">
@@ -87,7 +80,7 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Label Margin="5" Content="Folder to group:" />
-                    <Label Content="{Binding SolutionToAnalyse}" Margin="5"/>
+                    <Label Content="{Binding InspectionDirectory}" Margin="5"/>
                 </StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -127,12 +120,26 @@
                 </StackPanel>
             </StackPanel>
         </Expander>
+        
+        <Expander Grid.Row="4" Header="Refactor" Margin="5">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Target Directory" /><Label Content="{Binding InspectionDirectory}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="New CSS Files Directory" /><Label Content="{Binding CssDirectory}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Click="RefactorCss" Content="Refactor CSS blocks to css file" />
+                </StackPanel>
+            </StackPanel>
+        </Expander>
+        
+        <ProgressBar Grid.Row="5" Minimum="0" Maximum="100" Value="{Binding ProgressValue}" Margin="5" />
 
-        <ProgressBar Grid.Row="4" Minimum="0" Maximum="100" Value="{Binding ProgressValue}" Margin="5" />
+        <TextBox Grid.Row="6" Name="TxtOutput" Text="{Binding Output}" Margin="5" VerticalScrollBarVisibility="Visible" />
 
-        <TextBox Grid.Row="5" Name="TxtOutput" Text="{Binding Output}" Margin="5" VerticalScrollBarVisibility="Visible" />
-
-        <Grid Grid.Row="5" Height="30" VerticalAlignment="Top">
+        <Grid Grid.Row="6" Height="30" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -140,7 +147,7 @@
             <Button Grid.Column="1" Content="Clear Output" Margin="5"  Click="ClearOutput"/>
         </Grid>
 
-        <Grid Grid.Row="6">
+        <Grid Grid.Row="7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />

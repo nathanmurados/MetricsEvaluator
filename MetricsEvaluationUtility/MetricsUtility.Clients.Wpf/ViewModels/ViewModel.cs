@@ -1,10 +1,8 @@
-using System.Windows.Controls;
-
 namespace MetricsUtility.Clients.Wpf.ViewModels
 {
     public class ViewModel : ViewModelBase
     {
-        private string _solutionToAnalyse;
+        private string _inspectionDirectory;
         private string _output;
         private bool _isIdle;
         private bool _allowFolderChanges;
@@ -18,11 +16,12 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         private bool _enableGroupSelecting;
         private bool? _enableSpecificGroup;
         private int _specificGroupToInspect;
+        private bool _hasLastFilesAndIsIdle;
 
-        public string SolutionToAnalyse
+        public string InspectionDirectory
         {
-            get { return _solutionToAnalyse; }
-            set { _solutionToAnalyse = value; OnPropertyChanged(); }
+            get { return _inspectionDirectory; }
+            set { _inspectionDirectory = value; OnPropertyChanged(); }
         }
 
         public string Output
@@ -104,6 +103,12 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         {
             get { return _specificGroupToInspect; }
             set { _specificGroupToInspect = value; OnPropertyChanged(); }
+        }
+
+        public bool HasLastFilesAndIsIdle
+        {
+            get { return _hasLastFilesAndIsIdle; }
+            set { _hasLastFilesAndIsIdle = value; OnPropertyChanged(); }
         }
     }
 }
