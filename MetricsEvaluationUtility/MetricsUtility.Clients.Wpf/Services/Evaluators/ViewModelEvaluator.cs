@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
+using MetricsUtility.Clients.Wpf.Services.Presenters;
 using MetricsUtility.Clients.Wpf.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators
@@ -10,9 +13,15 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
         public IChildDirectoryCountEvaluator ChildDirectoryCountEvaluator { get; private set; }
         public IFoldersPerGroupEvaluator FoldersPerGroupEvaluator { get; private set; }
         public IEnableGroupingEvaluator EnableGroupingEvaluator { get; private set; }
+        public IHasFilesToInspectAndIsIdleEvaluator HasFilesToInspectAndIsIdleEvaluator { get; private set; }
+        public IFilesToInspectEvaluator FilesToInspectEvaluator { get; private set; }
+        public IHasCssRefactorPathsEvaluator HasCssRefactorPathsEvaluator { get; private set; }
 
-        public ViewModelEvaluator(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IEnableGroupingEvaluator enableGroupingEvaluator)
+        public ViewModelEvaluator(IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IEnableGroupingEvaluator enableGroupingEvaluator, IHasFilesToInspectAndIsIdleEvaluator hasFilesToInspectAndIsIdleEvaluator, IFilesToInspectEvaluator filesToInspectEvaluator, IHasCssRefactorPathsEvaluator hasCssRefactorPathsEvaluator)
         {
+            HasCssRefactorPathsEvaluator = hasCssRefactorPathsEvaluator;
+            FilesToInspectEvaluator = filesToInspectEvaluator;
+            HasFilesToInspectAndIsIdleEvaluator = hasFilesToInspectAndIsIdleEvaluator;
             EnableGroupingEvaluator = enableGroupingEvaluator;
             FoldersPerGroupEvaluator = foldersPerGroupEvaluator;
             PathExistenceEvaluator = pathExistenceEvaluator;
@@ -39,7 +48,12 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
                 EnableGroupSelecting = EnableGroupingEvaluator.Evaluate(new ViewModel { IsValidResultsDirectory = isValidResultsDirectory, IsIdle = isIdle }),
                 EnableSpecificGroup = false,
                 SpecificGroupToInspect = 1,
-                HasLastFilesAndIsIdle = !string.IsNullOrWhiteSpace(Properties.Settings.Default.LastFiles) 
+                HasFilesToInspectAndIsIdle = HasFilesToInspectAndIsIdleEvaluator.Evaluate(),
+                FilesToInspect = string.Join(Environment.NewLine, FilesToInspectEvaluator.Evaluate()),
+                RefactorCssDirectory = Properties.Settings.Default.RefactorCssPath,
+                HasCssRefactorPaths = HasCssRefactorPathsEvaluator.Evaluate(),
+                GeneratedCssDirectory = Properties.Settings.Default.GeneratedCssPath
+
             };
         }
     }

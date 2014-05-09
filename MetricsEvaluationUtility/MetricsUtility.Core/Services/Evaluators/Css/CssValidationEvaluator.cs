@@ -36,7 +36,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 return new CssEvaluationResult
                 {
                     FileName = filename,
-                    Page = page,
+                    Page = page.Select(x=> x.Count()).ToList(),
                     Inline = block,
                     Razor = razor
                 };

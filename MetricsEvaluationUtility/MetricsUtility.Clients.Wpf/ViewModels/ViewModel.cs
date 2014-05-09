@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Windows.Documents;
+
 namespace MetricsUtility.Clients.Wpf.ViewModels
 {
     public class ViewModel : ViewModelBase
@@ -16,7 +19,12 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         private bool _enableGroupSelecting;
         private bool? _enableSpecificGroup;
         private int _specificGroupToInspect;
-        private bool _hasLastFilesAndIsIdle;
+        private bool _hasFilesToInspectAndIsIdle;
+        private string _filesToInspect;
+        private string _refactorCssDirectory;
+        private bool _hasCssRefactorPaths;
+        private string _cssRefactorDirectory;
+        private string _generatedCssDirectory;
 
         public string InspectionDirectory
         {
@@ -105,10 +113,34 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
             set { _specificGroupToInspect = value; OnPropertyChanged(); }
         }
 
-        public bool HasLastFilesAndIsIdle
+        public bool HasFilesToInspectAndIsIdle
         {
-            get { return _hasLastFilesAndIsIdle; }
-            set { _hasLastFilesAndIsIdle = value; OnPropertyChanged(); }
+            get { return _hasFilesToInspectAndIsIdle; }
+            set { _hasFilesToInspectAndIsIdle = value; OnPropertyChanged(); }
+        }
+
+        public string FilesToInspect
+        {
+            get { return _filesToInspect; }
+            set { _filesToInspect = value; OnPropertyChanged(); }
+        }
+
+        public string RefactorCssDirectory
+        {
+            get { return _refactorCssDirectory; }
+            set { _refactorCssDirectory = value; OnPropertyChanged(); }
+        }
+
+        public bool HasCssRefactorPaths
+        {
+            get { return _hasCssRefactorPaths; }
+            set { _hasCssRefactorPaths = value; OnPropertyChanged(); }
+        }
+
+        public string GeneratedCssDirectory
+        {
+            get { return _generatedCssDirectory; }
+            set { _generatedCssDirectory = value; OnPropertyChanged(); }
         }
     }
 }

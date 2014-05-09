@@ -17,7 +17,7 @@ namespace MetricsUtility.Clients.Wpf.Services
             viewModel.AllowFolderChanges = allow;
             viewModel.IsIdle = allow;
             viewModel.EnableGroupSelecting = EnableGroupingEvaluator.Evaluate(viewModel);
-            viewModel.HasLastFilesAndIsIdle = allow;
+            viewModel.HasFilesToInspectAndIsIdle = allow;
         }
     }
 }

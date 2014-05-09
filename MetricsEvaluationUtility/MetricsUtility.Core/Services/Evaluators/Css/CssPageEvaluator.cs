@@ -10,19 +10,22 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
         /// <summary>
         /// Derived from http://stackoverflow.com/questions/1079423/regular-expression-to-get-an-attribute-from-html-tag
         /// </summary>
-        /// <param name="contents"></param>
+        /// <param name="lines"></param>
         /// <returns></returns>
-        public List<int> Evaluate(IEnumerable<string> contents)
+        public List<List<string>> Evaluate(IEnumerable<string> lines)
         {
-            var pageLevelCss = 0;
+            //var pageLevelCss = 0;
             var withinPageLevelCss = false;
-            var matches = new List<int>();
+            var matches = new List<List<string>>();
+            const string closeTag = "</style>";
 
             var openingRegex = new Regex("<style[^>]+type\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>", RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-            foreach (var content in contents)
+            var ls = new List<string>();
+
+            foreach (var line in lines)
             {
-                var openingTagMatches = openingRegex.Matches(content);
+                var openingTagMatches = openingRegex.Matches(line);
 
                 if (openingTagMatches.Count > 0)
                 {
@@ -30,14 +33,22 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 }
                 if (withinPageLevelCss)
                 {
-                    pageLevelCss++;
+                    if (line.Contains(closeTag))
+                    {
+                        var indexOfClosingTag = line.IndexOf(closeTag, StringComparison.InvariantCultureIgnoreCase);
+                        ls.Add(line.Substring(0, indexOfClosingTag + closeTag.Length));
+                    }
+                    else
+                    {
+                        ls.Add(line.Trim());
+                    }
                 }
 
-                if (content.Contains("</style>", StringComparison.OrdinalIgnoreCase))
+                if (line.Contains(closeTag, StringComparison.OrdinalIgnoreCase))
                 {
                     withinPageLevelCss = false;
-                    matches.Add(pageLevelCss);
-                    pageLevelCss = 0;
+                    matches.Add(ls);
+                    ls = new List<string>();
                 }
             }
 

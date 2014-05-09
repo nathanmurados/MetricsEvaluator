@@ -85,10 +85,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\Evaluators\HasLastFilesAndIsIdleEvaluator.cs" />
-    <Compile Include="Services\Evaluators\Interfaces\IHasLastFilesAndIsIdleEvaluator.cs" />
+    <Compile Include="Services\CssSpliter.cs" />
+    <Compile Include="Services\ICssSpliter.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IFilesToInspectEvaluator.cs" />
+    <Compile Include="Services\IFilesToInspectStorer.cs" />
+    <Compile Include="Services\Evaluators\FilesToInspectEvaluator.cs" />
+    <Compile Include="Services\FilesToInspectStorer.cs" />
+    <Compile Include="Services\Evaluators\HasFilesToInspectAndIsIdleEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Interfaces\IHasFilesToInspectAndIsIdleEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\ISpecificGroupEvaluator.cs" />
     <Compile Include="Services\Evaluators\GroupedCssEvaluator.cs" />
+    <Compile Include="Services\Presenters\CssRefactorPathPresenter.cs" />
+    <Compile Include="Services\Presenters\GeneratedCssPathPresenter.cs" />
+    <Compile Include="Services\Presenters\HasCssRefactorPathsEvaluator.cs" />
+    <Compile Include="Services\Presenters\ICssRefactorPathPresenter.cs" />
+    <Compile Include="Services\Presenters\IGeneratedCssPathPresenter.cs" />
+    <Compile Include="Services\Presenters\IHasCssRefactorPathsEvaluator.cs" />
     <Compile Include="SpecificGroupEvaluator.cs" />
     <Compile Include="ViewModels\GroupedFilesViewModel.cs" />
     <Compile Include="Services\Evaluators\GroupedJavaScriptEvaluator.cs" />

@@ -58,5 +58,29 @@ namespace MetricsUtility.Clients.Wpf.Properties {
                 this["LastFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RefactorCssPath {
+            get {
+                return ((string)(this["RefactorCssPath"]));
+            }
+            set {
+                this["RefactorCssPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GeneratedCssPath {
+            get {
+                return ((string)(this["GeneratedCssPath"]));
+            }
+            set {
+                this["GeneratedCssPath"] = value;
+            }
+        }
     }
 }

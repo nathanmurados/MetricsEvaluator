@@ -1,6 +1,6 @@
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces
 {
-    public interface IHasLastFilesAndIsIdleEvaluator
+    public interface IHasFilesToInspectAndIsIdleEvaluator
     {
         bool Evaluate();
     }

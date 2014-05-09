@@ -2,10 +2,12 @@
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using MetricsUtility.Clients.Wpf.Services;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
+using MetricsUtility.Clients.Wpf.Services.Presenters;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 using MetricsUtility.Core.Services;
@@ -40,11 +42,21 @@ namespace MetricsUtility.Clients.Wpf
         public IChildDirectoryCountEvaluator ChildDirectoryCountEvaluator { get; private set; }
         public IPathExistenceEvaluator PathExistenceEvaluator { get; private set; }
         public ISpecificGroupEvaluator SpecificGroupEvaluator { get; private set; }
-        public IHasLastFilesAndIsIdleEvaluator HasLastFilesAndIsIdleEvaluator { get; private set; }
+        public IHasFilesToInspectAndIsIdleEvaluator HasFilesToInspectAndIsIdleEvaluator { get; private set; }
+        public IFilesToInspectEvaluator FilesToInspectEvaluator { get; private set; }
+        public IFilesToInspectStorer FilesToInspectStorer { get; private set; }
+        public ICssSpliter CssSpliter { get; private set; }
+        public ICssRefactorPathPresenter CssRefactorRefactorPathPresenter { get; private set; }
+        public IGeneratedCssPathPresenter GeneratedCssPathPresenter { get; private set; }
 
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IGroupedJavaScriptEvaluator groupedJavaScriptEvaluator, ISpecificGroupEvaluator specificGroupEvaluator, IHasLastFilesAndIsIdleEvaluator hasLastFilesAndIsIdleEvaluator)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IGroupedJavaScriptEvaluator groupedJavaScriptEvaluator, ISpecificGroupEvaluator specificGroupEvaluator, IHasFilesToInspectAndIsIdleEvaluator hasFilesToInspectAndIsIdleEvaluator, IFilesToInspectEvaluator filesToInspectEvaluator, IFilesToInspectStorer filesToInspectStorer, ICssRefactorPathPresenter cssRefactorRefactorPathPresenter, ICssSpliter cssSpliter, IGeneratedCssPathPresenter generatedCssPathPresenter)
         {
-            HasLastFilesAndIsIdleEvaluator = hasLastFilesAndIsIdleEvaluator;
+            GeneratedCssPathPresenter = generatedCssPathPresenter;
+            CssSpliter = cssSpliter;
+            CssRefactorRefactorPathPresenter = cssRefactorRefactorPathPresenter;
+            FilesToInspectStorer = filesToInspectStorer;
+            FilesToInspectEvaluator = filesToInspectEvaluator;
+            HasFilesToInspectAndIsIdleEvaluator = hasFilesToInspectAndIsIdleEvaluator;
             SpecificGroupEvaluator = specificGroupEvaluator;
             GroupedJavaScriptEvaluator = groupedJavaScriptEvaluator;
             PathExistenceEvaluator = pathExistenceEvaluator;
@@ -98,50 +110,73 @@ namespace MetricsUtility.Clients.Wpf
             FolderPresenter.Present(Properties.Settings.Default.InspectionPath);
         }
 
-        private void ChangeResultsDirectory(object sender, RoutedEventArgs e)
+        private void ChangeResultsPath(object sender, RoutedEventArgs e)
         {
             ResultsPathPresenter.Present((ViewModel)DataContext);
         }
-
-        private void ChangeInspectionDirectory(object sender, RoutedEventArgs e)
+        private void ChangeInspectionPath(object sender, RoutedEventArgs e)
         {
             InspectionPathPresenter.Present((ViewModel)DataContext);
         }
-
-        private void InspectFileCss(object sender, RoutedEventArgs e)
+        private void ChangeGeneratedCssPath(object sender, RoutedEventArgs e)
         {
-            DoAction(() =>
-            {
-                var dialog = new OpenFileDialog { InitialDirectory = Properties.Settings.Default.InspectionPath, Multiselect = true };
-                if (dialog.ShowDialog() == true)
-                {
-                    CssMetricsPresenter.View(dialog.FileNames.ToList());
-                    Properties.Settings.Default.LastFiles = string.Join("~" , dialog.FileNames);
-                    EvaluateRerunButtons();
-                }
-            });
+            GeneratedCssPathPresenter.Present((ViewModel)DataContext);
+        }
+        private void ChangeCssRefactorPath(object sender, RoutedEventArgs e)
+        {
+            CssRefactorRefactorPathPresenter.Present((ViewModel)DataContext);
         }
 
-        private void InspectFileJavaScript(object sender, RoutedEventArgs e)
-        {
-            DoAction(() =>
-            {
-                var dialog = new OpenFileDialog { InitialDirectory = Properties.Settings.Default.InspectionPath, Multiselect = true };
-                if (dialog.ShowDialog() == true)
-                {
-                    JavaScriptMetricsPresenter.View(dialog.FileNames.ToList());
-                    Properties.Settings.Default.LastFiles = string.Join("~", dialog.FileNames);
-                    EvaluateRerunButtons();
-                }
-            });
-        }
-
+        //private void InspectFileCss(object sender, RoutedEventArgs e)
+        //{
+        //    DoAction(() =>
+        //    {
+        //        var dialog = new OpenFileDialog { InitialDirectory = Properties.Settings.Default.InspectionPath, Multiselect = true };
+        //        if (dialog.ShowDialog() == true)
+        //        {
+        //            CssMetricsPresenter.View(dialog.FileNames.ToList());
+        //            Properties.Settings.Default.LastFiles = string.Join("~" , dialog.FileNames);
+        //            EvaluateRerunButtons();
+        //        }
+        //    });
+        //}
+        //private void InspectFileJavaScript(object sender, RoutedEventArgs e)
+        //{
+        //    DoAction(() =>
+        //    {
+        //        var dialog = new OpenFileDialog { InitialDirectory = Properties.Settings.Default.InspectionPath, Multiselect = true };
+        //        if (dialog.ShowDialog() == true)
+        //        {
+        //            JavaScriptMetricsPresenter.View(dialog.FileNames.ToList());
+        //            Properties.Settings.Default.LastFiles = string.Join("~", dialog.FileNames);
+        //            EvaluateRerunButtons();
+        //        }
+        //    });
+        //}
         private void EvaluateRerunButtons()
         {
             Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
-                ((ViewModel)DataContext).HasLastFilesAndIsIdle = HasLastFilesAndIsIdleEvaluator.Evaluate();
+                ((ViewModel)DataContext).HasFilesToInspectAndIsIdle = HasFilesToInspectAndIsIdleEvaluator.Evaluate();
             }));
+        }
+        private void ReRunCss(object sender, RoutedEventArgs e)
+        {
+            DoAction(() => CssMetricsPresenter.View(FilesToInspectEvaluator.Evaluate()));
+        }
+        private void ReRunJavaScript(object sender, RoutedEventArgs e)
+        {
+            DoAction(() => JavaScriptMetricsPresenter.View(FilesToInspectEvaluator.Evaluate()));
+        }
+        private void ChooseFiles(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog { InitialDirectory = Properties.Settings.Default.InspectionPath, Multiselect = true };
+            if (dialog.ShowDialog() == true)
+            {
+                FilesToInspectStorer.Store(dialog.FileNames);
+                EvaluateRerunButtons();
+                ((ViewModel)DataContext).FilesToInspect = string.Join(Environment.NewLine, FilesToInspectEvaluator.Evaluate());
+            }
         }
 
         private void InspectFolderCss(object sender, RoutedEventArgs e)
@@ -185,6 +220,10 @@ namespace MetricsUtility.Clients.Wpf
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => { InteractionPermissionToggler.Toggle(true, (ViewModel)DataContext); TxtOutput.ScrollToEnd(); }));
             });
         }
+        private void ChangeNumberOfGroups(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ((ViewModel)DataContext).FoldersPerGroup = FoldersPerGroupEvaluator.Evaluate(ChildDirectoryCountEvaluator.Evaluate(), ((ViewModel)DataContext).GroupCount);
+        }
 
         private void DoAction(Action action)
         {
@@ -196,14 +235,9 @@ namespace MetricsUtility.Clients.Wpf
             });
         }
 
-        private void ChangeNumberOfGroups(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ((ViewModel)DataContext).FoldersPerGroup = FoldersPerGroupEvaluator.Evaluate(ChildDirectoryCountEvaluator.Evaluate(), ((ViewModel)DataContext).GroupCount);
-        }
-
         private void ClearOutput(object sender, RoutedEventArgs e)
         {
-            ((ViewModel) DataContext).Output = string.Empty;
+            ((ViewModel)DataContext).Output = string.Empty;
         }
 
         private void ScrollDown(object sender, EventArgs e)
@@ -211,19 +245,9 @@ namespace MetricsUtility.Clients.Wpf
             Application.Current.Dispatcher.BeginInvoke(new Action(() => TxtOutput.ScrollToEnd()));
         }
 
-        private void ReRunCss(object sender, RoutedEventArgs e)
-        {
-            DoAction(() => CssMetricsPresenter.View(Properties.Settings.Default.LastFiles.Split('~').ToList()));
-        }
-
-        private void ReRunJavaScript(object sender, RoutedEventArgs e)
-        {
-            DoAction(() => JavaScriptMetricsPresenter.View(Properties.Settings.Default.LastFiles.Split('~').ToList()));
-        }
-
         private void RefactorCss(object sender, RoutedEventArgs e)
         {
-            DoAction(()=> );
+            DoAction(() => CssSpliter.Split());
         }
     }
 }

@@ -25,31 +25,31 @@
 
         <Menu IsMainMenu="True" VerticalAlignment="Top">
             <MenuItem Header="_Setup">
-                <MenuItem Header="Set _inspection folder..." Click="ChangeInspectionDirectory" IsEnabled="{Binding AllowFolderChanges}"/>
-                <MenuItem Header="Set _results folder..." Click="ChangeResultsDirectory" IsEnabled="{Binding AllowFolderChanges}"/>
+                <MenuItem Header="Set _inspection folder..." Click="ChangeInspectionPath" IsEnabled="{Binding AllowFolderChanges}"/>
+                <MenuItem Header="Set _results folder..." Click="ChangeResultsPath" IsEnabled="{Binding AllowFolderChanges}"/>
                 <Separator />
                 <MenuItem Click="OpenInspectionDirectory" Header="Open inspection _folder" IsEnabled="{Binding IsValidInspectionDirectory}"/>
                 <MenuItem Click="OpenResultsDirectory" Header="_Open results folder" IsEnabled="{Binding IsValidResultsDirectory}"/>
             </MenuItem>
-            <MenuItem Header="_Inspect...">
-                <MenuItem Header="_CSS">
-                    <MenuItem Click="InspectFileCss" Header="File_s..."  IsEnabled="{Binding IsIdle}"/>
-                    <MenuItem Click="InspectFolderCss" Header="_Folder"  IsEnabled="{Binding IsIdle}"/>
-                </MenuItem>
-                <MenuItem Header="_Javascript">
-                    <MenuItem Click="InspectFileJavaScript" Header="File_s..."  IsEnabled="{Binding IsIdle}"/>
-                    <MenuItem Click="InspectFolderJavaScript" Header="_Folder"  IsEnabled="{Binding IsIdle}"/>
-                </MenuItem>
-            </MenuItem>
         </Menu>
 
         <Expander Grid.Row="1" Header="Individual file_s" Margin="5" >
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Inspect _CSS..." Click="InspectFileCss" IsEnabled="{Binding IsIdle}" Margin="5"/>
-                <Button Content="Inspect _JavaScript..." Click="InspectFileJavaScript" IsEnabled="{Binding IsIdle}" Margin="5"/>
-
-                <Button Content="Inspect CSS of last file(s)" Click="ReRunCss" IsEnabled="{Binding HasLastFilesAndIsIdle}" Margin="5"/>
-                <Button Content="Inspect JavaScript of last file(s)" Click="ReRunJavaScript" IsEnabled="{Binding HasLastFilesAndIsIdle}" Margin="5"/>
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Choose file(s)..." Click="ChooseFiles" Margin="5"/>
+                </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="File(s) to inspect:" />
+                </StackPanel>
+                <Label Content="{Binding FilesToInspect}" Margin="5" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Inspect _CSS" Click="ReRunCss" IsEnabled="{Binding IsIdle}" Margin="5"/>
+                    <Button Content="Inspect _JavaScript" Click="ReRunJavaScript" IsEnabled="{Binding IsIdle}" Margin="5"/>
+                </StackPanel>
             </StackPanel>
         </Expander>
 
@@ -120,21 +120,25 @@
                 </StackPanel>
             </StackPanel>
         </Expander>
-        
+
         <Expander Grid.Row="4" Header="Refactor" Margin="5">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Target Directory" /><Label Content="{Binding InspectionDirectory}" />
+                    <Label Content="Folder to refactor:" />
+                    <Label Content="{Binding RefactorCssDirectory}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="New CSS Files Directory" /><Label Content="{Binding CssDirectory}" />
+                    <Label Content="Folder to store Generated CSS:" />
+                    <Label Content="{Binding GeneratedCssDirectory}" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Button Click="RefactorCss" Content="Refactor CSS blocks to css file" />
+                <StackPanel Orientation="Horizontal" IsEnabled="{Binding IsIdle}">
+                    <Button Click="ChangeCssRefactorPath" Content="Select CSS to refactor" Margin="5" />
+                    <Button Click="ChangeGeneratedCssPath" Content="Select generated .CSS files' directory" Margin="5" />
+                    <Button Click="RefactorCss" Content="Refactor CSS blocks to CSS files" Margin="5" IsEnabled="{Binding HasCssRefactorPaths}" />
                 </StackPanel>
             </StackPanel>
         </Expander>
-        
+
         <ProgressBar Grid.Row="5" Minimum="0" Maximum="100" Value="{Binding ProgressValue}" Margin="5" />
 
         <TextBox Grid.Row="6" Name="TxtOutput" Text="{Binding Output}" Margin="5" VerticalScrollBarVisibility="Visible" />
