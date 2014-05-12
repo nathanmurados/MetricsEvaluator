@@ -96,7 +96,7 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<ICssFileNameEvaluator>().To<CssFileNameEvaluator>();
             _container.Bind<ISolutionRelativeFilenameEvaluator>().To<SolutionRelativeFilenameEvaluator>();
             _container.Bind<ISolutionPathPresenter>().To<SolutionPathPresenter>();
-            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            _container.Bind<IValidExtensionsEvaluator>().To<ValidExtensionsEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();

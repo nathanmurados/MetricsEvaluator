@@ -4,38 +4,43 @@ using System.Linq;
 
 namespace MetricsUtility.Core.Services.Evaluators
 {
-    public interface IFilteredFilesEvaluator
+    public interface IValidExtensionsEvaluator
     {
-        List<string> Evaluate(IEnumerable<string> files);
-        List<string> EvaluateFilteredExtensions();
+        List<string> Evaluate();
     }
-    
+
+    public class ValidExtensionsEvaluator : IValidExtensionsEvaluator
+    {
+        public List<string> Evaluate()
+        {
+            return new List<string>{"asax","asmx","asp","aspx","cs","cshtml",
+                                    //"css",
+                                    "htm",
+                                    "html",
+                                    //"js",
+                                    "master",
+                                   };
+        }
+    }
+
     public class FilteredFilesEvaluator : IFilteredFilesEvaluator
     {
-        private static readonly List<string> FilteredExtensions = new List<string>
+        public IValidExtensionsEvaluator ValidExtensionsEvaluator { get; private set; }
+        public FilteredFilesEvaluator(IValidExtensionsEvaluator validExtensionsEvaluator)
         {
-            "asax",
-            "asmx",
-            "asp",
-            "aspx",
-            "cs",
-            "cshtml",
-            //"css",
-            "htm",
-            "html",
-            //"js",
-            "master",
-        };
+            ValidExtensionsEvaluator = validExtensionsEvaluator;
+        }
+
 
         public List<string> Evaluate(IEnumerable<string> files)
         {
-            return files.ToList().Where(filename => FilteredExtensions.Any(extension => filename.EndsWith(extension, StringComparison.OrdinalIgnoreCase))).ToList();
+            return files.ToList().Where(filename => ValidExtensionsEvaluator.Evaluate().Any(extension => filename.EndsWith(extension, StringComparison.OrdinalIgnoreCase))).ToList();
         }
 
 
         public List<string> EvaluateFilteredExtensions()
         {
-            return FilteredExtensions;
+            return ValidExtensionsEvaluator.Evaluate();
         }
     }
 }

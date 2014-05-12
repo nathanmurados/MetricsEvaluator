@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 
@@ -7,9 +8,11 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
     public class GeneratedCssPathPresenter : IGeneratedCssPathPresenter
     {
         public IHasCssRefactorPathsEvaluator HasCssRefactorPathsEvaluator { get; private set; }
+        public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
 
-        public GeneratedCssPathPresenter(IHasCssRefactorPathsEvaluator hasCssRefactorPathsEvaluator)
+        public GeneratedCssPathPresenter(IHasCssRefactorPathsEvaluator hasCssRefactorPathsEvaluator, IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator)
         {
+            EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
             HasCssRefactorPathsEvaluator = hasCssRefactorPathsEvaluator;
         }
 
@@ -28,6 +31,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 Properties.Settings.Default.Save();
                 viewModel.GeneratedCssDirectory = Properties.Settings.Default.GeneratedCssPath;
                 viewModel.HasCssRefactorPaths = HasCssRefactorPathsEvaluator.Evaluate();
+                EnableDiagnosticsEvaluator.Evaluate();
             }
         }
     }

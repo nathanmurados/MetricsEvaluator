@@ -124,21 +124,21 @@
         <Expander Grid.Row="4" Header="Refactor" Margin="5">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Folder to refactor:" />
-                    <Label Content="{Binding RefactorCssDirectory}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
                     <Label Content="Solution route folder:" />
                     <Label Content="{Binding SolutionDirectory}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Folder to refactor:" />
+                    <Label Content="{Binding RefactorCssDirectory}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Generated CSS folder:" />
                     <Label Content="{Binding GeneratedCssDirectory}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" IsEnabled="{Binding IsIdle}">
-                    <Button Click="ChangeSolutionRoutePath" Content="Change solution rout folder:" Margin="5" />
+                    <Button Click="ChangeSolutionRoutePath" Content="Change solution route folder:" Margin="5" />
                     <Button Click="ChangeCssRefactorPath" Content="Select CSS folder to refactor" Margin="5" />
-                    <Button Click="ChangeGeneratedCssPath" Content="Choose generated CSS folder" Margin="5" />
+                    <Button Click="ChangeGeneratedCssPath" Content="Generated CSS folder" Margin="5" />
                     <Button Click="RefactorCss" Content="Refactor CSS" Margin="5" IsEnabled="{Binding HasCssRefactorPaths}" />
                 </StackPanel>
             </StackPanel>
