@@ -46,14 +46,16 @@ namespace MetricsUtility.Clients.Wpf
         public IFilesToInspectEvaluator FilesToInspectEvaluator { get; private set; }
         public IFilesToInspectStorer FilesToInspectStorer { get; private set; }
         public ICssSpliter CssSpliter { get; private set; }
-        public ICssRefactorPathPresenter CssRefactorRefactorPathPresenter { get; private set; }
+        public ICssRefactorPathPresenter CssRefactorPathPresenter { get; private set; }
         public IGeneratedCssPathPresenter GeneratedCssPathPresenter { get; private set; }
+        public ISolutionPathPresenter SolutionPathPresenter { get; private set; }
 
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IGroupedJavaScriptEvaluator groupedJavaScriptEvaluator, ISpecificGroupEvaluator specificGroupEvaluator, IHasFilesToInspectAndIsIdleEvaluator hasFilesToInspectAndIsIdleEvaluator, IFilesToInspectEvaluator filesToInspectEvaluator, IFilesToInspectStorer filesToInspectStorer, ICssRefactorPathPresenter cssRefactorRefactorPathPresenter, ICssSpliter cssSpliter, IGeneratedCssPathPresenter generatedCssPathPresenter)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IGroupedJavaScriptEvaluator groupedJavaScriptEvaluator, ISpecificGroupEvaluator specificGroupEvaluator, IHasFilesToInspectAndIsIdleEvaluator hasFilesToInspectAndIsIdleEvaluator, IFilesToInspectEvaluator filesToInspectEvaluator, IFilesToInspectStorer filesToInspectStorer, ICssRefactorPathPresenter cssRefactorPathPresenter, ICssSpliter cssSpliter, IGeneratedCssPathPresenter generatedCssPathPresenter, ISolutionPathPresenter solutionPathPresenter)
         {
+            SolutionPathPresenter = solutionPathPresenter;
             GeneratedCssPathPresenter = generatedCssPathPresenter;
             CssSpliter = cssSpliter;
-            CssRefactorRefactorPathPresenter = cssRefactorRefactorPathPresenter;
+            CssRefactorPathPresenter = cssRefactorPathPresenter;
             FilesToInspectStorer = filesToInspectStorer;
             FilesToInspectEvaluator = filesToInspectEvaluator;
             HasFilesToInspectAndIsIdleEvaluator = hasFilesToInspectAndIsIdleEvaluator;
@@ -124,7 +126,11 @@ namespace MetricsUtility.Clients.Wpf
         }
         private void ChangeCssRefactorPath(object sender, RoutedEventArgs e)
         {
-            CssRefactorRefactorPathPresenter.Present((ViewModel)DataContext);
+            CssRefactorPathPresenter.Present((ViewModel)DataContext);
+        }
+        private void ChangeSolutionRoutePath(object sender, RoutedEventArgs e)
+        {
+            SolutionPathPresenter.Present((ViewModel)DataContext);
         }
 
         //private void InspectFileCss(object sender, RoutedEventArgs e)

@@ -16,7 +16,7 @@ namespace MetricsUtiltiy.Tests
             var result = evaluator.Evaluate(raw.Contents);
 
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(6, result[0].Count);
+            Assert.AreEqual(6, result[0].Lines.Count);
         }
 
 

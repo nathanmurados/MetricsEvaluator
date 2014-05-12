@@ -82,5 +82,17 @@ namespace MetricsUtility.Clients.Wpf.Properties {
                 this["GeneratedCssPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SolutionPath {
+            get {
+                return ((string)(this["SolutionPath"]));
+            }
+            set {
+                this["SolutionPath"] = value;
+            }
+        }
     }
 }

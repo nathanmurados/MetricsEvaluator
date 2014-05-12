@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Windows.Documents;
-
 namespace MetricsUtility.Clients.Wpf.ViewModels
 {
     public class ViewModel : ViewModelBase
@@ -23,9 +20,9 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         private string _filesToInspect;
         private string _refactorCssDirectory;
         private bool _hasCssRefactorPaths;
-        private string _cssRefactorDirectory;
         private string _generatedCssDirectory;
-
+        private string _solutionDirectory;
+        
         public string InspectionDirectory
         {
             get { return _inspectionDirectory; }
@@ -141,6 +138,12 @@ namespace MetricsUtility.Clients.Wpf.ViewModels
         {
             get { return _generatedCssDirectory; }
             set { _generatedCssDirectory = value; OnPropertyChanged(); }
+        }
+
+        public string SolutionDirectory
+        {
+            get { return _solutionDirectory; }
+            set { _solutionDirectory = value; OnPropertyChanged(); }
         }
     }
 }

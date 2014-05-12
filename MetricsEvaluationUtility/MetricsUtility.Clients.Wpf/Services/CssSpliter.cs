@@ -8,7 +8,7 @@ using MetricsUtility.Core.Services.Refactorers;
 
 namespace MetricsUtility.Clients.Wpf.Services
 {
-    public class CssSpliter : ICssSpliter,IHasHumanInterface
+    public class CssSpliter : ICssSpliter, IHasHumanInterface
     {
         public IPageCssSeperationEvaluator PageCssSeperationEvaluator { get; private set; }
         public IHumanInterface Ux { get; private set; }
@@ -21,8 +21,6 @@ namespace MetricsUtility.Clients.Wpf.Services
 
         public void Split()
         {
-            //throw new NotImplementedException("ADD CSS REFERENCES TO GENERATED FILES");
-
             var refactorTarget = Properties.Settings.Default.RefactorCssPath;
 
             if (!Proceed(refactorTarget)) { return; }
@@ -33,11 +31,14 @@ namespace MetricsUtility.Clients.Wpf.Services
             {
                 Ux.WriteLine(string.Format("Refactoring {0}", file));
 
-                var seperatedCssViewModel = PageCssSeperationEvaluator.Evaluate(File.ReadAllLines(file));
+                var seperatedCssViewModel = PageCssSeperationEvaluator.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, Properties.Settings.Default.GeneratedCssPath, file);
                 var parts = Path.GetFileName(file).Split('.');
                 var newCssName = string.Format("{0}.css", string.Join(".", parts.Take(parts.Length - 1)));
 
-                File.WriteAllLines(Properties.Settings.Default.GeneratedCssPath + "\\" + newCssName, seperatedCssViewModel.ExtractedCssContent);
+                if (seperatedCssViewModel.ExtractedCssContent.Any())
+                {
+                    File.WriteAllLines(Properties.Settings.Default.GeneratedCssPath + "\\" + newCssName, seperatedCssViewModel.ExtractedCssContent);
+                }
                 File.WriteAllLines(file, seperatedCssViewModel.UpdatedContent);
             }
         }
@@ -48,7 +49,7 @@ namespace MetricsUtility.Clients.Wpf.Services
             if (dirCount > 0)
             {
                 var sb = new StringBuilder();
-                sb.AppendLine("This refactor operation will only be applied to files immedietly in your inspection direction.");
+                sb.AppendLine("This refactor operation will only be applied to files immedietly in your inspection directory.");
                 sb.AppendLine("");
                 sb.AppendLine(string.Format("Any files within the {0} sub-folder(s) will NOT be refactored.", dirCount));
                 var result = MessageBox.Show(sb.ToString(), "WARNING", MessageBoxButton.OKCancel, MessageBoxImage.Warning);

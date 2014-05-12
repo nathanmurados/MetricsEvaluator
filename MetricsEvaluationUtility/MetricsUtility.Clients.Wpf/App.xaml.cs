@@ -93,6 +93,13 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IPageCssSeperationEvaluator>().To<PageCssSeperationEvaluator>();
             _container.Bind<IHasCssRefactorPathsEvaluator>().To<HasCssRefactorPathsEvaluator>();
             _container.Bind<IGeneratedCssPathPresenter>().To<GeneratedCssPathPresenter>();
+            _container.Bind<ICssFileNameEvaluator>().To<CssFileNameEvaluator>();
+            _container.Bind<ISolutionRelativeFilenameEvaluator>().To<SolutionRelativeFilenameEvaluator>();
+            _container.Bind<ISolutionPathPresenter>().To<SolutionPathPresenter>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
             //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();

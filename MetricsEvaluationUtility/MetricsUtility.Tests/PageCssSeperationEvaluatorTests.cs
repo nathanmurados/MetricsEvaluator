@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Refactorers;
+using MetricsUtility.Core.ViewModels;
 using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests
@@ -8,6 +10,8 @@ namespace MetricsUtiltiy.Tests
     [TestFixture]
     public class PageCssSeperationEvaluatorTests
     {
+
+
         [Test]
         public void CommonFormat()
         {
@@ -25,13 +29,18 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var obj = new PageCssSeperationEvaluator(new CssPageEvaluator());
+            var result = Run(testData);
 
-            var result = obj.Evaluate(testData);
-
-            Assert.AreEqual(7, result.UpdatedContent.Count());
+            Assert.AreEqual(8, result.UpdatedContent.Count());
             Assert.AreEqual(1, result.ExtractedCssContent.Count());
             Assert.AreEqual("body{float:left;}", result.ExtractedCssContent[0]);
+            Assert.AreEqual("<link href=\"~/Content/BlockCss/Search/LoggingResultGrid.css\" rel=\"stylesheet\" />", result.UpdatedContent[2]);
+        }
+
+        private SeperatedCssViewModel Run(string[] testData)
+        {
+            var obj = new PageCssSeperationEvaluator(new CssPageEvaluator(), new CssFileNameEvaluator(new SolutionRelativeFilenameEvaluator()));
+            return obj.Evaluate(testData, @"C:\dir1\dir2\dir3\", @"C:\dir1\dir2\dir3\Content\BlockCss\Search\", @"LoggingResultGrid.cshtml");
         }
 
 
@@ -50,11 +59,10 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var obj = new PageCssSeperationEvaluator(new CssPageEvaluator());
 
-            var result = obj.Evaluate(testData);
+            var result = Run(testData);
 
-            Assert.AreEqual(7, result.UpdatedContent.Count());
+            Assert.AreEqual(8, result.UpdatedContent.Count());
             Assert.AreEqual(1, result.ExtractedCssContent.Count());
             Assert.AreEqual("body{float:left;}", result.ExtractedCssContent[0]);
         }
@@ -75,11 +83,9 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var obj = new PageCssSeperationEvaluator(new CssPageEvaluator());
+            var result = Run(testData);
 
-            var result = obj.Evaluate(testData);
-
-            Assert.AreEqual(7, result.UpdatedContent.Count());
+            Assert.AreEqual(8, result.UpdatedContent.Count());
             Assert.AreEqual(1, result.ExtractedCssContent.Count());
             Assert.AreEqual("body{float:left;}", result.ExtractedCssContent[0]);
         }
@@ -100,9 +106,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var obj = new PageCssSeperationEvaluator(new CssPageEvaluator());
-
-            var result = obj.Evaluate(testData);
+            var result = Run(testData);
 
             // Assert.AreEqual(7, result.UpdatedContent.Count());
             Assert.AreEqual(1, result.ExtractedCssContent.Count());
@@ -125,9 +129,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var obj = new PageCssSeperationEvaluator(new CssPageEvaluator());
-
-            var result = obj.Evaluate(testData);
+            var result = Run(testData);
 
             // Assert.AreEqual(7, result.UpdatedContent.Count());
             Assert.AreEqual(1, result.ExtractedCssContent.Count());
@@ -154,9 +156,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var obj = new PageCssSeperationEvaluator(new CssPageEvaluator());
-
-            var result = obj.Evaluate(testData);
+            var result = Run(testData);
 
             // Assert.AreEqual(7, result.UpdatedContent.Count());
             Assert.AreEqual(2, result.ExtractedCssContent.Count());

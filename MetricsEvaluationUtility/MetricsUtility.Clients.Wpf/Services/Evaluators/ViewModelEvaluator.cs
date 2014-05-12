@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters;
+using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Clients.Wpf.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators
@@ -52,8 +53,8 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
                 FilesToInspect = string.Join(Environment.NewLine, FilesToInspectEvaluator.Evaluate()),
                 RefactorCssDirectory = Properties.Settings.Default.RefactorCssPath,
                 HasCssRefactorPaths = HasCssRefactorPathsEvaluator.Evaluate(),
-                GeneratedCssDirectory = Properties.Settings.Default.GeneratedCssPath
-
+                GeneratedCssDirectory = Properties.Settings.Default.GeneratedCssPath,
+                SolutionDirectory = Properties.Settings.Default.SolutionPath
             };
         }
     }

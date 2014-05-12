@@ -98,9 +98,11 @@
     <Compile Include="Services\Presenters\CssRefactorPathPresenter.cs" />
     <Compile Include="Services\Presenters\GeneratedCssPathPresenter.cs" />
     <Compile Include="Services\Presenters\HasCssRefactorPathsEvaluator.cs" />
-    <Compile Include="Services\Presenters\ICssRefactorPathPresenter.cs" />
-    <Compile Include="Services\Presenters\IGeneratedCssPathPresenter.cs" />
-    <Compile Include="Services\Presenters\IHasCssRefactorPathsEvaluator.cs" />
+    <Compile Include="Services\Presenters\Interfaces\ICssRefactorPathPresenter.cs" />
+    <Compile Include="Services\Presenters\Interfaces\IGeneratedCssPathPresenter.cs" />
+    <Compile Include="Services\Presenters\Interfaces\IHasCssRefactorPathsEvaluator.cs" />
+    <Compile Include="Services\Presenters\Interfaces\ISolutionPathPresenter.cs" />
+    <Compile Include="Services\Presenters\SolutionPathPresenter.cs" />
     <Compile Include="SpecificGroupEvaluator.cs" />
     <Compile Include="ViewModels\GroupedFilesViewModel.cs" />
     <Compile Include="Services\Evaluators\GroupedJavaScriptEvaluator.cs" />

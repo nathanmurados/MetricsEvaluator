@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using MetricsUtility.Core.Services.Extensions;
 
@@ -12,19 +13,21 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
         /// </summary>
         /// <param name="lines"></param>
         /// <returns></returns>
-        public List<List<string>> Evaluate(IEnumerable<string> lines)
+        public List<CssPageEvaluationResult> Evaluate(string[] lines)
         {
             //var pageLevelCss = 0;
             var withinPageLevelCss = false;
-            var matches = new List<List<string>>();
+            var matches = new List<CssPageEvaluationResult>();
             const string closeTag = "</style>";
 
             var openingRegex = new Regex("<style[^>]+type\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>", RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-            var ls = new List<string>();
+            var ls = new CssPageEvaluationResult { Lines = new List<string>() };
 
-            foreach (var line in lines)
+            for (int i = 0; i < lines.Length; i++)
             {
+                var line = lines[i];
+
                 var openingTagMatches = openingRegex.Matches(line);
 
                 if (openingTagMatches.Count > 0)
@@ -36,11 +39,15 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                     if (line.Contains(closeTag))
                     {
                         var indexOfClosingTag = line.IndexOf(closeTag, StringComparison.InvariantCultureIgnoreCase);
-                        ls.Add(line.Substring(0, indexOfClosingTag + closeTag.Length));
+                        ls.Lines.Add(line.Substring(0, indexOfClosingTag + closeTag.Length));
+                        if (ls.FirstOccurenceLineNumber == 0)
+                        {
+                            ls.FirstOccurenceLineNumber = i;
+                        }
                     }
                     else
                     {
-                        ls.Add(line.Trim());
+                        ls.Lines.Add(line.Trim());
                     }
                 }
 
@@ -48,11 +55,17 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 {
                     withinPageLevelCss = false;
                     matches.Add(ls);
-                    ls = new List<string>();
+                    ls = new CssPageEvaluationResult { Lines = new List<string>() };
                 }
             }
 
             return matches;
         }
+    }
+
+    public class CssPageEvaluationResult
+    {
+        public List<string> Lines { get; set; }
+        public int FirstOccurenceLineNumber { get; set; }
     }
 }

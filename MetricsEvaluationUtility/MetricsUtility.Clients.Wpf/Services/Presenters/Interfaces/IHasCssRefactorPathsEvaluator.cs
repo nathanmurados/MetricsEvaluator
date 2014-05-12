@@ -1,4 +1,4 @@
-﻿namespace MetricsUtility.Clients.Wpf.Services.Presenters
+﻿namespace MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces
 {
     public interface IHasCssRefactorPathsEvaluator
     {
