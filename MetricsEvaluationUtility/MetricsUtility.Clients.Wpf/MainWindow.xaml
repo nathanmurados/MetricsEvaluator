@@ -64,15 +64,11 @@
                     <Label Content="{Binding InspectionDirectory}" Margin="5"/>
                 </StackPanel>
 
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <Button Content="Inspect _CSS" Click="InspectFolderCss" IsEnabled="{Binding IsIdle}" Margin="5"/>
-                    <Button Grid.Column="1" Content="Inspect _JavaScript" Click="InspectFolderJavaScript" IsEnabled="{Binding IsIdle}" Margin="5"/>
-                </Grid>
+                    <Button Content="Inspect _JavaScript" Click="InspectFolderJavaScript" IsEnabled="{Binding IsIdle}" Margin="5"/>
+                    <Button Content="Search  for image paths" Click="InspectFolderAbsoluteImagePaths" IsEnabled="{Binding IsIdle}" Margin="5"/>
+                </StackPanel>
             </Grid>
         </Expander>
 
@@ -128,18 +124,19 @@
                     <Label Content="{Binding SolutionDirectory}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Folder to refactor:" />
-                    <Label Content="{Binding RefactorCssDirectory}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
                     <Label Content="Generated CSS folder:" />
                     <Label Content="{Binding GeneratedCssDirectory}" />
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Folder to refactor:" />
+                    <Label Content="{Binding RefactorCssDirectory}" />
+                </StackPanel>
                 <StackPanel Orientation="Horizontal" IsEnabled="{Binding IsIdle}">
                     <Button Click="ChangeSolutionRoutePath" Content="Change solution route folder:" Margin="5" />
-                    <Button Click="ChangeCssRefactorPath" Content="Select CSS folder to refactor" Margin="5" />
                     <Button Click="ChangeGeneratedCssPath" Content="Generated CSS folder" Margin="5" />
-                    <Button Click="RefactorCss" Content="Refactor CSS" Margin="5" IsEnabled="{Binding HasCssRefactorPaths}" />
+                    <Button Click="ChangeRefactorPath" Content="Select folder to refactor" Margin="5" />
+                    <Button Click="RefactorCss" Content="Refactor CSS" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
+                    <Button Click="RefactorJs" Content="Refactor JS" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </Expander>

@@ -83,7 +83,8 @@ namespace MetricsUtility.Core.Services.Presenters
 
             Ux.WriteLine(string.Format("Total number of files: {0}", results.Count()));
             Ux.WriteLine(string.Format("Total <script type='text/javascript'> declarations: {0}", results.Sum(x => x.PageInstances.Count)));
-            Ux.WriteLine(string.Format("Total <script type='text/javascript'> lines of code: {0}", results.Sum(x => x.PageInstances.Sum(y => y))));
+            Ux.WriteLine(string.Format("Total <script type='text/javascript'> lines of code: {0}", results.Sum(x => x.PageInstances.Sum(y => y.Lines.Count))));
+            Ux.WriteLine(string.Format("Total <script type='text/javascript'> lines of code containing '@': {0}", results.Sum(x => x.PageInstances.Sum(y => y.AtSymbols))));
             Ux.WriteLine(string.Format("Total <div onSomeEvent='...'> declarations: {0}", results.Sum(x => x.Block.Sum(y => y.InlineJavascriptTags.Count))));
 
             foreach (var attr in attributes.Where(tag => results.Any(x => x.Block.Any(y => comparer.Equals(y.AttributeName, tag)))))

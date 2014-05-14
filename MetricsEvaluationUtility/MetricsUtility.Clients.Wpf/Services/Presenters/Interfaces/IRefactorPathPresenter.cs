@@ -2,7 +2,7 @@
 
 namespace MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces
 {
-    public interface ICssRefactorPathPresenter
+    public interface IRefactorPathPresenter
     {
         void Present(ViewModel viewModel);
     }

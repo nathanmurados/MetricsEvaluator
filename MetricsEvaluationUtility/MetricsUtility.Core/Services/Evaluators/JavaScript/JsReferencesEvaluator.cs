@@ -19,9 +19,4 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             return 0;
         }
     }
-
-    public interface IJsReferencesEvaluator
-    {
-        int Evaluate(string content);
-    }
 }

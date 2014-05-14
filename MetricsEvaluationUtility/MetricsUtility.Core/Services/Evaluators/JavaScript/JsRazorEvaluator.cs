@@ -41,9 +41,4 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             return finalResults;
         }
     }
-
-    public interface IJsRazorEvaluator
-    {
-        List<DetailedJavaScriptEvaluationResult> Evaluate(string content, IEnumerable<string> attributes);
-    }
 }

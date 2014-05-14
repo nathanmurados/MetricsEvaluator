@@ -7,20 +7,20 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
     public class SolutionPathPresenter : ISolutionPathPresenter
     {
-        public IHasCssRefactorPathsEvaluator HasCssRefactorPathsEvaluator { get; private set; }
+        public IHasRefactorPathsEvaluator HasRefactorPathsEvaluator { get; private set; }
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
 
-        public SolutionPathPresenter(IHasCssRefactorPathsEvaluator hasCssRefactorPathsEvaluator, IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator)
+        public SolutionPathPresenter(IHasRefactorPathsEvaluator hasRefactorPathsEvaluator, IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator)
         {
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
-            HasCssRefactorPathsEvaluator = hasCssRefactorPathsEvaluator;
+            HasRefactorPathsEvaluator = hasRefactorPathsEvaluator;
         }
 
         public void Present(ViewModel viewModel)
         {
             var dialog = new FolderBrowserDialog
             {
-                SelectedPath = Properties.Settings.Default.RefactorCssPath,
+                SelectedPath = Properties.Settings.Default.RefactorPath,
                 Description = "Select the route directory of the solution you are refactoring"
             };
 
@@ -29,7 +29,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
                 Properties.Settings.Default.SolutionPath = dialog.SelectedPath;
                 Properties.Settings.Default.Save();
                 viewModel.SolutionDirectory = Properties.Settings.Default.SolutionPath;
-                viewModel.HasCssRefactorPaths = HasCssRefactorPathsEvaluator.Evaluate();
+                viewModel.HasCssRefactorPaths = HasRefactorPathsEvaluator.Evaluate();
                 EnableDiagnosticsEvaluator.Evaluate();
             }
         }

@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTests.cs" />
+    <Compile Include="FoldermakerTests.cs" />
+    <Compile Include="PagJsSeperationEvaluatorTests.cs" />
     <Compile Include="PageCssSeperationEvaluatorTests.cs" />
     <Compile Include="DirectoryGroupEvaluatorTests.cs" />
     <Compile Include="JavaScriptStatsStorerTests.cs" />

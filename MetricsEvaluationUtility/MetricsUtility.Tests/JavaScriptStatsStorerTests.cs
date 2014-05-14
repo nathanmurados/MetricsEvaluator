@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
+using MetricsUtility.Core.Services.Evaluators.Css;
+using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.Storers;
 using MetricsUtility.Core.ViewModels;
 using Moq;
@@ -30,7 +32,7 @@ namespace MetricsUtiltiy.Tests
             {
                 var str = sb.ToString();
 
-                Assert.AreEqual(21, str.Count(x => x == ','));
+                Assert.AreEqual(8 * 3, str.Count(x => x == ','));
                 Assert.AreEqual(2, Regex.Matches(str, Environment.NewLine).Count);
             });
 
@@ -50,7 +52,11 @@ namespace MetricsUtiltiy.Tests
                         new DetailedJavaScriptEvaluationResult { AttributeName = "onclick" },
                         new DetailedJavaScriptEvaluationResult { AttributeName = "ondblclick" },
                     },
-                    PageInstances = new List<int> { 1,0 }, 
+                    PageInstances = new List<PageBlockSplitResult>
+                    {
+                        new PageBlockSplitResult {Lines = new List<string>{"line1"}},
+                        new PageBlockSplitResult {Lines = new List<string>()},
+                    }, 
                     FileName = "test",
                     References = 1
                 }

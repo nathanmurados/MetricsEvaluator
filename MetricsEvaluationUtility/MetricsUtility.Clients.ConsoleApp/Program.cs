@@ -29,7 +29,7 @@ namespace MetricsUtility.Clients.ConsoleApp
                 Bind<IDateTimeProvider>().To<DateTimeProvider>();
                 Bind<ICssBlockEvaluator>().To<CssBlockEvaluator>();
                 Bind<ICssRazorEvaluator>().To<CssRazorEvaluator>();
-                Bind<ICssPageEvaluator>().To<CssPageEvaluator>();
+                Bind<ICssPageBlockSplitter>().To<CssPagePageBlockSplitter>();
                 Bind<IJavaScriptStatsPresenter>().To<JavaScriptStatsPresenter>();
                 Bind<IJsValidationEvaluator>().To<JsValidationEvaluator>();
                 Bind<IJsBlockEvaluator>().To<JsBlockEvaluator>();

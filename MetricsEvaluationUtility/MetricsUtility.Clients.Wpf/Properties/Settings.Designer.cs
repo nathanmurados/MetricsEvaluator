@@ -62,24 +62,24 @@ namespace MetricsUtility.Clients.Wpf.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string RefactorCssPath {
+        public string RefactorPath {
             get {
-                return ((string)(this["RefactorCssPath"]));
+                return ((string)(this["RefactorPath"]));
             }
             set {
-                this["RefactorCssPath"] = value;
+                this["RefactorPath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string GeneratedCssPath {
+        public string GeneratedFilesPath {
             get {
-                return ((string)(this["GeneratedCssPath"]));
+                return ((string)(this["GeneratedFilesPath"]));
             }
             set {
-                this["GeneratedCssPath"] = value;
+                this["GeneratedFilesPath"] = value;
             }
         }
         

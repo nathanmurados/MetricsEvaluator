@@ -1,57 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using MetricsUtility.Core.Services.Extensions;
+using MetricsUtility.Core.Services.Evaluators.Css;
+using MetricsUtility.Core.Services.Refactorers;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    public class JsPageEvaluator : IJsPageEvaluator
+    public class JsPageEvaluator :PageBlockSplitter, IJsPageEvaluator
     {
-        /// <summary>
-        /// Derived from http://stackoverflow.com/questions/17200485/regex-to-match-a-html-tags-without-specific-attribute
-        /// </summary>
-        /// <param name="contents"></param>
-        /// <returns></returns>
-        public List<int> Evaluate(IEnumerable<string> contents, string joinedContent)
+        public List<PageBlockSplitResult> Evaluate(string[] contents, bool includeBlocksWithAtVars)
         {
-            var matches = new List<int>();
-
-            if (joinedContent.Contains("script", StringComparison.OrdinalIgnoreCase))
-            {
-                var pageLevelCss = 0;
-                var withinPageLevelCss = false;
-
-                var openingRegex = new Regex("<script(?=\\s|>)(?!(?:[^>=]|=(['\"])(?:(?!\\1).)*\\1)*?\\ssrc=['\"])[^>]*>", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-
-                foreach (var content in contents)
-                {
-                    var openingTagMatches = openingRegex.Matches(content);
-
-                    if (openingTagMatches.Count > 0)
-                    {
-                        withinPageLevelCss = true;
-                    }
-                    if (withinPageLevelCss)
-                    {
-                        pageLevelCss++;
-                    }
-
-                    if (withinPageLevelCss && content.Contains("</script>", StringComparison.OrdinalIgnoreCase))
-                    {
-                        withinPageLevelCss = false;
-                        matches.Add(pageLevelCss);
-                        pageLevelCss = 0;
-                    }
-                }
-            }
-
-            return matches;
+            return Split(contents, RegexConstants.ScriptOpeningTag, "</script>", includeBlocksWithAtVars);
         }
-
-    }
-
-    public interface IJsPageEvaluator
-    {
-        List<int> Evaluate(IEnumerable<string> contents, string joinedContent);
     }
 }

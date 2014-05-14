@@ -30,7 +30,7 @@ namespace MetricsUtility.Core.Services.Storers
 
             var sb = new StringBuilder();
 
-            sb.Append("Filename,Inline Instances,Total Inline LOC");
+            sb.Append("Filename,Inline Instances,Total Inline LOC, Contains '@'");
 
             var comparer = StringComparer.OrdinalIgnoreCase;
 
@@ -45,7 +45,10 @@ namespace MetricsUtility.Core.Services.Storers
 
             foreach (var result in results.OrderBy(x => x.FileName))
             {
-                sb.AppendFormat("{0},{1},{2}", result.FileName, result.PageInstances.Count, result.PageInstances.Sum(x => x));
+                sb.AppendFormat("{0},{1},{2},{3}",
+                    result.FileName, 
+                    result.PageInstances.Count, 
+                    result.PageInstances.Sum(x => x.Lines.Count), result.PageInstances.Any(x => x.AtSymbols > 0));
 
                 foreach (var attribute in attributesInUse)
                 {
@@ -65,7 +68,12 @@ namespace MetricsUtility.Core.Services.Storers
                 sb.AppendLine("");
             }
 
-            sb.AppendFormat("Total: {2},{0},{1}", results.Sum(x => x.PageInstances.Count), results.Sum(x => x.PageInstances.Sum(y => y)), results.Count);
+            sb.AppendFormat("Total: {0},{1},{2},{3}",
+                results.Count,
+                results.Sum(x => x.PageInstances.Count),
+                results.Sum(x => x.PageInstances.Sum(y => y.Lines.Count)),
+                results.Sum(x => x.PageInstances.Count(y => y.AtSymbols > 0)));
+
 
             foreach (var attribute in attributesInUse)
             {

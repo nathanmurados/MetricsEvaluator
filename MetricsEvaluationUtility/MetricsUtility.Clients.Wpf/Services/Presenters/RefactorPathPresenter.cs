@@ -5,15 +5,15 @@ using MetricsUtility.Clients.Wpf.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
-    public class CssRefactorPathPresenter : ICssRefactorPathPresenter
+    public class RefactorPathPresenter : IRefactorPathPresenter
     {
-        public IHasCssRefactorPathsEvaluator HasCssRefactorPathsEvaluator { get; private set; }
+        public IHasRefactorPathsEvaluator HasRefactorPathsEvaluator { get; private set; }
         public IEnableDiagnosticsEvaluator EnableDiagnosticsEvaluator { get; private set; }
 
-        public CssRefactorPathPresenter(IHasCssRefactorPathsEvaluator hasCssRefactorPathsEvaluator, IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator)
+        public RefactorPathPresenter(IHasRefactorPathsEvaluator hasRefactorPathsEvaluator, IEnableDiagnosticsEvaluator enableDiagnosticsEvaluator)
         {
             EnableDiagnosticsEvaluator = enableDiagnosticsEvaluator;
-            HasCssRefactorPathsEvaluator = hasCssRefactorPathsEvaluator;
+            HasRefactorPathsEvaluator = hasRefactorPathsEvaluator;
         }
 
 
@@ -21,16 +21,16 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
         {
             var dialog = new FolderBrowserDialog
             {
-                SelectedPath = Properties.Settings.Default.RefactorCssPath,
+                SelectedPath = Properties.Settings.Default.RefactorPath,
                 Description = "Select the target CSS folder to refactor"
             };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Properties.Settings.Default.RefactorCssPath = dialog.SelectedPath;
+                Properties.Settings.Default.RefactorPath = dialog.SelectedPath;
                 Properties.Settings.Default.Save();
-                viewModel.RefactorCssDirectory = Properties.Settings.Default.RefactorCssPath;
-                viewModel.HasCssRefactorPaths = HasCssRefactorPathsEvaluator.Evaluate();
+                viewModel.RefactorCssDirectory = Properties.Settings.Default.RefactorPath;
+                viewModel.HasCssRefactorPaths = HasRefactorPathsEvaluator.Evaluate();
                 viewModel.IsIdle = EnableDiagnosticsEvaluator.Evaluate();
             }
         }

@@ -11,9 +11,9 @@ namespace MetricsUtiltiy.Tests
         {
             var raw = GetFileAndContent();
 
-            var evaluator = new CssPageEvaluator();
+            var evaluator = new CssPagePageBlockSplitter();
 
-            var result = evaluator.Evaluate(raw.Contents);
+            var result = evaluator.Split(raw.Contents, true);
 
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(6, result[0].Lines.Count);

@@ -1,3 +1,4 @@
+using System.Linq;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace MetricsUtiltiy.Tests
 
             var evaluator = new JsPageEvaluator();
 
-            var result = evaluator.Evaluate(raw.Contents, string.Join("", raw.Contents));
+            var result = evaluator.Evaluate(raw.Contents, true);
 
             Assert.AreEqual(2, result.Count);
         }

@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Forms;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Refactorers;
 using MetricsUtility.Core.ViewModels;
-using MessageBox = System.Windows.MessageBox;
 
 namespace MetricsUtility.Clients.Wpf.Services
 {
@@ -27,7 +24,7 @@ namespace MetricsUtility.Clients.Wpf.Services
         {
             if (MessageBox.Show("Are you sure?", "Refactor CSS", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) { return; }
 
-            var refactorTarget = Properties.Settings.Default.RefactorCssPath;
+            var refactorTarget = Properties.Settings.Default.RefactorPath;
 
             var newPath = GetNewPath();
 
@@ -39,18 +36,21 @@ namespace MetricsUtility.Clients.Wpf.Services
             {
                 Ux.WriteLine(string.Format("Refactoring {0}", file));
 
-                SeperatedCssViewModel seperatedCssViewModel ;
-                
+                SeperatedCssViewModel seperatedCssViewModel;
+
                 try
                 {
                     seperatedCssViewModel = PageCssSeperationEvaluator.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file);
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Unable to process " + file);
+                    var x = string.Format("---ERROR: Unable to process {0}---", file);
+                    Ux.WriteLine(x);
+                    Ux.WriteLine("");
+                    MessageBox.Show(x, "OPERATION HALTED", MessageBoxButton.OK, MessageBoxImage.Stop);
                     return;
                 }
-                
+
 
                 if (seperatedCssViewModel.ExtractedCssBlocks.Any())
                 {
@@ -67,27 +67,34 @@ namespace MetricsUtility.Clients.Wpf.Services
                         {
                             MessageBox.Show("PLEASE REVIEW THIS FILE MANUALLY - " + url);
                             Ux.WriteLine("ERROR - TASK STOPPED");
+                            Ux.WriteLine("");
                             return;
                         }
 
                         File.WriteAllLines(url, newCssFile.Lines);
+
+                        var atSigns = newCssFile.Lines.Count(x => x.Contains("@"));
+                        var dotDotSlashes = newCssFile.Lines.Count(x => x.Contains("../"));
+                        if (atSigns > 0) Ux.WriteLine(string.Format("---WARNING: {0} lines containing @ were detected", atSigns));
+                        if (dotDotSlashes > 0) Ux.WriteLine(string.Format("---WARNING: {0} lines containing ../ were detected", dotDotSlashes));
                     }
                     Ux.WriteLine("Created " + seperatedCssViewModel.ExtractedCssBlocks.Count() + " new files");
+                    File.WriteAllLines(file, seperatedCssViewModel.StripedContent);
                 }
-                File.WriteAllLines(file, seperatedCssViewModel.StripedContent);
             }
 
-           Ux.WriteLine("Operation complete.");
+            Ux.WriteLine("Operation complete.");
+            Ux.WriteLine("");
         }
 
-        private string GetNewPath()
+        private static string GetNewPath()
         {
-            var newFolder = Properties.Settings.Default.RefactorCssPath.Split('\\').Last();
-            var newPath = Properties.Settings.Default.GeneratedCssPath + "\\" + newFolder;
+            var newFolder = Properties.Settings.Default.RefactorPath.Split('\\').Last();
+            var newPath = Properties.Settings.Default.GeneratedFilesPath + "\\" + newFolder;
             return newPath;
         }
 
-        private bool Proceed(string refactorTarget)
+        private static bool Proceed(string refactorTarget)
         {
             var dirCount = Directory.GetDirectories(refactorTarget).Count();
             if (dirCount > 0)

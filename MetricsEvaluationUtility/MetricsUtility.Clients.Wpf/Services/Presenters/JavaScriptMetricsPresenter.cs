@@ -31,11 +31,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
             if (Directory.Exists(Properties.Settings.Default.InspectionPath))
             {
                 var results = JavaScriptStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
-                Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () =>
-                {
-                    var filename = CssJavaScriptStorer.Store(results, string.Empty);
-                    //FilePresenter.Present(filename);
-                }, null);
+                Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () => CssJavaScriptStorer.Store(results, string.Empty), null);
 
                 Ux.WriteLine("");
             }

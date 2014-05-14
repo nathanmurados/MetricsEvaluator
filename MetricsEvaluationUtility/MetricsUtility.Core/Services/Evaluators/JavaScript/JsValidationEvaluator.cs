@@ -31,7 +31,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 return null;
             }
 
-            var pageLevel = JsPageEvaluator.Evaluate(contents, joinedString);
+            var pageLevel = JsPageEvaluator.Evaluate(contents, true);
             var references = JsReferencesEvaluator.Evaluate(joinedString);
             var block = JsBlockEvaluator.Evaluate(joinedString, attributes);
             var razor = JsRazorEvaluator.Evaluate(joinedString, attributes);
@@ -50,10 +50,5 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
             return null;
         }
-    }
-
-    public interface IJsValidationEvaluator
-    {
-        JavaScriptEvaluationResult Evaluate(string filename, string[] contents, List<string> attributes);
     }
 }
