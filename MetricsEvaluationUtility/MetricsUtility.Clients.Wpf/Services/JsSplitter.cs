@@ -9,32 +9,6 @@ using MetricsUtility.Core.Services.Refactorers;
 
 namespace MetricsUtility.Clients.Wpf.Services
 {
-
-    public class DirectoryMimicker : IDirectoryMimicker
-    {
-        public string Mimick(string refactorPath, string generatedFilesPath, string file)
-        {
-            if (refactorPath.EndsWith("\\")) throw new NotImplementedException();
-
-            var bit = file.Replace(refactorPath, "");
-
-            var parts = file.Split('\\');
-            var fileName = parts.Last();
-
-            var newPath = bit.Replace(fileName, "");
-
-            var newPathParts = newPath.Split('\\');
-            newPath = string.Join("\\", newPathParts.Take(newPathParts.Length - 1));
-
-            return string.Format("{0}{1}", generatedFilesPath, newPath);
-        }
-    }
-
-    public interface IDirectoryMimicker
-    {
-        string Mimick(string refactorPath, string generatedFilesPath, string file);
-    }
-
     public class JsSplitter : IJsSplitter, IHasHumanInterface
     {
         public IHumanInterface Ux { get; private set; }
@@ -146,4 +120,17 @@ namespace MetricsUtility.Clients.Wpf.Services
         }
     }
 
+
+    public class AdvancedJsSplitter : IAdvancedJsSplitter
+    {
+        public void Split(string refactorPath, string generatedFilesPath, string[] files)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface IAdvancedJsSplitter
+    {
+        void Split(string refactorPath, string generatedFilesPath, string[] files);
+    }
 }

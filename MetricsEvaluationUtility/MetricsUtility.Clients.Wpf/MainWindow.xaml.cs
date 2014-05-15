@@ -49,9 +49,11 @@ namespace MetricsUtility.Clients.Wpf
         public ISolutionPathPresenter SolutionPathPresenter { get; private set; }
         public ImageReferencesEvaluator ImageReferencesEvaluator { get; private set; }
         public IJsSplitter JsSplitter { get; private set; }
+        public IAdvancedJsSplitter AdvancedJsSplitter { get; private set; }
         
-        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IGroupedJavaScriptEvaluator groupedJavaScriptEvaluator, ISpecificGroupEvaluator specificGroupEvaluator, IHasFilesToInspectAndIsIdleEvaluator hasFilesToInspectAndIsIdleEvaluator, IFilesToInspectEvaluator filesToInspectEvaluator, IFilesToInspectStorer filesToInspectStorer, IRefactorPathPresenter refactorPathPresenter, ICssSpliter cssSpliter, IGeneratedCssPathPresenter generatedCssPathPresenter, ISolutionPathPresenter solutionPathPresenter, ImageReferencesEvaluator imageReferencesEvaluator, IJsSplitter jsSplitter)
+        public MainWindow(IViewModelEvaluator viewModelEvaluator, ICssMetricsPresenter cssMetricsPresenter, IHumanInterface ux, IInspectionPathPresenter inspectionPathPresenter, IResultsPathPresenter resultsPathPresenter, IBoolOptionPresenter boolOptionPresenter, IOutputPresenter outputPresenter, IProgressPresenter progressPresenter, IInputPresenter inputPresenter, IOptionsPresenter optionsPresenter, ISettingsClearer settingsClearer, IInteractionPermissionToggler interactionPermissionToggler, IJavaScriptMetricsPresenter javaScriptMetricsPresenter, IFolderPresenter folderPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IGroupedCssEvaluator groupedCssEvaluator, IFoldersPerGroupEvaluator foldersPerGroupEvaluator, IChildDirectoryCountEvaluator childDirectoryCountEvaluator, IPathExistenceEvaluator pathExistenceEvaluator, IGroupedJavaScriptEvaluator groupedJavaScriptEvaluator, ISpecificGroupEvaluator specificGroupEvaluator, IHasFilesToInspectAndIsIdleEvaluator hasFilesToInspectAndIsIdleEvaluator, IFilesToInspectEvaluator filesToInspectEvaluator, IFilesToInspectStorer filesToInspectStorer, IRefactorPathPresenter refactorPathPresenter, ICssSpliter cssSpliter, IGeneratedCssPathPresenter generatedCssPathPresenter, ISolutionPathPresenter solutionPathPresenter, ImageReferencesEvaluator imageReferencesEvaluator, IJsSplitter jsSplitter, IAdvancedJsSplitter advancedJsSplitter)
         {
+            AdvancedJsSplitter = advancedJsSplitter;
             JsSplitter = jsSplitter;
             ImageReferencesEvaluator = imageReferencesEvaluator;
             SolutionPathPresenter = solutionPathPresenter;
@@ -275,6 +277,20 @@ namespace MetricsUtility.Clients.Wpf
                 var files = DirectoryDescendentFilesEvaluator.Evaluate(Properties.Settings.Default.RefactorPath).Where(x => x.EndsWith(".cshtml")).ToArray();
 
                 JsSplitter.Split(Properties.Settings.Default.RefactorPath, Properties.Settings.Default.GeneratedFilesPath, files);
+            });
+        }
+
+        private void RefactorJsWithAtVars(object sender, RoutedEventArgs e)
+        {
+            ((ViewModel)DataContext).Output = "";
+
+            if (MessageBox.Show("Are you sure?", "Refactor JS", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) { return; }
+
+            DoAction(() =>
+            {
+                var files = DirectoryDescendentFilesEvaluator.Evaluate(Properties.Settings.Default.RefactorPath).Where(x => x.EndsWith(".cshtml")).ToArray();
+
+                AdvancedJsSplitter.Split(Properties.Settings.Default.RefactorPath, Properties.Settings.Default.GeneratedFilesPath, files);
             });
         }
     }

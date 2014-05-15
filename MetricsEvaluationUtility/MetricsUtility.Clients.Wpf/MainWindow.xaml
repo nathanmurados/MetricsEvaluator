@@ -132,11 +132,14 @@
                     <Label Content="{Binding RefactorCssDirectory}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" IsEnabled="{Binding IsIdle}">
-                    <Button Click="ChangeSolutionRoutePath" Content="Change solution route folder:" Margin="5" />
-                    <Button Click="ChangeGeneratedCssPath" Content="Generated CSS folder" Margin="5" />
-                    <Button Click="ChangeRefactorPath" Content="Select folder to refactor" Margin="5" />
+                    <Button Click="ChangeSolutionRoutePath" Content="Change solution root folder:" Margin="5" />
+                    <Button Click="ChangeGeneratedCssPath" Content="Generated results folder" Margin="5" />
+                    <Button Click="ChangeRefactorPath" Content="Folder to refactor" Margin="5" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" IsEnabled="{Binding IsIdle}">
                     <Button Click="RefactorCss" Content="Refactor CSS" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
-                    <Button Click="RefactorJs" Content="Refactor JS" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
+                    <Button Click="RefactorJs" Content="Refactor JS (non @)" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
+                    <Button Click="RefactorJsWithAtVars" Content="Refactor JS (@ only)" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </Expander>
