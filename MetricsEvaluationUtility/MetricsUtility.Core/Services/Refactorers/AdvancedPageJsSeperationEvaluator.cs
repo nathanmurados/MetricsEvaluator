@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -28,18 +29,13 @@ namespace MetricsUtility.Core.Services.Refactorers
                     .Replace("<script language=\"javascript\" type=\"text/javascript\">", correct);
             }
 
-            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.OnlyBlocksWithoutAtVars);
+            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.OnlyBlocksWithAtVars);
 
             GeneratedJsViewModel[] extractedJsBlocks;
             List<string> strippedContent;
 
 
-            if (!inlineJs.Any())
-            {
-                extractedJsBlocks = new GeneratedJsViewModel[0];
-                strippedContent = cleanedLines.ToList();
-            }
-            else
+            if (inlineJs.Any())
             {
                 strippedContent = new List<string>();
                 extractedJsBlocks = new GeneratedJsViewModel[inlineJs.Count];
@@ -52,7 +48,8 @@ namespace MetricsUtility.Core.Services.Refactorers
                 for (var i = 0; i < inlineJs.Count; i++)
                 {
                     extractedJsBlocks[i] = new GeneratedJsViewModel { Lines = new List<string>() };
-                    jsFileDetails[i] = JsFileNameEvaluator.Evaluate(solutionRouteDirectory, generatedResultDirectory, fileName, i);
+                    jsFileDetails[i] = JsFileNameEvaluator.Evaluate(solutionRouteDirectory, generatedResultDirectory,
+                        fileName, i);
                 }
 
                 var openingTagWrittenFor = -1;
@@ -85,6 +82,11 @@ namespace MetricsUtility.Core.Services.Refactorers
                             }
                             else
                             {
+                                if (line.Contains("@"))
+                                {
+                                    throw new NotImplementedException("ERROR: '@' sign detected");
+                                }
+
                                 line = line.Remove(toReplace);
                             }
 
@@ -97,6 +99,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                             {
                                 extractedJsBlocks[blockIndex].Lines.Add(cssReplacement);
                             }
+
                             if (lineIndex == inlineJs[blockIndex].Lines.Count - 1)
                             {
                                 extractedJsBlocks[blockIndex].ProposedFileName = jsFileDetails[blockIndex].Filename;
@@ -120,6 +123,12 @@ namespace MetricsUtility.Core.Services.Refactorers
                     }
                 }
             }
+            else
+            {
+                extractedJsBlocks = new GeneratedJsViewModel[0];
+                strippedContent = cleanedLines.ToList();
+            }
+
             return new SeperatedJsViewModel
             {
                 ExtractedJsBlocks = extractedJsBlocks,

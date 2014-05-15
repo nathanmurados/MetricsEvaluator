@@ -10,17 +10,17 @@ namespace MetricsUtility.Clients.Wpf.Services
     public class AdvancedJsSplitter : IAdvancedJsSplitter, IHasHumanInterface
     {
         public IHumanInterface Ux { get; private set; }
-        public IPageJsSeperationEvaluator PageJsSeperationEvaluator { get; private set; }
+        public IAdvancedPageJsSeperationEvaluator AdvancedPageJsSeperationEvaluator { get; private set; }
         public IDirectoryMimicker DirectoryMimicker { get; private set; }
         public IJsRefactorResultsPresenter JsRefactorResultsPresenter { get; private set; }
         public ISplitJsFileCreator SplitJsFileCreator { get; private set; }
 
-        public AdvancedJsSplitter(IHumanInterface ux, IPageJsSeperationEvaluator pageJsSeperationEvaluator, IDirectoryMimicker directoryMimicker, IJsRefactorResultsPresenter jsRefactorResultsPresenter, ISplitJsFileCreator splitJsFileCreator)
+        public AdvancedJsSplitter(IHumanInterface ux, IAdvancedPageJsSeperationEvaluator advancedPageJsSeperationEvaluator, IDirectoryMimicker directoryMimicker, IJsRefactorResultsPresenter jsRefactorResultsPresenter, ISplitJsFileCreator splitJsFileCreator)
         {
             SplitJsFileCreator = splitJsFileCreator;
             JsRefactorResultsPresenter = jsRefactorResultsPresenter;
             DirectoryMimicker = directoryMimicker;
-            PageJsSeperationEvaluator = pageJsSeperationEvaluator;
+            AdvancedPageJsSeperationEvaluator = advancedPageJsSeperationEvaluator;
             Ux = ux;
         }
 
@@ -41,7 +41,7 @@ namespace MetricsUtility.Clients.Wpf.Services
 
                 try
                 {
-                    seperatedJsViewModel = PageJsSeperationEvaluator.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file);
+                    seperatedJsViewModel = AdvancedPageJsSeperationEvaluator.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file);
                 }
                 catch (Exception e)
                 {
@@ -50,13 +50,11 @@ namespace MetricsUtility.Clients.Wpf.Services
                 }
 
                 SplitJsFileCreator.Create(seperatedJsViewModel, newPath, avoidedOverWrites, ref filesCreated, file);
-
             }
 
             Ux.WriteLine(string.Format("Created {0} failedFiles", filesCreated));
 
             JsRefactorResultsPresenter.Present(failedFiles, avoidedOverWrites);
         }
-
     }
 }
