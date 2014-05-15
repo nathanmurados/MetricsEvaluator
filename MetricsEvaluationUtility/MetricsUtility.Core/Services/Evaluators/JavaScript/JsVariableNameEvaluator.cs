@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
+    
     public class JsVariableNameEvaluator : IJsVariableNameEvaluator
     {
+        private static char[] charactersToRemove = new char[] { '@', '"', '[', ']', '(', ')', ' ', ';', ',', '.'};
         /// <summary>
         /// Extract a variable name from the razor code.
         /// Example input: @ViewData["Subject"]"
@@ -13,7 +16,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// <returns></returns>
         public string Evaluate(string razorCode)
         {
-            throw new NotImplementedException();
+            return new string(razorCode.Where(c => !JsVariableNameEvaluator.charactersToRemove.Contains(c)).ToArray());
         }
     }
 }

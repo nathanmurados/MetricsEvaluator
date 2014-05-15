@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\work\MetricsEvaluator\MetricsEvaluationUtility\Metrics Evaluator.nunit" total="10" errors="0" failures="8" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-05-15" time="19:52:45">
+  <environment nunit-version="2.6.0.12051" clr-version="2.0.50727.5477" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\work\MetricsEvaluator\MetricsEvaluationUtility" machine-name="SEAN" user="Sean" user-domain="SEAN" />
+  <culture-info current-culture="en-GB" current-uiculture="en-US" />
+  <test-suite type="Project" name="C:\work\MetricsEvaluator\MetricsEvaluationUtility\Metrics Evaluator.nunit" executed="True" result="Failure" success="False" time="1.031" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="C:\work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\bin\Debug\MetricsUtiltiy.Tests.dll" executed="True" result="Failure" success="False" time="0.972" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="MetricsUtiltiy" executed="True" result="Failure" success="False" time="0.971" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Tests" executed="True" result="Failure" success="False" time="0.970" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="GetVariableNameTests" executed="True" result="Failure" success="False" time="0.964" asserts="0">
+                    <results>
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_1" executed="True" result="Success" success="True" time="0.234" asserts="1" />
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_10" executed="True" result="Failure" success="False" time="0.069" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected string length 37 but was 39. Strings differ at index 17.
+  Expected: "newHtmlStringJsonEncodeModelFrequency"
+  But was:  "newHtmlStringJson.EncodeModel.Frequency"
+  ----------------------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_10() in c:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\GetVariableNameTests.cs:line 147
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_2" executed="True" result="Failure" success="False" time="0.010" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected string length 52 but was 54. Strings differ at index 6.
+  Expected: "Model0MessageListActivitiesConstantsPleaseEnterValue"
+  But was:  "Model0.MessageListActivitiesConstants.PleaseEnterValue"
+  -----------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_2() in c:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\GetVariableNameTests.cs:line 35
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_3" executed="True" result="Failure" success="False" time="0.003" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected string length 13 but was 14. Strings differ at index 7.
+  Expected: "ViewBagpageId"
+  But was:  "ViewBag.pageId"
+  ------------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_3() in c:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\GetVariableNameTests.cs:line 49
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_4" executed="True" result="Failure" success="False" time="0.003" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected string length 52 but was 53. Strings differ at index 5.
+  Expected: "ModelSettingsFactsActivitiesConstantsPhoneCallNotes]"
+  But was:  "Model.SettingsFactsActivitiesConstants.PhoneCallNotes"
+  ----------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_4() in c:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\GetVariableNameTests.cs:line 63
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_5" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_6" executed="True" result="Failure" success="False" time="0.003" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected string length 27 but was 28. Strings differ at index 4.
+  Expected: "HtmlRawViewBag.factPageDict"
+  But was:  "Html.RawViewBag.factPageDict"
+  ---------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_6() in c:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\GetVariableNameTests.cs:line 91
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_7" executed="True" result="Failure" success="False" time="0.002" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected string length 26 but was 27. Strings differ at index 5.
+  Expected: "ModelMessageListMSG1005884"
+  But was:  "Model.MessageListMSG1005884"
+  ----------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_7() in c:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\GetVariableNameTests.cs:line 105
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_8" executed="True" result="Failure" success="False" time="0.003" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected string length 37 but was 38. Strings differ at index 3.
+  Expected: "UrlActionMenuAssociationConfigureMenu"
+  But was:  "Url.ActionMenuAssociationConfigureMenu"
+  --------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_8() in c:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\GetVariableNameTests.cs:line 119
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_9" executed="True" result="Failure" success="False" time="0.002" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected string length 27 but was 29. Strings differ at index 7.
+  Expected: "ConvertToInt32ViewBagPageNo"
+  But was:  "Convert.ToInt32ViewBag.PageNo"
+  ------------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_9() in c:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\GetVariableNameTests.cs:line 133
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
