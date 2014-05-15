@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Windows;
-using System.Windows.Documents;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Refactorers;
 
 namespace MetricsUtility.Clients.Wpf.Services
 {
-    public class JsSplitter : IJsSplitter, IHasHumanInterface
+    public class AdvancedJsSplitter : IAdvancedJsSplitter, IHasHumanInterface
     {
         public IHumanInterface Ux { get; private set; }
         public IPageJsSeperationEvaluator PageJsSeperationEvaluator { get; private set; }
@@ -17,7 +15,7 @@ namespace MetricsUtility.Clients.Wpf.Services
         public IJsRefactorResultsPresenter JsRefactorResultsPresenter { get; private set; }
         public ISplitJsFileCreator SplitJsFileCreator { get; private set; }
 
-        public JsSplitter(IHumanInterface ux, IPageJsSeperationEvaluator pageJsSeperationEvaluator, IDirectoryMimicker directoryMimicker, IJsRefactorResultsPresenter jsRefactorResultsPresenter, ISplitJsFileCreator splitJsFileCreator)
+        public AdvancedJsSplitter(IHumanInterface ux, IPageJsSeperationEvaluator pageJsSeperationEvaluator, IDirectoryMimicker directoryMimicker, IJsRefactorResultsPresenter jsRefactorResultsPresenter, ISplitJsFileCreator splitJsFileCreator)
         {
             SplitJsFileCreator = splitJsFileCreator;
             JsRefactorResultsPresenter = jsRefactorResultsPresenter;
@@ -52,11 +50,13 @@ namespace MetricsUtility.Clients.Wpf.Services
                 }
 
                 SplitJsFileCreator.Create(seperatedJsViewModel, newPath, avoidedOverWrites, ref filesCreated, file);
+
             }
 
             Ux.WriteLine(string.Format("Created {0} failedFiles", filesCreated));
 
             JsRefactorResultsPresenter.Present(failedFiles, avoidedOverWrites);
         }
+
     }
 }

@@ -8,7 +8,14 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
     {
         public List<PageBlockSplitResult> Evaluate(string[] contents, bool includeBlocksWithAtVars)
         {
-            return Split(contents, RegexConstants.ScriptOpeningTag, "</script>", includeBlocksWithAtVars);
+            return Split(contents, RegexConstants.ScriptOpeningTag, RegexConstants.ScriptClosingTag, includeBlocksWithAtVars);
         }
+    }
+
+    public enum JsPageEvaluationMode
+    {
+        OnlyNonAtVars,
+        OnlyAtVars,
+        Any
     }
 }

@@ -82,9 +82,11 @@
     <Compile Include="Services\Presenters\JavaScriptFileStatsPresenter.cs" />
     <Compile Include="Services\Presenters\JavascriptStatsPresenter.cs" />
     <Compile Include="Services\Presenters\ListPresenter.cs" />
+    <Compile Include="Services\Refactorers\AdvancedPageJsSeperationEvaluator.cs" />
     <Compile Include="Services\Refactorers\CssFileNameEvaluator.cs" />
     <Compile Include="Services\Refactorers\GeneratedCssViewModel.cs" />
     <Compile Include="Services\Refactorers\GeneratedJsViewModel.cs" />
+    <Compile Include="Services\Refactorers\IAdvancedPageJsSeperationEvaluator.cs" />
     <Compile Include="Services\Refactorers\ICssFileNameEvaluator.cs" />
     <Compile Include="Services\Refactorers\IJsFileNameEvaluator.cs" />
     <Compile Include="Services\Refactorers\IPageCssSeperationEvaluator.cs" />

@@ -85,9 +85,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\AdvancedJsSplitter.cs" />
     <Compile Include="Services\DirectoryMimicker.cs" />
+    <Compile Include="Services\IAdvancedJsSplitter.cs" />
     <Compile Include="Services\IDirectoryMimicker.cs" />
+    <Compile Include="Services\IJsRefactorResultsPresenter.cs" />
     <Compile Include="Services\IJsSplitter.cs" />
+    <Compile Include="Services\ISplitJsFileCreator.cs" />
+    <Compile Include="Services\JsRefactorResultsPresenter.cs" />
     <Compile Include="Services\JsSplitter.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IImageReferencesEvaluator.cs" />
     <Compile Include="Services\Evaluators\ImageReferencesEvaluator.cs" />
@@ -110,6 +115,7 @@
     <Compile Include="Services\Presenters\Interfaces\ISolutionPathPresenter.cs" />
     <Compile Include="Services\Presenters\SolutionPathPresenter.cs" />
     <Compile Include="Services\SpecificGroupEvaluator.cs" />
+    <Compile Include="Services\SplitJsFileCreator.cs" />
     <Compile Include="ViewModels\GroupedFilesViewModel.cs" />
     <Compile Include="Services\Evaluators\GroupedJavaScriptEvaluator.cs" />
     <Compile Include="Services\Evaluators\Interfaces\IGroupedCssEvaluator.cs" />

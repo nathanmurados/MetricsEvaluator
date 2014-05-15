@@ -1,0 +1,59 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using MetricsUtility.Core.Services;
+using MetricsUtility.Core.Services.Refactorers;
+
+namespace MetricsUtility.Clients.Wpf.Services
+{
+    public class SplitJsFileCreator : ISplitJsFileCreator, IHasHumanInterface
+    {
+        public IHumanInterface Ux { get; private set; }
+
+        public SplitJsFileCreator(IHumanInterface ux)
+        {
+            Ux = ux;
+        }
+
+        public void Create(SeperatedJsViewModel seperatedJsViewModel, string newPath, List<string> avoidedOverWrites, ref int filesCreated, string file)
+        {
+            if (seperatedJsViewModel.ExtractedJsBlocks.Any())
+            {
+                foreach (var newFile in seperatedJsViewModel.ExtractedJsBlocks)
+                {
+                    var uri = newPath + "\\" + newFile.ProposedFileName;
+
+                    if (!Directory.Exists(newPath))
+                    {
+                        Directory.CreateDirectory(newPath);
+                    }
+
+                    if (File.Exists(uri))
+                    {
+                        avoidedOverWrites.Add(uri);
+                        Ux.WriteLine(string.Format("SKIPPED: {0}", uri));
+                        continue;
+                    }
+
+                    File.WriteAllLines(uri, newFile.Lines);
+
+                    var atSigns = newFile.Lines.Count(x => x.Contains("@"));
+                    var dotDotSlashes = newFile.Lines.Count(x => x.Contains("../"));
+                    if (atSigns > 0)
+                    {
+                        Ux.WriteLine(string.Format("---WARNING: {0} lines containing @ were detected", atSigns));
+                    }
+                    if (dotDotSlashes > 0)
+                    {
+                        Ux.WriteLine(string.Format("---WARNING: {0} lines containing ../ were detected", dotDotSlashes));
+                    }
+
+                    Ux.WriteLine("Created " + uri);
+                    filesCreated++;
+                }
+                File.WriteAllLines(file, seperatedJsViewModel.StripedContent);
+            }
+        }
+
+    }
+}
