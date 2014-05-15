@@ -92,10 +92,12 @@
     <Compile Include="Services\Refactorers\IAdvancedPageJsSeperationEvaluator.cs" />
     <Compile Include="Services\Refactorers\ICssFileNameEvaluator.cs" />
     <Compile Include="Services\Refactorers\IJsFileNameEvaluator.cs" />
+    <Compile Include="Services\Refactorers\IJsModuleFactory.cs" />
     <Compile Include="Services\Refactorers\IPageCssSeperationEvaluator.cs" />
     <Compile Include="Services\Refactorers\IPageJsSeperationEvaluator.cs" />
     <Compile Include="Services\Refactorers\ISolutionRelativeDirectoryEvaluator.cs" />
     <Compile Include="Services\Refactorers\JsFileNameEvaluator.cs" />
+    <Compile Include="Services\Refactorers\JsModuleFactory.cs" />
     <Compile Include="Services\Refactorers\PageCssSeperationEvaluator.cs" />
     <Compile Include="Services\Refactorers\PageJsSeperationEvaluator.cs" />
     <Compile Include="Services\Refactorers\RefactoredFileNameViewModel.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Services\Refactorers\SeperatedJsViewModel.cs" />
     <Compile Include="Services\Refactorers\SolutionRelativeDirectoryEvaluator.cs" />
     <Compile Include="Services\Refactorers\StringExtensions.cs" />
+    <Compile Include="ViewModels\JsModuleViewModel.cs" />
     <Compile Include="ViewModels\SeperatedCssViewModel.cs" />
     <Compile Include="Services\Storers\CssStatsStorer.cs" />
     <Compile Include="Services\Storers\ICssStatsFileNameEvaluator.cs" />

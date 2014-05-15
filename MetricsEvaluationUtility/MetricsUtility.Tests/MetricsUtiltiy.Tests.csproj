@@ -52,6 +52,7 @@
     <Compile Include="BaseTests.cs" />
     <Compile Include="FoldermakerTests.cs" />
     <Compile Include="GetVariableNameTests.cs" />
+    <Compile Include="JsModuleFactoryTests.cs" />
     <Compile Include="PagJsSeperationEvaluatorTests.cs" />
     <Compile Include="PageCssSeperationEvaluatorTests.cs" />
     <Compile Include="DirectoryGroupEvaluatorTests.cs" />
