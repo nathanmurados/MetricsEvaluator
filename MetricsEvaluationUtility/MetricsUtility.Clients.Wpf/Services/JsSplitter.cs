@@ -51,6 +51,7 @@ namespace MetricsUtility.Clients.Wpf.Services
         public void Split(string refactorPath, string generatedFilesPath, string[] filesToRefactor)
         {
             var failedFiles = new List<string>();
+            var collisions = new List<string>();
             var created = 0;
 
             for (var i = 0; i < filesToRefactor.Length; i++)
@@ -92,11 +93,13 @@ namespace MetricsUtility.Clients.Wpf.Services
 
                         if (File.Exists(uri))
                         {
-                            var x = string.Format("An error occured whilst attempting to process {1}{2}{2}A FILE ALREADY EXISTS HERE - PLEASE REVIEW MANUALLY - {0}", uri, file, Environment.NewLine);
-                            MessageBox.Show(x, "OVERWRITE PREVENTED", MessageBoxButton.OK, MessageBoxImage.Error);
-                            Ux.WriteLine("ERROR - TASK STOPPED: " + x);
-                            Ux.WriteLine("");
-                            return;
+                            //var x = string.Format("An error occured whilst attempting to process {1}{2}{2}A FILE ALREADY EXISTS HERE - PLEASE REVIEW MANUALLY - {0}", uri, file, Environment.NewLine);
+                            //MessageBox.Show(x, "OVERWRITE PREVENTED", MessageBoxButton.OK, MessageBoxImage.Error);
+                            //Ux.WriteLine("ERROR - TASK STOPPED: " + x);
+                            //Ux.WriteLine("");
+                            collisions.Add(uri);
+                            Ux.WriteLine(string.Format("SKIPPED: {0}", uri));
+                            continue;
                         }
 
                         File.WriteAllLines(uri, newFile.Lines);
@@ -104,10 +107,13 @@ namespace MetricsUtility.Clients.Wpf.Services
                         var atSigns = newFile.Lines.Count(x => x.Contains("@"));
                         var dotDotSlashes = newFile.Lines.Count(x => x.Contains("../"));
                         if (atSigns > 0)
+                        {
                             Ux.WriteLine(string.Format("---WARNING: {0} lines containing @ were detected", atSigns));
+                        }
                         if (dotDotSlashes > 0)
-                            Ux.WriteLine(string.Format("---WARNING: {0} lines containing ../ were detected",
-                                dotDotSlashes));
+                        {
+                            Ux.WriteLine(string.Format("---WARNING: {0} lines containing ../ were detected",dotDotSlashes));
+                        }
 
                         Ux.WriteLine("Created " + uri);
                         created++;
@@ -118,7 +124,7 @@ namespace MetricsUtility.Clients.Wpf.Services
 
             Ux.WriteLine(string.Format("Created {0} files", created));
 
-            if (!failedFiles.Any())
+            if (!failedFiles.Any() && !collisions.Any())
             {
                 Ux.WriteLine("Operation complete.");
                 Ux.WriteLine("");
@@ -128,8 +134,13 @@ namespace MetricsUtility.Clients.Wpf.Services
                 Ux.WriteLine(string.Format("Operation completed with {0} ERRORS.", failedFiles.Count));
                 foreach (var failedFile in failedFiles)
                 {
-                    Ux.WriteLine(failedFile);
+                    Ux.WriteLine("Unable to parse: " + failedFile);
                 }
+                foreach (var collision in collisions)
+                {
+                    Ux.WriteLine("Skipped overwrite: " + collision);                    
+                }
+                
                 Ux.WriteLine("");
             }
         }

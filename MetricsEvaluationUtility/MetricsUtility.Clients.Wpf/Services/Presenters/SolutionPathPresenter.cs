@@ -20,7 +20,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
         {
             var dialog = new FolderBrowserDialog
             {
-                SelectedPath = Properties.Settings.Default.RefactorPath,
+                SelectedPath = Properties.Settings.Default.SolutionPath,
                 Description = "Select the route directory of the solution you are refactoring"
             };
 

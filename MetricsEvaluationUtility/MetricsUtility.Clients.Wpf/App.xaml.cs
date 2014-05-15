@@ -94,7 +94,7 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IHasRefactorPathsEvaluator>().To<HasRefactorPathsEvaluator>();
             _container.Bind<IGeneratedCssPathPresenter>().To<GeneratedCssPathPresenter>();
             _container.Bind<ICssFileNameEvaluator>().To<CssFileNameEvaluator>();
-            _container.Bind<ISolutionRelativeFilenameEvaluator>().To<SolutionRelativeFilenameEvaluator>();
+            _container.Bind<ISolutionRelativeDirectoryEvaluator>().To<SolutionRelativeDirectoryEvaluator>();
             _container.Bind<ISolutionPathPresenter>().To<SolutionPathPresenter>();
             _container.Bind<IValidExtensionsEvaluator>().To<ValidExtensionsEvaluator>();
             _container.Bind<IJsSplitter>().To<JsSplitter>();

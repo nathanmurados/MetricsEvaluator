@@ -11,7 +11,7 @@ namespace MetricsUtiltiy.Tests
     {
         private static SeperatedCssViewModel Run(string[] testData)
         {
-            var obj = new PageCssSeperationEvaluator(new CssPagePageBlockSplitter(), new CssFileNameEvaluator(new SolutionRelativeFilenameEvaluator()));
+            var obj = new PageCssSeperationEvaluator(new CssPagePageBlockSplitter(), new CssFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()));
             return obj.Evaluate(testData, @"C:\dir1\dir2\dir3", @"C:\dir1\dir2\dir3\Content\BlockCss\Search", @"LoggingResultGrid.cshtml");
         }
 
