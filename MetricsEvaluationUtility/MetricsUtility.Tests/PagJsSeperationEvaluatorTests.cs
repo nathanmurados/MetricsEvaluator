@@ -28,7 +28,7 @@ namespace MetricsUtiltiy.Tests
 
             Assert.AreEqual(1, result.StripedContent.Count());
             Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
+            Assert.AreEqual("   body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
             Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.StripedContent[0]);
         }
 
@@ -48,7 +48,7 @@ namespace MetricsUtiltiy.Tests
 
             Assert.AreEqual(2, result.StripedContent.Count());
             Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
+            Assert.AreEqual("   body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
             Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.StripedContent[1]);
         }
 
@@ -87,7 +87,7 @@ namespace MetricsUtiltiy.Tests
 
             Assert.AreEqual(1, result.StripedContent.Count());
             Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
+            Assert.AreEqual("   body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
             Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.StripedContent[0]);
             //<script src="@Url.Content("~/Scripts/ThirdPartyFeeds.js")" type="text/javascript"></script>
 
@@ -115,7 +115,7 @@ namespace MetricsUtiltiy.Tests
 
             Assert.AreEqual(8, result.StripedContent.Count());
             Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
+            Assert.AreEqual("         body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
             Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.StripedContent[2]);
         }
 
@@ -148,6 +148,32 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("      <div>some text</div>", result.StripedContent[5]);
             Assert.AreEqual("   <body>", result.StripedContent[6]);
             Assert.AreEqual("</html>", result.StripedContent[7]);
+        }
+
+        [Test]
+        public void EnsureJsIsFormattedProeprly()
+        {
+            var testData = new[]
+            {
+                "<html>",
+                "   <head>",
+                "      <script type=\"text/javascript\">",
+                "         $(function(){",
+                "             alert('hello world');",
+                "         });",
+                "      </script>",
+                "   </head>",
+                "   <body>",
+                "      <div>some text</div>",
+                "   <body>",
+                "</html>"
+            };
+
+            var result = Run(testData);
+
+            Assert.AreEqual("         $(function(){", result.ExtractedJsBlocks[0].Lines[0]);
+            Assert.AreEqual("             alert('hello world');", result.ExtractedJsBlocks[0].Lines[1]);
+            Assert.AreEqual("         });", result.ExtractedJsBlocks[0].Lines[2]);
         }
 
         [Test]
@@ -336,8 +362,8 @@ namespace MetricsUtiltiy.Tests
 
             // Assert.AreEqual(7, result.StripedContent.Count());
             Assert.AreEqual(2, result.ExtractedJsBlocks[0].Lines.Count());
-            Assert.AreEqual("body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
-            Assert.AreEqual("div{float:left;}", result.ExtractedJsBlocks[0].Lines[1]);
+            Assert.AreEqual("           body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
+            Assert.AreEqual("           div{float:left;}", result.ExtractedJsBlocks[0].Lines[1]);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                     }
                     else
                     {
-                        ls.Lines.Add(line.Trim());
+                        ls.Lines.Add(line);
                         atSymbols += line.Count(x => x == '@');
                     }
                 }
