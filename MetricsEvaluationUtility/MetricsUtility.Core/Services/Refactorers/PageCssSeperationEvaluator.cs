@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.ViewModels;
 
@@ -25,7 +26,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                 cleanedLines[i] = lines[i].Replace("<style>", "<style type=\"text/css\">");
             }
 
-            var inlineCss = CssPageBlockSplitter.Split(cleanedLines, false);
+            var inlineCss = CssPageBlockSplitter.Split(cleanedLines, JsPageEvaluationMode.OnlyBlocksWithoutAtVars);
 
             GeneratedCssViewModel[] extractedCssBlocks;
             List<string> strippedContent;

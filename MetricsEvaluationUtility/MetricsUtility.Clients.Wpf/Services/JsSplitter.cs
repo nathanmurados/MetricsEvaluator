@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Windows;
-using System.Windows.Documents;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Refactorers;
 

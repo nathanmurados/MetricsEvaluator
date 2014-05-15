@@ -30,16 +30,10 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
             double oldPercentage = 0;
             var i = 0;
 
-            //var regex = new Regex("\\(s*['\"]*>", RegexOptions.Multiline | RegexOptions.IgnoreCase);
             var references = new List<string>();
 
             Parallel.ForEach(files, file =>
             {
-                //if (File.ReadAllLines(file).Any(x => regex.Matches(x).Count > 0))
-                //{
-                //    Ux.WriteLine(file + " contains ../");
-                //}
-
                 var line = File.ReadAllLines(file).Count(x => (x.Contains("url")));
 
                 Interlocked.Increment(ref i);
@@ -53,7 +47,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
 
                     var newPercentage = (double)Math.Round((100m / count) * i);
 
-                    if (newPercentage != oldPercentage /* && newPercentage % 5 == 0*/)
+                    if (newPercentage != oldPercentage)
                     {
                         Ux.UpdateProgress((int)newPercentage);
                         oldPercentage = newPercentage;

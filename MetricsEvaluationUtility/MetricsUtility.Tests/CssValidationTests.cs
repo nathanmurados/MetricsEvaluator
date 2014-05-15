@@ -1,4 +1,5 @@
-﻿using MetricsUtility.Core.Services.Evaluators.Css;
+﻿using MetricsUtility.Core.Enums;
+using MetricsUtility.Core.Services.Evaluators.Css;
 using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests
@@ -13,7 +14,7 @@ namespace MetricsUtiltiy.Tests
 
             var evaluator = new CssPagePageBlockSplitter();
 
-            var result = evaluator.Split(raw.Contents, true);
+            var result = evaluator.Split(raw.Contents, JsPageEvaluationMode.AnyBlock);
 
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(6, result[0].Lines.Count);
