@@ -120,4 +120,17 @@ namespace MetricsUtility.Clients.Wpf.Services
         }
     }
 
+
+    public class AdvancedJsSplitter : IAdvancedJsSplitter
+    {
+        public void Split(string refactorPath, string generatedFilesPath, string[] files)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface IAdvancedJsSplitter
+    {
+        void Split(string refactorPath, string generatedFilesPath, string[] files);
+    }
 }
