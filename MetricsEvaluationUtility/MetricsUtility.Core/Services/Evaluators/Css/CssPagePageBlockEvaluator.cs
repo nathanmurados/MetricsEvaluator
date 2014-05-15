@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Refactorers;
 
 namespace MetricsUtility.Core.Services.Evaluators.Css
@@ -9,11 +10,11 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
         /// Derived from http://stackoverflow.com/questions/1079423/regular-expression-to-get-an-attribute-from-html-tag
         /// </summary>
         /// <param name="lines"></param>
-        /// <param name="includeBlocksWithAtVars"></param>
+        /// <param name="mode"></param>
         /// <returns></returns>
-        public List<PageBlockSplitResult> Split(string[] lines, bool includeBlocksWithAtVars)
+        public List<PageBlockSplitResult> Split(string[] lines, JsPageEvaluationMode mode)
         {
-            return Split(lines, RegexConstants.StyleOpeningTag, RegexConstants.StyleClosingTag, includeBlocksWithAtVars);
+            return Split(lines, RegexConstants.StyleOpeningTag, RegexConstants.StyleClosingTag, mode);
         }
     }
 }

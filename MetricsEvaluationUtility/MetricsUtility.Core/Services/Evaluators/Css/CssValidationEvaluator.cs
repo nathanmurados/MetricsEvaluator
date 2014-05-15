@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Extensions;
 using MetricsUtility.Core.ViewModels;
 
@@ -27,7 +28,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 return null;
             }
 
-            var page = CssPageBlockSplitter.Split(contents, true);
+            var page = CssPageBlockSplitter.Split(contents, JsPageEvaluationMode.AnyBlock);
             var block = CssBlockEvaluator.Evaluate(joinedString);
             var razor = CssRazorEvaluator.Evaluate(joinedString);
 

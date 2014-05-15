@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 
 namespace MetricsUtility.Core.Services.Refactorers
@@ -27,7 +28,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                     .Replace("<script language=\"javascript\" type=\"text/javascript\">", correct);
             }
 
-            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, false);
+            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.OnlyBlocksWithoutAtVars);
 
             GeneratedJsViewModel[] extractedJsBlocks;
             List<string> strippedContent;

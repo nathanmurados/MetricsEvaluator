@@ -52,6 +52,7 @@
     <Compile Include="Services\Evaluators\Css\PageBlockSplitResult.cs" />
     <Compile Include="Services\Evaluators\Css\PageBlockSplitter.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsVariableNameEvaluator.cs" />
+    <Compile Include="Enums\JsPageEvaluationMode.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsPageEvaluator.cs" />
     <Compile Include="Services\Evaluators\DirectoryFileEvaluator.cs" />
     <Compile Include="Services\Evaluators\FilteredFilesEvaluator.cs" />

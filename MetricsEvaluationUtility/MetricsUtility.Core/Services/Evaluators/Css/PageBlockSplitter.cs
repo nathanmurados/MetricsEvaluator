@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Extensions;
 
 namespace MetricsUtility.Core.Services.Evaluators.Css
 {
     public abstract class PageBlockSplitter
     {
-        public List<PageBlockSplitResult> Split(string[] lines, string openingRegexTag, string closeTag, bool includeBlocksWithAtVars)
+        public List<PageBlockSplitResult> Split(string[] lines, string openingRegexTag, string closeTag, JsPageEvaluationMode mode)
         {
             //var pageLevelCss = 0;
             var within = false;
@@ -59,7 +60,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 if (within && line.Contains(closeTag, StringComparison.OrdinalIgnoreCase))
                 {
                     within = false;
-                    if (includeBlocksWithAtVars || atSymbols == 0)
+                    if (mode.AllowAtVars() || atSymbols == 0)
                     {
                         if (isWhitSpaceSinceLastBlock && matches.Any())
                         {
@@ -83,6 +84,14 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
             }
 
             return matches;
+        }
+    }
+
+    public static class JsPageEvaluationModeExtensions
+    {
+        public static bool AllowAtVars(this JsPageEvaluationMode mode)
+        {
+            return mode != JsPageEvaluationMode.OnlyBlocksWithoutAtVars;
         }
     }
 }

@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
-using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.Storers;
 using MetricsUtility.Core.ViewModels;
 using Moq;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Extensions;
 using MetricsUtility.Core.ViewModels;
 
@@ -31,7 +32,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 return null;
             }
 
-            var pageLevel = JsPageEvaluator.Evaluate(contents, true);
+            var pageLevel = JsPageEvaluator.Evaluate(contents, JsPageEvaluationMode.AnyBlock);
             var references = JsReferencesEvaluator.Evaluate(joinedString);
             var block = JsBlockEvaluator.Evaluate(joinedString, attributes);
             var razor = JsRazorEvaluator.Evaluate(joinedString, attributes);
