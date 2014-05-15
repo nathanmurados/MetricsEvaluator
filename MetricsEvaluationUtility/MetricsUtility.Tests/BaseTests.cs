@@ -6,7 +6,7 @@ namespace MetricsUtiltiy.Tests
     {
         public FileAndContents GetFileAndContent()
         {
-            const string path = @"C:\Users\nathan.murados\Documents\Visual Studio 2010\Projects\MetricsEvaluationUtility\MetricsEvaluationUtiltiyTests\Assets\TestingResource.cshtml";
+            const string path = @"C:\Users\Michael.Brown\Documents\GitHub\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\Assets\TestingResource.cshtml";
 
             return new FileAndContents
             {

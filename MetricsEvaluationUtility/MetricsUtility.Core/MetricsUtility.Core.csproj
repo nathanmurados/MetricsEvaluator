@@ -51,6 +51,7 @@
     <Compile Include="Services\Evaluators\Css\ICssValidationEvaluator.cs" />
     <Compile Include="Services\Evaluators\Css\PageBlockSplitResult.cs" />
     <Compile Include="Services\Evaluators\Css\PageBlockSplitter.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\IJsVariableNameEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsPageEvaluator.cs" />
     <Compile Include="Services\Evaluators\DirectoryFileEvaluator.cs" />
     <Compile Include="Services\Evaluators\FilteredFilesEvaluator.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Services\Evaluators\JavaScript\JsRazorEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsReferencesEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsValidationEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsVariableNameEvaluator.cs" />
     <Compile Include="Services\Evaluators\RelevantAttributesEvaluator.cs" />
     <Compile Include="Services\Evaluators\SettingsEvaluator.cs" />
     <Compile Include="Services\Extensions\StringExtensions.cs" />
