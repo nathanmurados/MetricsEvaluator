@@ -60,7 +60,7 @@ namespace MetricsUtiltiy.Tests
             string result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual("ModelSettingsFactsActivitiesConstantsPhoneCallNotes]", result);
+            Assert.AreEqual("ModelSettingsFactsActivitiesConstantsPhoneCallNotes", result);
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace MetricsUtiltiy.Tests
             string result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual("HtmlRawViewBag.factPageDict", result);
+            Assert.AreEqual("HtmlRawViewBagfactPageDict", result);
         }
 
         [Test]
