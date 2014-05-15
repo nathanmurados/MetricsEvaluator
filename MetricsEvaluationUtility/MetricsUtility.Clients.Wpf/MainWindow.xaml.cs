@@ -277,5 +277,19 @@ namespace MetricsUtility.Clients.Wpf
                 JsSplitter.Split(Properties.Settings.Default.RefactorPath, Properties.Settings.Default.GeneratedFilesPath, files);
             });
         }
+
+        private void RefactorJsWithAtVars(object sender, RoutedEventArgs e)
+        {
+            ((ViewModel)DataContext).Output = "";
+
+            if (MessageBox.Show("Are you sure?", "Refactor JS", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) { return; }
+
+            DoAction(() =>
+            {
+                var files = DirectoryDescendentFilesEvaluator.Evaluate(Properties.Settings.Default.RefactorPath).Where(x => x.EndsWith(".cshtml")).ToArray();
+
+                AdvancedJsSplitter.Split(Properties.Settings.Default.RefactorPath, Properties.Settings.Default.GeneratedFilesPath, files);
+            });
+        }
     }
 }
