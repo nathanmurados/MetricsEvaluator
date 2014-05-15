@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="BaseTests.cs" />
     <Compile Include="FoldermakerTests.cs" />
+    <Compile Include="GetRazorCodeTests.cs" />
     <Compile Include="GetVariableNameTests.cs" />
     <Compile Include="PagJsSeperationEvaluatorTests.cs" />
     <Compile Include="PageCssSeperationEvaluatorTests.cs" />
