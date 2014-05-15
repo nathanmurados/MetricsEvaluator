@@ -1,0 +1,6 @@
+buildartifacts
+bin
+obj
+*.suo
+*.user
+*.filters
