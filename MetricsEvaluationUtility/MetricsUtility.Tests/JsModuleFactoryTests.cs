@@ -14,7 +14,9 @@ namespace MetricsUtiltiy.Tests
 
             var data = new List<JsModuleViewModel>
             {
-
+                new JsModuleViewModel{JavaScriptName = "ap2.ViewDataSubject",OriginalRazorText = "@ViewData[\"Subject\"]"},
+                new JsModuleViewModel{JavaScriptName = "ap2.Model0MessageListActivitiesConstantsPleaseEnterValue",OriginalRazorText = "@Model[0].MessageList[ActivitiesConstants.PleaseEnterValue]"},
+                new JsModuleViewModel{JavaScriptName = "ap2.ViewBag.pageId",OriginalRazorText = "@ViewData[\"Subject\"]"},
             };
 
             var result = JsModuleFactory.Build();

@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsUtility.Clients.Wpf", "MetricsUtility.Clients.Wpf\MetricsUtility.Clients.Wpf.csproj", "{CFD4E697-B51C-4630-B97D-6A2D2E4DAE19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsUtility.Clients.ConsoleApp", "MetricsUtility.Clients.ConsoleApp\MetricsUtility.Clients.ConsoleApp.csproj", "{F5ECF2A3-077A-45D8-8092-C1EA3B41F5B4}"
@@ -10,6 +8,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsUtility.Core", "MetricsUtility.Core\MetricsUtility.Core.csproj", "{3F448FE5-D3DD-4B6B-9AFF-521B615EA3D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsUtiltiy.Tests", "MetricsUtility.Tests\MetricsUtiltiy.Tests.csproj", "{E8ADB90C-F5AB-4D2B-86EE-E8ED87CF768F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5D7ED8CB-F82C-432C-B0FA-9A7E09BF755F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

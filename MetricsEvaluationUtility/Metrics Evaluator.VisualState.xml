@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Work\MetricsEvaluator\MetricsEvaluationUtility\Metrics Evaluator.nunit</TopNode>
+  <SelectedNode>[0-1012]MetricsUtiltiy.Tests.GetVariableNameTests</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Work\MetricsEvaluator\MetricsEvaluationUtility\Metrics Evaluator.nunit" Expanded="true" />
+    <Node UniqueName="[0-1069]C:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\bin\Debug\MetricsUtiltiy.Tests.dll" Expanded="true" />
+    <Node UniqueName="[0-1070]MetricsUtiltiy" Expanded="true" />
+    <Node UniqueName="[0-1071]MetricsUtiltiy.Tests" Expanded="true" />
+    <Node UniqueName="[0-1012]MetricsUtiltiy.Tests.GetVariableNameTests" Expanded="true" />
+  </Nodes>
+</VisualState>
