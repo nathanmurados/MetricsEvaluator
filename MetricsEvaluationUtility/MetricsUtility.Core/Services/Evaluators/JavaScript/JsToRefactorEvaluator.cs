@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
@@ -11,7 +10,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// Note the line may contain several fragments of razor, but only the first (working left ro right) should be processed
         /// The razor code is prefixed with @, it will probably be surrounded by quotes (single or double).
         /// </summary>
-        public IEnumerable<string> Evaluate(string jsLine)
+        public string[] Evaluate(string jsLine)
         {
             throw new NotImplementedException();
         }

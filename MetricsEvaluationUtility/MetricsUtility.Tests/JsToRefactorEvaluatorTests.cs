@@ -17,10 +17,10 @@ namespace MetricsUtiltiy.Tests
             string input = "var selectedMenu = '@ViewBag.MenuInstanceName';";
 
             // Act
-            IEnumerable<string> result = evaluator.Evaluate(input);
+            string[] result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual("'@ViewBag.MenuInstanceName'", result);
+            Assert.AreEqual("'@ViewBag.MenuInstanceName'", result[0]);
         }
 
         [Test]
@@ -33,10 +33,10 @@ namespace MetricsUtiltiy.Tests
             string input = "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';";
 
             // Act
-            IEnumerable<string> result = evaluator.Evaluate(input);
+            string[] result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual("Url.Action(\"Configure\", \"ConfigureMenu\")", result);
+            Assert.AreEqual("Url.Action(\"Configure\", \"ConfigureMenu\")", result[0]);
         }
         [Test]
         public void Extract_Razor_3()
@@ -59,10 +59,10 @@ namespace MetricsUtiltiy.Tests
             string input = "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));";
 
             // Act
-            IEnumerable<string> result = evaluator.Evaluate(input);
+            string[] result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual("@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList))", result);
+            Assert.AreEqual("@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList))", result[0]);
         }
         [Test]
         public void Extract_Razor_5()
@@ -74,10 +74,10 @@ namespace MetricsUtiltiy.Tests
             string input = " data: \"{'docId1':'\" + '@ViewBag.docid' + \"','conditionType1':'\" + '@ViewBag.doctype' + \"'}\",";
 
             // Act
-            IEnumerable<string> result = evaluator.Evaluate(input);
+            string[] result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual("'@ViewBag.doctype'", result);
+            Assert.AreEqual("'@ViewBag.doctype'", result[0]);
         }
         [Test]
         public void Extract_Razor_6()
@@ -87,10 +87,10 @@ namespace MetricsUtiltiy.Tests
             string input = "$('#HiddenName').val('@Convert.ToString(stateWatcherVM.LName)');";
 
             // Act
-            IEnumerable<string> result = evaluator.Evaluate(input);
+            string[] result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual("@Convert.ToString(stateWatcherVM.LName)'", result);
+            Assert.AreEqual("@Convert.ToString(stateWatcherVM.LName)'", result[0]);
         }
         
     }
