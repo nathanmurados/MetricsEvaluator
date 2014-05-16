@@ -22,13 +22,15 @@ namespace MetricsUtiltiy.Tests
     /// 
     /// </summary>
     [TestFixture]
-    public class JsToRefactorEvaluatorTests2
+    public class JsModuleLineEvaluatorTests
     {
         [Test]
         public void Extract_Razor_wth_text_to_left()
         {
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+
+
+            var evaluator = new JsModuleLineEvaluator();
             string input = "alert('text left @Viewbag.Variable');";
 
             // Act
@@ -43,7 +45,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_wth_text_to_right()
         {
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+            var evaluator = new JsModuleLineEvaluator();
             string input = "alert('@Viewbag.Variable text right');";
 
             // Act
@@ -58,7 +60,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_wth_text_eitherside()
         {
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+            var evaluator = new JsModuleLineEvaluator();
             string input = "alert('text left @Viewbag.Variable text right');";
 
             // Act
