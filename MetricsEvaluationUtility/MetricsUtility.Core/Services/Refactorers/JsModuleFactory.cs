@@ -12,7 +12,7 @@ namespace MetricsUtility.Core.Services.Refactorers
         /// <summary>
         /// Takes a list of razor fragments and corresponding variables names and turns into a JS module.
         /// </summary>
-        public static string[] Build(List<JsModuleViewModel> data)
+        public string[] Build(List<JsModuleViewModel> data)
         {
             // Currently the razor fragment is surrounded by quotes, but that may not always be the case...
             //
