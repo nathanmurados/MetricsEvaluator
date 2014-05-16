@@ -20,6 +20,7 @@ namespace MetricsUtiltiy.Tests
             string[] result = evaluator.Evaluate(input);
 
             // Assert
+            Assert.AreEqual(1, result.Length);
             Assert.AreEqual("'@ViewBag.MenuInstanceName'", result[0]);
         }
 
@@ -36,6 +37,7 @@ namespace MetricsUtiltiy.Tests
             string[] result = evaluator.Evaluate(input);
 
             // Assert
+            Assert.AreEqual(1, result.Length);
             Assert.AreEqual("Url.Action(\"Configure\", \"ConfigureMenu\")", result[0]);
         }
         [Test]
@@ -46,9 +48,10 @@ namespace MetricsUtiltiy.Tests
             string input = "$('#DecommisionReason').val('@decommisionReason');";
 
             // Act
-            IEnumerable<string> result = evaluator.Evaluate(input);
+            string[] result = evaluator.Evaluate(input);
 
             // Assert
+            Assert.AreEqual(1, result.Length);
             Assert.AreEqual("'@decommisionReason'", result);
         }
         [Test]
@@ -62,6 +65,7 @@ namespace MetricsUtiltiy.Tests
             string[] result = evaluator.Evaluate(input);
 
             // Assert
+            Assert.AreEqual(1, result.Length);
             Assert.AreEqual("@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList))", result[0]);
         }
         [Test]
@@ -69,7 +73,7 @@ namespace MetricsUtiltiy.Tests
         {
             // Arrange
             var evaluator = new JsToRefactorEvaluator();
-            
+
             // NB contains 2 fragments of razor
             string input = " data: \"{'docId1':'\" + '@ViewBag.docid' + \"','conditionType1':'\" + '@ViewBag.doctype' + \"'}\",";
 
@@ -77,6 +81,7 @@ namespace MetricsUtiltiy.Tests
             string[] result = evaluator.Evaluate(input);
 
             // Assert
+            Assert.AreEqual(2, result.Length);
             Assert.AreEqual("'@ViewBag.docid'", result[0]);
             Assert.AreEqual("'@ViewBag.doctype'", result[1]);
         }
@@ -91,8 +96,9 @@ namespace MetricsUtiltiy.Tests
             string[] result = evaluator.Evaluate(input);
 
             // Assert
+            Assert.AreEqual(1, result.Length);
             Assert.AreEqual("@Convert.ToString(stateWatcherVM.LName)'", result[0]);
         }
-        
+
     }
 }
