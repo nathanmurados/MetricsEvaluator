@@ -54,7 +54,7 @@
     <Compile Include="AdvancedJsSplitterTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="FoldermakerTests.cs" />
-    <Compile Include="GetRazorCodeTests.cs" />
+    <Compile Include="JsToRefactorEvaluatorTests.cs" />
     <Compile Include="GetVariableNameTests.cs" />
     <Compile Include="JsModuleFactoryTests.cs" />
     <Compile Include="PagJsSeperationEvaluatorTests.cs" />

@@ -69,7 +69,7 @@
     <Compile Include="Services\Evaluators\JavaScript\JsRazorEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsReferencesEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsValidationEvaluator.cs" />
-    <Compile Include="Services\Evaluators\JavaScript\GetJsToRefactor.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsToRefactorEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsVariableNameEvaluator.cs" />
     <Compile Include="Services\Evaluators\RelevantAttributesEvaluator.cs" />
     <Compile Include="Services\Evaluators\SettingsEvaluator.cs" />
