@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using MetricsUtility.Core.Services;
-using MetricsUtility.Core.Services.Refactorers;
+using MetricsUtility.Core.Services.RefactorServices;
 using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services

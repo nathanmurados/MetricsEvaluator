@@ -8,7 +8,7 @@ using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.Presenters;
-using MetricsUtility.Core.Services.Refactorers;
+using MetricsUtility.Core.Services.RefactorServices;
 using MetricsUtility.Core.Services.StorageServices;
 using Ninject;
 using System.Windows;

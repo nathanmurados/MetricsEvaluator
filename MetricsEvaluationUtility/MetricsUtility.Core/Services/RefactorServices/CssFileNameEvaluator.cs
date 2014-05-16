@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace MetricsUtility.Core.Services.Refactorers
+namespace MetricsUtility.Core.Services.RefactorServices
 {
     public class CssFileNameEvaluator : ICssFileNameEvaluator
     {

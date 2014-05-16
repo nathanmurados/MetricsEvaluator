@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using MetricsUtility.Core.Services.Evaluators.Css;
-using MetricsUtility.Core.Services.Refactorers;
+using MetricsUtility.Core.Services.RefactorServices;
 using MetricsUtility.Core.ViewModels;
 using NUnit.Framework;
 

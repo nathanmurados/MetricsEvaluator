@@ -1,11 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetricsUtility.Core.ViewModels;
 
-namespace MetricsUtility.Core.Services.Refactorers
+namespace MetricsUtility.Core.Services.RefactorServices
 {
-    using System;
-
     public class JsModuleFactory : IJsModuleFactory
     {
         private const string JsContainerName = "ap2";

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.Css;
-using MetricsUtility.Core.Services.Refactorers;
+using MetricsUtility.Core.Services.RefactorServices;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {

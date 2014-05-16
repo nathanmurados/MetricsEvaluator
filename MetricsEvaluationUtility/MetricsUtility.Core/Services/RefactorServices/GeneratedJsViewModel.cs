@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace MetricsUtility.Core.Services.Refactorers
+namespace MetricsUtility.Core.Services.RefactorServices
 {
-    public class GeneratedCssViewModel
+    public class GeneratedJsViewModel
     {
         public List<string> Lines { get; set; }
         public string ProposedFileName { get; set; }

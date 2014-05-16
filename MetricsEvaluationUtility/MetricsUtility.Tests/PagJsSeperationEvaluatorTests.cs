@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
-using MetricsUtility.Core.Services.Refactorers;
+using MetricsUtility.Core.Services.RefactorServices;
 using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests

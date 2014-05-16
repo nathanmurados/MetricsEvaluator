@@ -5,7 +5,7 @@ using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.ViewModels;
 
-namespace MetricsUtility.Core.Services.Refactorers
+namespace MetricsUtility.Core.Services.RefactorServices
 {
     public class PageCssSeperationEvaluator : IPageCssSeperationEvaluator
     {

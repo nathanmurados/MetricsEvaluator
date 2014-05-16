@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MetricsUtility.Core.Services.Refactorers;
+using MetricsUtility.Core.Services.RefactorServices;
 
 namespace MetricsUtility.Clients.Wpf.Services
 {

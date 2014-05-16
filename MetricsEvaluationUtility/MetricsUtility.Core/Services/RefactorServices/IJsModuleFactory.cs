@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MetricsUtility.Core.ViewModels;
 
-namespace MetricsUtility.Core.Services.Refactorers
+namespace MetricsUtility.Core.Services.RefactorServices
 {
     public interface IJsModuleFactory
     {

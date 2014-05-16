@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace MetricsUtility.Core.Services.Refactorers
+namespace MetricsUtility.Core.Services.RefactorServices
 {
     public class JsFileNameEvaluator : IJsFileNameEvaluator
     {
