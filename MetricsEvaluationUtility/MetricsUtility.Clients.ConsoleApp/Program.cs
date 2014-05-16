@@ -4,7 +4,7 @@ using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.Presenters;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 using Ninject;
 using Ninject.Modules;
 
@@ -25,20 +25,20 @@ namespace MetricsUtility.Clients.ConsoleApp
                 Bind<IFilteredFilesStatsPresenter>().To<FilteredFilesStatsPresenter>();
                 Bind<ICssStatsPresenter>().To<CssStatsPresenter>();
                 Bind<ICssValidationEvaluator>().To<CssValidationEvaluator>();
-                Bind<ICssStatsStorer>().To<CssStatsStorer>();
+                Bind<ICssStatsStorageService>().To<CssStatsStorageService>();
                 Bind<IDateTimeProvider>().To<DateTimeProvider>();
                 Bind<ICssBlockEvaluator>().To<CssBlockEvaluator>();
                 Bind<ICssRazorEvaluator>().To<CssRazorEvaluator>();
-                Bind<ICssPageBlockSplitter>().To<CssPagePageBlockSplitter>();
+                Bind<ICssBlockContentEvaluator>().To<CssBlockContentEvaluator>();
                 Bind<IJavaScriptStatsPresenter>().To<JavaScriptStatsPresenter>();
                 Bind<IJsValidationEvaluator>().To<JsValidationEvaluator>();
                 Bind<IJsBlockEvaluator>().To<JsBlockEvaluator>();
-                Bind<IJsPageEvaluator>().To<JsPageEvaluator>();
+                Bind<IJsBlockContentEvaluator>().To<JsBlockContentEvaluator>();
                 Bind<IJsRazorEvaluator>().To<JsRazorEvaluator>();
                 Bind<IJsReferencesEvaluator>().To<JsReferencesEvaluator>();
-                Bind<IJavaScriptStatsStorer>().To<JavaScriptStatsStorer>();
+                Bind<IJavaScriptStatsStorageService>().To<JavaScriptStatsStorageService>();
                 Bind<IRelevantAttributesEvaluator>().To<RelevantAttributesEvaluator>();
-                Bind<IStorer>().To<Storer>();
+                Bind<IStorageService>().To<StorageService>();
                 Bind<IJavaScriptFileStatsPresenter>().To<JavaScriptFileStatsPresenter>();
                 Bind<ISettingsValidator>().To<SettingsValidator>();
                 Bind<ISettingsEvaluator>().To<SettingsEvaluator>();
@@ -65,8 +65,8 @@ namespace MetricsUtility.Clients.ConsoleApp
                 kernel.Get<JavaScriptFileStatsPresenter>(),
                 kernel.Get<ISettingsValidator>(),
                 kernel.Get<ISettingsEvaluator>(),
-                kernel.Get<IJavaScriptStatsStorer>(),
-                kernel.Get<ICssStatsStorer>()
+                kernel.Get<IJavaScriptStatsStorageService>(),
+                kernel.Get<ICssStatsStorageService>()
             );
 
             prog.Execute();

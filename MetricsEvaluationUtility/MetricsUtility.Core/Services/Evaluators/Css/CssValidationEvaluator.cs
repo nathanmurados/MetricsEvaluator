@@ -9,13 +9,13 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
     public class CssValidationEvaluator : ICssValidationEvaluator
     {
         public ICssRazorEvaluator CssRazorEvaluator { get; private set; }
-        public ICssPageBlockSplitter CssPageBlockSplitter { get; private set; }
+        public ICssBlockContentEvaluator CssBlockContentEvaluator { get; private set; }
         public ICssBlockEvaluator CssBlockEvaluator { get; private set; }
 
-        public CssValidationEvaluator(ICssBlockEvaluator cssBlockEvaluator, ICssRazorEvaluator cssRazorEvaluator, ICssPageBlockSplitter cssPageBlockSplitter)
+        public CssValidationEvaluator(ICssBlockEvaluator cssBlockEvaluator, ICssRazorEvaluator cssRazorEvaluator, ICssBlockContentEvaluator cssBlockContentEvaluator)
         {
             CssBlockEvaluator = cssBlockEvaluator;
-            CssPageBlockSplitter = cssPageBlockSplitter;
+            CssBlockContentEvaluator = cssBlockContentEvaluator;
             CssRazorEvaluator = cssRazorEvaluator;
         }
 
@@ -28,7 +28,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 return null;
             }
 
-            var page = CssPageBlockSplitter.Split(contents, JsPageEvaluationMode.Any);
+            var page = CssBlockContentEvaluator.Split(contents, JsPageEvaluationMode.Any);
             var block = CssBlockEvaluator.Evaluate(joinedString);
             var razor = CssRazorEvaluator.Evaluate(joinedString);
 

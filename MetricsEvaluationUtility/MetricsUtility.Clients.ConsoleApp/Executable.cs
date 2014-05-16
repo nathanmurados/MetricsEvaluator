@@ -3,7 +3,7 @@ using System.Linq;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Presenters;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 
 namespace MetricsUtility.Clients.ConsoleApp
 {
@@ -22,13 +22,13 @@ namespace MetricsUtility.Clients.ConsoleApp
         public IJavaScriptFileStatsPresenter JavaScriptFileStatsPresenter { get; private set; }
         public ISettingsValidator SettingsValidator { get; private set; }
         public ISettingsEvaluator SettingsEvaluator { get; private set; }
-        public IJavaScriptStatsStorer JavaScriptStatsStorer { get; private set; }
-        public ICssStatsStorer CssStatsStorer { get; private set; }
+        public IJavaScriptStatsStorageService JavaScriptStatsStorageService { get; private set; }
+        public ICssStatsStorageService CssStatsStorageService { get; private set; }
 
-        public Executable(IHumanInterface ux, IFileExtensionPresenter fileExtensionPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IListPresenter listPresenter, IFilteredFilesPresenter filteredFilesPresenter, IFilteredFilesStatsPresenter filteredFilesStatsPresenter, ICssStatsPresenter cssStatsPresenter, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, IJavaScriptFileStatsPresenter javaScriptFileStatsPresenter, ISettingsValidator settingsValidator, ISettingsEvaluator settingsEvaluator, IJavaScriptStatsStorer javaScriptStatsStorer, ICssStatsStorer cssStatsStorer)
+        public Executable(IHumanInterface ux, IFileExtensionPresenter fileExtensionPresenter, IDirectoryDescendentFilesEvaluator directoryDescendentFilesEvaluator, IListPresenter listPresenter, IFilteredFilesPresenter filteredFilesPresenter, IFilteredFilesStatsPresenter filteredFilesStatsPresenter, ICssStatsPresenter cssStatsPresenter, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, IJavaScriptFileStatsPresenter javaScriptFileStatsPresenter, ISettingsValidator settingsValidator, ISettingsEvaluator settingsEvaluator, IJavaScriptStatsStorageService javaScriptStatsStorageService, ICssStatsStorageService cssStatsStorageService)
         {
-            CssStatsStorer = cssStatsStorer;
-            JavaScriptStatsStorer = javaScriptStatsStorer;
+            CssStatsStorageService = cssStatsStorageService;
+            JavaScriptStatsStorageService = javaScriptStatsStorageService;
             SettingsEvaluator = settingsEvaluator;
 
             SettingsValidator = settingsValidator;
@@ -70,13 +70,13 @@ namespace MetricsUtility.Clients.ConsoleApp
                 Ux.AddOptionWithHeadingSpace("Count inline CSS on filtered files", () =>
                 {
                     var results = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
-                    Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(results, string.Empty), null);
+                    Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorageService.Store(results, string.Empty), null);
                 });
 
                 Ux.AddOptionWithHeadingSpace("Count inline Javascript on filtered files", () =>
                 {
                     var results = JavaScriptStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
-                    Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () => JavaScriptStatsStorer.Store(results, string.Empty), null);
+                    Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () => JavaScriptStatsStorageService.Store(results, string.Empty), null);
                 });
 
                 Ux.AddOptionWithHeadingSpace("Count inline Javascript and CSS on specific file...", () => JavaScriptFileStatsPresenter.Present());

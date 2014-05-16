@@ -1,4 +1,4 @@
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 
 namespace MetricsUtility.Clients.ConsoleApp.Services
 {

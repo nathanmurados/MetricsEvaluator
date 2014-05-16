@@ -5,9 +5,9 @@ using MetricsUtility.Core.Services.Refactorers;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    public class JsPageEvaluator :PageBlockSplitter, IJsPageEvaluator
+    public class JsBlockContentEvaluator : BlockContentEvaluator, IJsBlockContentEvaluator
     {
-        public List<PageBlockSplitResult> Evaluate(string[] contents, JsPageEvaluationMode mode)
+        public BlockContent[] Evaluate(string[] contents, JsPageEvaluationMode mode)
         {
             return Split(contents, RegexConstants.ScriptOpeningTag, RegexConstants.ScriptClosingTag, mode);
         }

@@ -1,3 +1,4 @@
+using System.Linq;
 using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using NUnit.Framework;
@@ -12,11 +13,11 @@ namespace MetricsUtiltiy.Tests
         {
             var raw = GetFileAndContent();
 
-            var evaluator = new JsPageEvaluator();
+            var evaluator = new JsBlockContentEvaluator();
 
             var result = evaluator.Evaluate(raw.Contents, JsPageEvaluationMode.Any);
 
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, result.Length);
         }
 
 

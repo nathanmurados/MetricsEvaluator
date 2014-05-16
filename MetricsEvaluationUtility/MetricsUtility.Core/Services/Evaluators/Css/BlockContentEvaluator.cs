@@ -7,18 +7,18 @@ using MetricsUtility.Core.Services.Extensions;
 
 namespace MetricsUtility.Core.Services.Evaluators.Css
 {
-    public abstract class PageBlockSplitter
+    public abstract class BlockContentEvaluator
     {
-        public List<PageBlockSplitResult> Split(string[] lines, string openingRegexTag, string closeTag, JsPageEvaluationMode mode)
+        public BlockContent[] Split(string[] lines, string openingRegexTag, string closeTag, JsPageEvaluationMode mode)
         {
             //var pageLevelCss = 0;
             var within = false;
-            var matches = new List<PageBlockSplitResult>();
+            var matches = new List<BlockContent>();
             var isWhitSpaceSinceLastBlock = false;
             var openingRegex = new Regex(openingRegexTag, RegexOptions.Multiline | RegexOptions.IgnoreCase);
             var atSymbols = 0;
 
-            var ls = new PageBlockSplitResult { Lines = new List<string>() };
+            var ls = new BlockContent { Lines = new List<string>() };
 
             for (var i = 0; i < lines.Length; i++)
             {
@@ -79,7 +79,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                         }
                     }
 
-                    ls = new PageBlockSplitResult
+                    ls = new BlockContent
                     {
                         Lines = new List<string>(),
                         AtSymbols = 0
@@ -87,7 +87,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 }
             }
 
-            return matches;
+            return matches.ToArray();
         }
     }
 

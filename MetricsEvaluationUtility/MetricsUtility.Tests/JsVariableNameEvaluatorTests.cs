@@ -5,7 +5,7 @@ namespace MetricsUtiltiy.Tests
     using MetricsUtility.Core.Services.Evaluators.JavaScript;
 
     [TestFixture]
-    public class GetVariableNameTests
+    public class JsVariableNameEvaluatorTests
     {
         [Test]
         public void Extract_Varable_Name_1()

@@ -1,6 +1,6 @@
 ﻿namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    public interface IGetJsToRefactor
+    public interface IJsModuleLineEvaluator
     {
         string[] Evaluate(string jsLine);
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Core.Services.Refactorers
@@ -12,7 +13,7 @@ namespace MetricsUtility.Core.Services.Refactorers
         /// <summary>
         /// Takes a list of razor fragments and corresponding variables names and turns into a JS module.
         /// </summary>
-        public string[] Build(List<JsModuleViewModel> data)
+        public string[] Build(IEnumerable<JsModuleViewModel> data)
         {
             // Currently the razor fragment is surrounded by quotes, but that may not always be the case...
             //
@@ -27,13 +28,13 @@ namespace MetricsUtility.Core.Services.Refactorers
             //        return ap2;
             //    }(ap2 || {}));
 
-            if (data == null || data.Count == 0)
+            if (data == null || !data.Any())
             {
                 throw new ArgumentException("Null or empty arguments.");
             }
 
             int i = 0;
-            int moduleLines = data.Count + 3;
+            int moduleLines = data.Count() + 3;
             const string indent1 = "    "; // may change to tabs
             const string indent2 = "        "; // may change to tabs
             string[] result = new string[moduleLines];

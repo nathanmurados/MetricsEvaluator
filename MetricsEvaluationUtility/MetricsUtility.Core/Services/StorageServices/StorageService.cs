@@ -1,13 +1,13 @@
 using System.IO;
 using System.Text;
 
-namespace MetricsUtility.Core.Services.Storers
+namespace MetricsUtility.Core.Services.StorageServices
 {
-    public sealed class Storer : IStorer
+    public sealed class StorageService : IStorageService
     {
         public IResultsDirectoryEvaluator ResultsDirectoryEvaluator { get; private set; }
 
-        public Storer(IResultsDirectoryEvaluator resultsDirectoryEvaluator)
+        public StorageService(IResultsDirectoryEvaluator resultsDirectoryEvaluator)
         {
             ResultsDirectoryEvaluator = resultsDirectoryEvaluator;
         }
@@ -29,10 +29,5 @@ namespace MetricsUtility.Core.Services.Storers
 
             return null;
         }
-    }
-
-    public interface IStorer
-    {
-        string Store(StringBuilder stringBuilder, string fileName);
     }
 }

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 using MetricsUtility.Core.ViewModels;
 using Moq;
 using NUnit.Framework;
@@ -22,7 +22,7 @@ namespace MetricsUtiltiy.Tests
             var mockRelevantAttributesEvaluator = new Mock<IRelevantAttributesEvaluator>();
             var mockHumanInterface = new Mock<IHumanInterface>();
             var mockDateTimeProvider = new Mock<IDateTimeProvider>();
-            var mockStorer = new Mock<IStorer>();
+            var mockStorer = new Mock<IStorageService>();
             var mockNamer = new Mock<IJavaScriptStatsFileNameEvaluator>();
 
             mockRelevantAttributesEvaluator.Setup(x => x.Evaluate(It.IsAny<List<JavaScriptEvaluationResult>>())).Returns(() => new List<string> { "onclick", "onblur", "ondblclick" });
@@ -35,7 +35,7 @@ namespace MetricsUtiltiy.Tests
                 Assert.AreEqual(2, Regex.Matches(str, Environment.NewLine).Count);
             });
 
-            var evaluator = new JavaScriptStatsStorer(mockStorer.Object, mockDateTimeProvider.Object, mockHumanInterface.Object, mockRelevantAttributesEvaluator.Object, mockNamer.Object);
+            var evaluator = new JavaScriptStatsStorageService(mockStorer.Object, mockDateTimeProvider.Object, mockHumanInterface.Object, mockRelevantAttributesEvaluator.Object, mockNamer.Object);
 
             var testData = new List<JavaScriptEvaluationResult>
             {
@@ -51,10 +51,10 @@ namespace MetricsUtiltiy.Tests
                         new DetailedJavaScriptEvaluationResult { AttributeName = "onclick" },
                         new DetailedJavaScriptEvaluationResult { AttributeName = "ondblclick" },
                     },
-                    PageInstances = new List<PageBlockSplitResult>
+                    PageInstances = new []
                     {
-                        new PageBlockSplitResult {Lines = new List<string>{"line1"}},
-                        new PageBlockSplitResult {Lines = new List<string>()},
+                        new BlockContent {Lines = new List<string>{"line1"}},
+                        new BlockContent {Lines = new List<string>()},
                     }, 
                     FileName = "test",
                     References = 1

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MetricsUtility.Core.Services.Evaluators.Css;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Core.Services.Presenters
@@ -14,12 +14,12 @@ namespace MetricsUtility.Core.Services.Presenters
     {
         public IHumanInterface Ux { get; private set; }
         public ICssValidationEvaluator CssValidationEvaluator { get; private set; }
-        public ICssStatsStorer CssStatsStorer { get; private set; }
+        public ICssStatsStorageService CssStatsStorageService { get; private set; }
         public static object Lock = new object();
 
-        public CssStatsPresenter(IHumanInterface ux, ICssValidationEvaluator cssValidationEvaluator, ICssStatsStorer cssStatsStorer)
+        public CssStatsPresenter(IHumanInterface ux, ICssValidationEvaluator cssValidationEvaluator, ICssStatsStorageService cssStatsStorageService)
         {
-            CssStatsStorer = cssStatsStorer;
+            CssStatsStorageService = cssStatsStorageService;
             CssValidationEvaluator = cssValidationEvaluator;
             Ux = ux;
         }

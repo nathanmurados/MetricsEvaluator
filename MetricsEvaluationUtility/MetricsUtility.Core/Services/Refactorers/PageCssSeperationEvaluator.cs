@@ -9,13 +9,13 @@ namespace MetricsUtility.Core.Services.Refactorers
 {
     public class PageCssSeperationEvaluator : IPageCssSeperationEvaluator
     {
-        public ICssPageBlockSplitter CssPageBlockSplitter { get; private set; }
+        public ICssBlockContentEvaluator CssBlockContentEvaluator { get; private set; }
         public ICssFileNameEvaluator CssFileNameEvaluator { get; private set; }
 
-        public PageCssSeperationEvaluator(ICssPageBlockSplitter cssPageBlockSplitter, ICssFileNameEvaluator cssFileNameEvaluator)
+        public PageCssSeperationEvaluator(ICssBlockContentEvaluator cssBlockContentEvaluator, ICssFileNameEvaluator cssFileNameEvaluator)
         {
             CssFileNameEvaluator = cssFileNameEvaluator;
-            CssPageBlockSplitter = cssPageBlockSplitter;
+            CssBlockContentEvaluator = cssBlockContentEvaluator;
         }
 
         public SeperatedCssViewModel Evaluate(string[] lines, string solutionRouteDirectory, string directoryForGeneratedCss, string fileName)
@@ -26,7 +26,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                 cleanedLines[i] = lines[i].Replace("<style>", "<style type=\"text/css\">");
             }
 
-            var inlineCss = CssPageBlockSplitter.Split(cleanedLines, JsPageEvaluationMode.NonRazorOnly);
+            var inlineCss = CssBlockContentEvaluator.Split(cleanedLines, JsPageEvaluationMode.NonRazorOnly);
 
             GeneratedCssViewModel[] extractedCssBlocks;
             List<string> strippedContent;
@@ -40,14 +40,14 @@ namespace MetricsUtility.Core.Services.Refactorers
             else
             {
                 strippedContent = new List<string>();
-                extractedCssBlocks = new GeneratedCssViewModel[inlineCss.Count];
+                extractedCssBlocks = new GeneratedCssViewModel[inlineCss.Length];
 
-                var cssFileDetails = new RefactoredFileNameViewModel[inlineCss.Count];
+                var cssFileDetails = new RefactoredFileNameViewModel[inlineCss.Length];
                 var blockIndex = 0;
                 var lineIndex = 0;
                 var done = false;
 
-                for (var i = 0; i < inlineCss.Count; i++)
+                for (var i = 0; i < inlineCss.Length; i++)
                 {
                     extractedCssBlocks[i] = new GeneratedCssViewModel { Lines = new List<string>() };
                     cssFileDetails[i] = CssFileNameEvaluator.Evaluate(solutionRouteDirectory, directoryForGeneratedCss, fileName, i);
@@ -100,7 +100,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                                 extractedCssBlocks[blockIndex].ProposedFileName = cssFileDetails[blockIndex].Filename;
                                 lineIndex = -1;
                                 blockIndex++;
-                                if (blockIndex == inlineCss.Count)
+                                if (blockIndex == inlineCss.Length)
                                 {
                                     done = true;
                                 }

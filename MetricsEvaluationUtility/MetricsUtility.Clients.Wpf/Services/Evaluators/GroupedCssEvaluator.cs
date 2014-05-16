@@ -4,7 +4,7 @@ using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Presenters;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators
@@ -15,15 +15,15 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
         public IDirectoryGroupEvaluator DirectoryGroupEvaluator { get; private set; }
         public IHumanInterface Ux { get; private set; }
         public ICssStatsPresenter CssStatsPresenter { get; private set; }
-        public ICssStatsStorer CssStatsStorer { get; private set; }
+        public ICssStatsStorageService CssStatsStorageService { get; private set; }
         public IFolderPresenter FolderPresenter { get; private set; }
         public event EventHandler ScrollDown;
 
 
-        public GroupedCssEvaluator(IPathExistenceEvaluator pathExistenceEvaluator, IDirectoryGroupEvaluator directoryGroupEvaluator, IHumanInterface ux, ICssStatsPresenter cssStatsPresenter, ICssStatsStorer cssStatsStorer, IFolderPresenter folderPresenter)
+        public GroupedCssEvaluator(IPathExistenceEvaluator pathExistenceEvaluator, IDirectoryGroupEvaluator directoryGroupEvaluator, IHumanInterface ux, ICssStatsPresenter cssStatsPresenter, ICssStatsStorageService cssStatsStorageService, IFolderPresenter folderPresenter)
         {
             FolderPresenter = folderPresenter;
-            CssStatsStorer = cssStatsStorer;
+            CssStatsStorageService = cssStatsStorageService;
             CssStatsPresenter = cssStatsPresenter;
             Ux = ux;
             DirectoryGroupEvaluator = directoryGroupEvaluator;
@@ -60,7 +60,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
                 i = 1;
                 foreach (var resultGroup in groupedResults)
                 {
-                    CssStatsStorer.Store(resultGroup, string.Format("Group {0}", specificGroup > 0 ? specificGroup : i));
+                    CssStatsStorageService.Store(resultGroup, string.Format("Group {0}", specificGroup > 0 ? specificGroup : i));
                     ScrollDown(null, null);
                     i++;
                 }

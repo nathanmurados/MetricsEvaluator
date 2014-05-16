@@ -2,7 +2,7 @@
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    public class JsToRefactorEvaluator : IGetJsToRefactor
+    public class JsModuleLineEvaluator : IJsModuleLineEvaluator
     {
         /// <summary>
         /// Extract the razor code from the line of javascript

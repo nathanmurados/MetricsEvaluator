@@ -15,11 +15,11 @@ namespace MetricsUtility.Clients.Wpf.Services
             Ux = ux;
         }
 
-        public void Create(SeperatedJsViewModel seperatedJsViewModel, string newPath, List<string> avoidedOverWrites, ref int filesCreated, string file)
+        public void Create(SeperatedJs seperatedJs, string newPath, List<string> avoidedOverWrites, ref int filesCreated, string file)
         {
-            if (seperatedJsViewModel.ExtractedJsBlocks.Any())
+            if (seperatedJs.ExtractedJsBlocks.Any())
             {
-                foreach (var newFile in seperatedJsViewModel.ExtractedJsBlocks)
+                foreach (var newFile in seperatedJs.ExtractedJsBlocks)
                 {
                     var uri = newPath + "\\" + newFile.ProposedFileName;
 
@@ -51,7 +51,7 @@ namespace MetricsUtility.Clients.Wpf.Services
                     Ux.WriteLine("Created " + uri);
                     filesCreated++;
                 }
-                File.WriteAllLines(file, seperatedJsViewModel.StripedContent);
+                File.WriteAllLines(file, seperatedJs.ReplacementLines);
             }
         }
 

@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
-    public class FoldermakerTests
+    public class DirectoryMimickerTests
     {
         [Test]
         public void Test1()

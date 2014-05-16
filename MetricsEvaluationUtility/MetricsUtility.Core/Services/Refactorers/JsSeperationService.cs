@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using MetricsUtility.Core.Enums;
@@ -6,18 +6,18 @@ using MetricsUtility.Core.Services.Evaluators.JavaScript;
 
 namespace MetricsUtility.Core.Services.Refactorers
 {
-    public class AdvancedPageJsSeperationEvaluator : IAdvancedPageJsSeperationEvaluator
+    public class JsSeperationService : IJsSeperationService
     {
-        public IJsPageEvaluator JsPageEvaluator { get; private set; }
+        public IJsBlockContentEvaluator JsBlockContentEvaluator { get; private set; }
         public IJsFileNameEvaluator JsFileNameEvaluator { get; private set; }
 
-        public AdvancedPageJsSeperationEvaluator(IJsPageEvaluator jsPageEvaluator, IJsFileNameEvaluator jsFileNameEvaluator)
+        public JsSeperationService(IJsBlockContentEvaluator jsBlockContentEvaluator, IJsFileNameEvaluator jsFileNameEvaluator)
         {
             JsFileNameEvaluator = jsFileNameEvaluator;
-            JsPageEvaluator = jsPageEvaluator;
+            JsBlockContentEvaluator = jsBlockContentEvaluator;
         }
 
-        public SeperatedJsViewModel Evaluate(string[] lines, string solutionRouteDirectory, string generatedResultDirectory, string fileName)
+        public SeperatedJs Evaluate(string[] lines, string solutionRouteDirectory, string generatedResultDirectory, string fileName)
         {
             var cleanedLines = new string[lines.Length];
             const string correct = "<script type=\"text/javascript\">";
@@ -28,23 +28,28 @@ namespace MetricsUtility.Core.Services.Refactorers
                     .Replace("<script language=\"javascript\" type=\"text/javascript\">", correct);
             }
 
-            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.RazorOnly);
+            var inlineJs = JsBlockContentEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.NonRazorOnly);
 
             GeneratedJsViewModel[] extractedJsBlocks;
-            List<string> strippedContent;
+            List<string> replacmentContent;
 
 
-            if (inlineJs.Any())
+            if (!inlineJs.Any())
             {
-                strippedContent = new List<string>();
-                extractedJsBlocks = new GeneratedJsViewModel[inlineJs.Count];
+                extractedJsBlocks = new GeneratedJsViewModel[0];
+                replacmentContent = cleanedLines.ToList();
+            }
+            else
+            {
+                replacmentContent = new List<string>();
+                extractedJsBlocks = new GeneratedJsViewModel[inlineJs.Count()];
 
-                var jsFileDetails = new RefactoredFileNameViewModel[inlineJs.Count];
+                var jsFileDetails = new RefactoredFileNameViewModel[inlineJs.Count()];
                 var blockIndex = 0;
                 var lineIndex = 0;
                 var done = false;
 
-                for (var i = 0; i < inlineJs.Count; i++)
+                for (var i = 0; i < inlineJs.Count(); i++)
                 {
                     extractedJsBlocks[i] = new GeneratedJsViewModel { Lines = new List<string>() };
                     jsFileDetails[i] = JsFileNameEvaluator.Evaluate(solutionRouteDirectory, generatedResultDirectory, fileName, i);
@@ -63,11 +68,11 @@ namespace MetricsUtility.Core.Services.Refactorers
                             var hasStartTag = Regex.Matches(toReplace, RegexConstants.ScriptOpeningTag, RegexOptions.IgnoreCase).Count > 0;
                             var line = l;
 
-                            var replacement = Regex.Replace(toReplace, RegexConstants.ScriptClosingTag, "", RegexOptions.IgnoreCase);
+                            var cssReplacement = Regex.Replace(toReplace, RegexConstants.ScriptClosingTag, "", RegexOptions.IgnoreCase);
 
                             if (hasStartTag)
                             {
-                                replacement = Regex.Replace(replacement, RegexConstants.ScriptOpeningTag, "", RegexOptions.IgnoreCase);
+                                cssReplacement = Regex.Replace(cssReplacement, RegexConstants.ScriptOpeningTag, "", RegexOptions.IgnoreCase);
                                 if (openingTagWrittenFor != blockIndex)
                                 {
                                     line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
@@ -85,20 +90,19 @@ namespace MetricsUtility.Core.Services.Refactorers
 
                             if (line.Trim().Length > 0)
                             {
-                                strippedContent.Add(line.Trim());
+                                replacmentContent.Add(line.Trim());
                             }
 
-                            if (replacement.Trim().Length > 0)
+                            if (cssReplacement.Trim().Length > 0)
                             {
-                                extractedJsBlocks[blockIndex].Lines.Add(replacement);
+                                extractedJsBlocks[blockIndex].Lines.Add(cssReplacement);
                             }
-
                             if (lineIndex == inlineJs[blockIndex].Lines.Count - 1)
                             {
                                 extractedJsBlocks[blockIndex].ProposedFileName = jsFileDetails[blockIndex].Filename;
                                 lineIndex = -1;
                                 blockIndex++;
-                                if (blockIndex == inlineJs.Count)
+                                if (blockIndex == inlineJs.Length)
                                 {
                                     done = true;
                                 }
@@ -107,25 +111,19 @@ namespace MetricsUtility.Core.Services.Refactorers
                         }
                         else
                         {
-                            strippedContent.Add(l);
+                            replacmentContent.Add(l);
                         }
                     }
                     else
                     {
-                        strippedContent.Add(l);
+                        replacmentContent.Add(l);
                     }
                 }
             }
-            else
-            {
-                extractedJsBlocks = new GeneratedJsViewModel[0];
-                strippedContent = cleanedLines.ToList();
-            }
-
-            return new SeperatedJsViewModel
+            return new SeperatedJs
             {
                 ExtractedJsBlocks = extractedJsBlocks,
-                StripedContent = strippedContent.ToArray()
+                ReplacementLines = replacmentContent.ToArray()
             };
         }
     }

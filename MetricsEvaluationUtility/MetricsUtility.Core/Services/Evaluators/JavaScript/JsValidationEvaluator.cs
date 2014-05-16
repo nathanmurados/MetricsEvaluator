@@ -10,15 +10,15 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
     public class JsValidationEvaluator : IJsValidationEvaluator
     {
         public IJsRazorEvaluator JsRazorEvaluator { get; private set; }
-        public IJsPageEvaluator JsPageEvaluator { get; private set; }
+        public IJsBlockContentEvaluator JsBlockContentEvaluator { get; private set; }
         public IJsBlockEvaluator JsBlockEvaluator { get; private set; }
         public IJsReferencesEvaluator JsReferencesEvaluator { get; private set; }
 
-        public JsValidationEvaluator(IJsBlockEvaluator jsBlockEvaluator, IJsPageEvaluator jsPageEvaluator, IJsRazorEvaluator jsRazorEvaluator, IJsReferencesEvaluator jsReferencesEvaluator)
+        public JsValidationEvaluator(IJsBlockEvaluator jsBlockEvaluator, IJsBlockContentEvaluator jsBlockContentEvaluator, IJsRazorEvaluator jsRazorEvaluator, IJsReferencesEvaluator jsReferencesEvaluator)
         {
             JsReferencesEvaluator = jsReferencesEvaluator;
             JsBlockEvaluator = jsBlockEvaluator;
-            JsPageEvaluator = jsPageEvaluator;
+            JsBlockContentEvaluator = jsBlockContentEvaluator;
             JsRazorEvaluator = jsRazorEvaluator;
         }
 
@@ -32,7 +32,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 return null;
             }
 
-            var pageLevel = JsPageEvaluator.Evaluate(contents, JsPageEvaluationMode.Any);
+            var pageLevel = JsBlockContentEvaluator.Evaluate(contents, JsPageEvaluationMode.Any);
             var references = JsReferencesEvaluator.Evaluate(joinedString);
             var block = JsBlockEvaluator.Evaluate(joinedString, attributes);
             var razor = JsRazorEvaluator.Evaluate(joinedString, attributes);

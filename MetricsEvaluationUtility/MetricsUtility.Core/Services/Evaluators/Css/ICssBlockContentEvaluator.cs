@@ -3,8 +3,8 @@ using MetricsUtility.Core.Enums;
 
 namespace MetricsUtility.Core.Services.Evaluators.Css
 {
-    public interface ICssPageBlockSplitter
+    public interface ICssBlockContentEvaluator
     {
-        List<PageBlockSplitResult> Split(string[] lines, JsPageEvaluationMode mode);
+        BlockContent[] Split(string[] lines, JsPageEvaluationMode mode);
     }
 }

@@ -10,17 +10,17 @@ namespace MetricsUtility.Clients.Wpf.Services
     public class JsSplitter : IJsSplitter, IHasHumanInterface
     {
         public IHumanInterface Ux { get; private set; }
-        public IPageJsSeperationEvaluator PageJsSeperationEvaluator { get; private set; }
+        public IJsSeperationService JsSeperationService { get; private set; }
         public IDirectoryMimicker DirectoryMimicker { get; private set; }
         public IJsRefactorResultsPresenter JsRefactorResultsPresenter { get; private set; }
         public ISplitJsFileCreator SplitJsFileCreator { get; private set; }
 
-        public JsSplitter(IHumanInterface ux, IPageJsSeperationEvaluator pageJsSeperationEvaluator, IDirectoryMimicker directoryMimicker, IJsRefactorResultsPresenter jsRefactorResultsPresenter, ISplitJsFileCreator splitJsFileCreator)
+        public JsSplitter(IHumanInterface ux, IJsSeperationService jsSeperationService, IDirectoryMimicker directoryMimicker, IJsRefactorResultsPresenter jsRefactorResultsPresenter, ISplitJsFileCreator splitJsFileCreator)
         {
             SplitJsFileCreator = splitJsFileCreator;
             JsRefactorResultsPresenter = jsRefactorResultsPresenter;
             DirectoryMimicker = directoryMimicker;
-            PageJsSeperationEvaluator = pageJsSeperationEvaluator;
+            JsSeperationService = jsSeperationService;
             Ux = ux;
         }
 
@@ -35,13 +35,13 @@ namespace MetricsUtility.Clients.Wpf.Services
                 var file = filesToRefactor[i];
                 var newPath = DirectoryMimicker.Mimick(refactorPath, generatedFilesPath, file);
 
-                SeperatedJsViewModel seperatedJsViewModel;
+                SeperatedJs seperatedJs;
 
                 Ux.WriteLine(string.Format("Processing item {0}", i.ToString(CultureInfo.InvariantCulture)));
 
                 try
                 {
-                    seperatedJsViewModel = PageJsSeperationEvaluator.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file);
+                    seperatedJs = JsSeperationService.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file);
                 }
                 catch (Exception e)
                 {
@@ -49,7 +49,7 @@ namespace MetricsUtility.Clients.Wpf.Services
                     continue;
                 }
 
-                SplitJsFileCreator.Create(seperatedJsViewModel, newPath, avoidedOverWrites, ref filesCreated, file);
+                SplitJsFileCreator.Create(seperatedJs, newPath, avoidedOverWrites, ref filesCreated, file);
             }
 
             Ux.WriteLine(string.Format("Created {0} failedFiles", filesCreated));

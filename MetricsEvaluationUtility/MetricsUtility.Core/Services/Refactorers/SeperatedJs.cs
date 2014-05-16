@@ -1,8 +1,8 @@
 ﻿namespace MetricsUtility.Core.Services.Refactorers
 {
-    public class SeperatedJsViewModel
+    public class SeperatedJs
     {
-        public string[] StripedContent { get; set; }
+        public string[] ReplacementLines { get; set; }
         public GeneratedJsViewModel[] ExtractedJsBlocks { get; set; }
     }
 }

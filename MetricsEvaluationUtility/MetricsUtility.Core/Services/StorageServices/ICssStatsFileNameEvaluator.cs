@@ -1,4 +1,4 @@
-namespace MetricsUtility.Core.Services.Storers
+namespace MetricsUtility.Core.Services.StorageServices
 {
     public interface ICssStatsFileNameEvaluator
     {

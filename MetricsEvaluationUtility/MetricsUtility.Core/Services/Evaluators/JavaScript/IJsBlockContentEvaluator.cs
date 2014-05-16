@@ -4,8 +4,8 @@ using MetricsUtility.Core.Services.Evaluators.Css;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    public interface IJsPageEvaluator
+    public interface IJsBlockContentEvaluator
     {
-        List<PageBlockSplitResult> Evaluate(string[] contents, JsPageEvaluationMode mode);
+        BlockContent[] Evaluate(string[] contents, JsPageEvaluationMode mode);
     }
 }

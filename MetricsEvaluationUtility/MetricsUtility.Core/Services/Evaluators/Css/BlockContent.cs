@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace MetricsUtility.Core.Services.Evaluators.Css
 {
-    public class PageBlockSplitResult
+    public class BlockContent
     {
         public List<string> Lines { get; set; }
         public int FirstOccurenceLineNumber { get; set; }

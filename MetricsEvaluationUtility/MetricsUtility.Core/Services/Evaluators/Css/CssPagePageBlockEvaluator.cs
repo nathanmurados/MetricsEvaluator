@@ -4,7 +4,7 @@ using MetricsUtility.Core.Services.Refactorers;
 
 namespace MetricsUtility.Core.Services.Evaluators.Css
 {
-    public class CssPagePageBlockSplitter : PageBlockSplitter, ICssPageBlockSplitter
+    public class CssBlockContentEvaluator : BlockContentEvaluator, ICssBlockContentEvaluator
     {
         /// <summary>
         /// Derived from http://stackoverflow.com/questions/1079423/regular-expression-to-get-an-attribute-from-html-tag
@@ -12,7 +12,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
         /// <param name="lines"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public List<PageBlockSplitResult> Split(string[] lines, JsPageEvaluationMode mode)
+        public BlockContent[] Split(string[] lines, JsPageEvaluationMode mode)
         {
             return Split(lines, RegexConstants.StyleOpeningTag, RegexConstants.StyleClosingTag, mode);
         }

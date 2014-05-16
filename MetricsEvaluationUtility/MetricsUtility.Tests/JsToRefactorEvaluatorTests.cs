@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests
@@ -13,7 +12,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_1()
         {
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+            var evaluator = new JsModuleLineEvaluator();
             string input = "var selectedMenu = '@ViewBag.MenuInstanceName';";
 
             // Act
@@ -30,7 +29,7 @@ namespace MetricsUtiltiy.Tests
             throw new NotImplementedException("Would who ever works on this please discuss this with Nathan");
 
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+            var evaluator = new JsModuleLineEvaluator();
             string input = "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';";
 
             // Act
@@ -44,7 +43,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_3()
         {
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+            var evaluator = new JsModuleLineEvaluator();
             string input = "$('#DecommisionReason').val('@decommisionReason');";
 
             // Act
@@ -58,7 +57,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_4()
         {
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+            var evaluator = new JsModuleLineEvaluator();
             string input = "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));";
 
             // Act
@@ -72,7 +71,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_5()
         {
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+            var evaluator = new JsModuleLineEvaluator();
 
             // NB contains 2 fragments of razor
             string input = " data: \"{'docId1':'\" + '@ViewBag.docid' + \"','conditionType1':'\" + '@ViewBag.doctype' + \"'}\",";
@@ -89,7 +88,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_6()
         {
             // Arrange
-            var evaluator = new JsToRefactorEvaluator();
+            var evaluator = new JsModuleLineEvaluator();
             string input = "$('#HiddenName').val('@Convert.ToString(stateWatcherVM.LName)');";
 
             // Act

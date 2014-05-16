@@ -5,7 +5,7 @@ using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Presenters;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 
 namespace MetricsUtility.Clients.Wpf.Services.Presenters
 {
@@ -13,14 +13,14 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
     {
         public IJavaScriptStatsPresenter JavaScriptStatsPresenter { get; private set; }
         public IFilteredFilesEvaluator FilteredFilesEvaluator { get; private set; }
-        public IJavaScriptStatsStorer CssJavaScriptStorer { get; private set; }
+        public IJavaScriptStatsStorageService CssJavaScriptStorageService { get; private set; }
         public IHumanInterface Ux { get; private set; }
         public IFilePresenter FilePresenter { get; private set; }
 
-        public JavaScriptMetricsPresenter(IHumanInterface ux, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, IJavaScriptStatsStorer cssJavaScriptStorer, IFilePresenter filePresenter)
+        public JavaScriptMetricsPresenter(IHumanInterface ux, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, IJavaScriptStatsStorageService cssJavaScriptStorageService, IFilePresenter filePresenter)
         {
             FilePresenter = filePresenter;
-            CssJavaScriptStorer = cssJavaScriptStorer;
+            CssJavaScriptStorageService = cssJavaScriptStorageService;
             FilteredFilesEvaluator = filteredFilesEvaluator;
             JavaScriptStatsPresenter = javaScriptStatsPresenter;
             Ux = ux;
@@ -31,7 +31,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Presenters
             if (Directory.Exists(Properties.Settings.Default.InspectionPath))
             {
                 var results = JavaScriptStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(files));
-                Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () => CssJavaScriptStorer.Store(results, string.Empty), null);
+                Ux.DisplayBoolOption("Store detailed JavaScript results to disk?", () => CssJavaScriptStorageService.Store(results, string.Empty), null);
 
                 Ux.WriteLine("");
             }

@@ -1,6 +1,6 @@
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    //public class JsPageEvaluator : IJsPageEvaluator
+    //public class JsBlockContentEvaluator : IJsBlockContentEvaluator
     //{
     //    /// <summary>
     //    /// Derived from http://stackoverflow.com/questions/17200485/regex-to-match-a-html-tags-without-specific-attribute

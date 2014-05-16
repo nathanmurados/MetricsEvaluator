@@ -5,6 +5,6 @@ namespace MetricsUtility.Clients.Wpf.Services
 {
     public interface ISplitJsFileCreator
     {
-        void Create(SeperatedJsViewModel seperatedJsViewModel, string newPath, List<string> avoidedOverWrites, ref int filesCreated, string file);
+        void Create(SeperatedJs seperatedJs, string newPath, List<string> avoidedOverWrites, ref int filesCreated, string file);
     }
 }

@@ -3,21 +3,21 @@ using System.Linq;
 using System.Text;
 using MetricsUtility.Core.ViewModels;
 
-namespace MetricsUtility.Core.Services.Storers
+namespace MetricsUtility.Core.Services.StorageServices
 {
-    public class CssStatsStorer : ICssStatsStorer, IHasDateTimeProvider, IHasHumanInterface
+    public class CssStatsStorageService : ICssStatsStorageService, IHasDateTimeProvider, IHasHumanInterface
     {
         public IHumanInterface Ux { get; private set; }
         public IDateTimeProvider DateTimeProvider { get; private set; }
-        public IStorer Storer { get; private set; }
+        public IStorageService StorageService { get; private set; }
         public ICssStatsFileNameEvaluator CssStatsFileNameEvaluator { get; private set; }
 
-        public CssStatsStorer(IStorer storer, IDateTimeProvider dateTimeProvider, IHumanInterface ux, ICssStatsFileNameEvaluator cssStatsFileNameEvaluator)
+        public CssStatsStorageService(IStorageService storageService, IDateTimeProvider dateTimeProvider, IHumanInterface ux, ICssStatsFileNameEvaluator cssStatsFileNameEvaluator)
         {
             CssStatsFileNameEvaluator = cssStatsFileNameEvaluator;
             Ux = ux;
             DateTimeProvider = dateTimeProvider;
-            Storer = storer;
+            StorageService = storageService;
         }
 
         /// <summary>
@@ -56,17 +56,12 @@ namespace MetricsUtility.Core.Services.Storers
                 results.Sum(x => x.Razor.Sum(y => y.Value.Length))
             );
 
-            var filename = Storer.Store(sb, CssStatsFileNameEvaluator.Evaluate(groupName));
+            var filename = StorageService.Store(sb, CssStatsFileNameEvaluator.Evaluate(groupName));
 
             Ux.WriteLine(string.Format("Saved to {0}", filename));
             Ux.WriteLine("");
 
             return filename;
         }
-    }
-
-    public interface ICssStatsStorer
-    {
-        string Store(List<CssEvaluationResult> results, string groupName);
     }
 }

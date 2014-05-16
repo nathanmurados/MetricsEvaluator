@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using MetricsUtility.Core.Services;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 using MetricsUtility.Core.ViewModels;
 using Moq;
 using NUnit.Framework;
@@ -19,7 +19,7 @@ namespace MetricsUtiltiy.Tests
         {
             var mockHumanInterface = new Mock<IHumanInterface>();
             var mockDateTimeProvider = new Mock<IDateTimeProvider>();
-            var mockStorer = new Mock<IStorer>();
+            var mockStorer = new Mock<IStorageService>();
             var mockNamer = new Mock<ICssStatsFileNameEvaluator>();
 
             mockStorer.Setup(x => x.Store(It.IsAny<StringBuilder>(), It.IsAny<string>())).Callback<StringBuilder, string>((sb, title) =>
@@ -30,7 +30,7 @@ namespace MetricsUtiltiy.Tests
                 Assert.AreEqual(2, Regex.Matches(str, Environment.NewLine).Count);
             });
 
-            var evaluator = new CssStatsStorer(mockStorer.Object, mockDateTimeProvider.Object, mockHumanInterface.Object, mockNamer.Object);
+            var evaluator = new CssStatsStorageService(mockStorer.Object, mockDateTimeProvider.Object, mockHumanInterface.Object, mockNamer.Object);
 
             var testData = new List<CssEvaluationResult>
             {

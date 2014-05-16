@@ -11,7 +11,7 @@ namespace MetricsUtiltiy.Tests
     {
         private static SeperatedCssViewModel Run(string[] testData)
         {
-            var obj = new PageCssSeperationEvaluator(new CssPagePageBlockSplitter(), new CssFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()));
+            var obj = new PageCssSeperationEvaluator(new CssBlockContentEvaluator(), new CssFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()));
             return obj.Evaluate(testData, @"C:\dir1\dir2\dir3", @"C:\dir1\dir2\dir3\Content\BlockCss\Search", @"LoggingResultGrid.cshtml");
         }
 
@@ -242,7 +242,7 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            // Assert.AreEqual(7, result.StripedContent.Count());
+            // Assert.AreEqual(7, result.ReplacementLines.Count());
             Assert.AreEqual(1, result.ExtractedCssBlocks.Count());
             Assert.AreEqual("body{float:left;}", result.ExtractedCssBlocks[0].Lines[0]);
         }
@@ -264,7 +264,7 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            // Assert.AreEqual(7, result.StripedContent.Count());
+            // Assert.AreEqual(7, result.ReplacementLines.Count());
             Assert.AreEqual(1, result.ExtractedCssBlocks.Count());
             Assert.AreEqual("body{float:left;}", result.ExtractedCssBlocks[0].Lines[0]);
         }
@@ -290,7 +290,7 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            // Assert.AreEqual(7, result.StripedContent.Count());
+            // Assert.AreEqual(7, result.ReplacementLines.Count());
             Assert.AreEqual(2, result.ExtractedCssBlocks[0].Lines.Count());
             Assert.AreEqual("body{float:left;}", result.ExtractedCssBlocks[0].Lines[0]);
             Assert.AreEqual("div{float:left;}", result.ExtractedCssBlocks[0].Lines[1]);

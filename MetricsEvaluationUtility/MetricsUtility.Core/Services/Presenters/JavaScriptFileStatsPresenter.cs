@@ -1,5 +1,5 @@
 using MetricsUtility.Core.Services.Evaluators;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 
 namespace MetricsUtility.Core.Services.Presenters
 {
@@ -10,13 +10,13 @@ namespace MetricsUtility.Core.Services.Presenters
         public IJavaScriptStatsPresenter JavaScriptStatsPresenter { get; private set; }
         public ISettingsEvaluator SettingsEvaluator { get; private set; }
         public ICssStatsPresenter CssStatsPresenter { get; private set; }
-        public IJavaScriptStatsStorer JavaScriptStatsStorer { get; private set; }
-        public ICssStatsStorer CssStatsStorer { get; private set; }
+        public IJavaScriptStatsStorageService JavaScriptStatsStorageService { get; private set; }
+        public ICssStatsStorageService CssStatsStorageService { get; private set; }
 
-        public JavaScriptFileStatsPresenter(IHumanInterface ux, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, ISettingsEvaluator settingsEvaluator, ICssStatsPresenter cssStatsPresenter, IJavaScriptStatsStorer javaScriptStatsStorer, ICssStatsStorer cssStatsStorer)
+        public JavaScriptFileStatsPresenter(IHumanInterface ux, IJavaScriptStatsPresenter javaScriptStatsPresenter, IFilteredFilesEvaluator filteredFilesEvaluator, ISettingsEvaluator settingsEvaluator, ICssStatsPresenter cssStatsPresenter, IJavaScriptStatsStorageService javaScriptStatsStorageService, ICssStatsStorageService cssStatsStorageService)
         {
-            CssStatsStorer = cssStatsStorer;
-            JavaScriptStatsStorer = javaScriptStatsStorer;
+            CssStatsStorageService = cssStatsStorageService;
+            JavaScriptStatsStorageService = javaScriptStatsStorageService;
             CssStatsPresenter = cssStatsPresenter;
             SettingsEvaluator = settingsEvaluator;
             FilteredFilesEvaluator = filteredFilesEvaluator;
@@ -30,8 +30,8 @@ namespace MetricsUtility.Core.Services.Presenters
 
             var cssResults = CssStatsPresenter.Present(FilteredFilesEvaluator.Evaluate(SettingsEvaluator.GetSpecificFiles()));
 
-            Ux.DisplayBoolOption("Store detailed Javascript results to disk?", () => JavaScriptStatsStorer.Store(jsResults, string.Empty), null);
-            Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorer.Store(cssResults,string.Empty), null);
+            Ux.DisplayBoolOption("Store detailed Javascript results to disk?", () => JavaScriptStatsStorageService.Store(jsResults, string.Empty), null);
+            Ux.DisplayBoolOption("Store detailed CSS results to disk?", () => CssStatsStorageService.Store(cssResults,string.Empty), null);
         }
     }
 }

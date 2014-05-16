@@ -5,20 +5,20 @@ using System.Text;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.ViewModels;
 
-namespace MetricsUtility.Core.Services.Storers
+namespace MetricsUtility.Core.Services.StorageServices
 {
-    public class JavaScriptStatsStorer : IJavaScriptStatsStorer, IHasHumanInterface, IHasDateTimeProvider
+    public class JavaScriptStatsStorageService : IJavaScriptStatsStorageService, IHasHumanInterface, IHasDateTimeProvider
     {
         public IRelevantAttributesEvaluator RelevantAttributesEvaluator { get; private set; }
         public IHumanInterface Ux { get; private set; }
         public IDateTimeProvider DateTimeProvider { get; private set; }
-        public IStorer Storer { get; private set; }
+        public IStorageService StorageService { get; private set; }
         public IJavaScriptStatsFileNameEvaluator JavaScriptStatsFileNameEvaluator { get; private set; }
 
-        public JavaScriptStatsStorer(IStorer storer, IDateTimeProvider dateTimeProvider, IHumanInterface ux, IRelevantAttributesEvaluator relevantAttributesEvaluator, IJavaScriptStatsFileNameEvaluator javaScriptStatsFileNameEvaluator)
+        public JavaScriptStatsStorageService(IStorageService storageService, IDateTimeProvider dateTimeProvider, IHumanInterface ux, IRelevantAttributesEvaluator relevantAttributesEvaluator, IJavaScriptStatsFileNameEvaluator javaScriptStatsFileNameEvaluator)
         {
             JavaScriptStatsFileNameEvaluator = javaScriptStatsFileNameEvaluator;
-            Storer = storer;
+            StorageService = storageService;
             DateTimeProvider = dateTimeProvider;
             Ux = ux;
             RelevantAttributesEvaluator = relevantAttributesEvaluator;
@@ -47,7 +47,7 @@ namespace MetricsUtility.Core.Services.Storers
             {
                 sb.AppendFormat("{0},{1},{2},{3}",
                     result.FileName, 
-                    result.PageInstances.Count, 
+                    result.PageInstances.Length, 
                     result.PageInstances.Sum(x => x.Lines.Count), result.PageInstances.Any(x => x.AtSymbols > 0));
 
                 foreach (var attribute in attributesInUse)
@@ -70,7 +70,7 @@ namespace MetricsUtility.Core.Services.Storers
 
             sb.AppendFormat("Total: {0},{1},{2},{3}",
                 results.Count,
-                results.Sum(x => x.PageInstances.Count),
+                results.Sum(x => x.PageInstances.Length),
                 results.Sum(x => x.PageInstances.Sum(y => y.Lines.Count)),
                 results.Sum(x => x.PageInstances.Count(y => y.AtSymbols > 0)));
 
@@ -82,7 +82,7 @@ namespace MetricsUtility.Core.Services.Storers
 
             sb.AppendFormat(",{0},{1}", attributeTotals.Sum(x => x.BlockCount), attributeTotals.Sum(x => x.RazorCount));
 
-            var filename = Storer.Store(sb, JavaScriptStatsFileNameEvaluator.Evaluate(groupName));
+            var filename = StorageService.Store(sb, JavaScriptStatsFileNameEvaluator.Evaluate(groupName));
 
             Ux.WriteLine(string.Format("Saved to {0}", filename));
             Ux.WriteLine("");
@@ -99,7 +99,7 @@ namespace MetricsUtility.Core.Services.Storers
         public int RazorCount { get; set; }
     }
 
-    public interface IJavaScriptStatsStorer
+    public interface IJavaScriptStatsStorageService
     {
         string Store(List<JavaScriptEvaluationResult> results, string groupName);
     }

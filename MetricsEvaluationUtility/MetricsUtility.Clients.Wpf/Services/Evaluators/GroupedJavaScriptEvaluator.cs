@@ -4,7 +4,7 @@ using MetricsUtility.Clients.Wpf.Services.Evaluators.Interfaces;
 using MetricsUtility.Clients.Wpf.Services.Presenters.Interfaces;
 using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Presenters;
-using MetricsUtility.Core.Services.Storers;
+using MetricsUtility.Core.Services.StorageServices;
 using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Clients.Wpf.Services.Evaluators
@@ -15,15 +15,15 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
         public IDirectoryGroupEvaluator DirectoryGroupEvaluator { get; private set; }
         public IHumanInterface Ux { get; private set; }
         public IJavaScriptStatsPresenter JavaScriptStatsPresenter { get; private set; }
-        public IJavaScriptStatsStorer JavaScriptStatsStorer { get; private set; }
+        public IJavaScriptStatsStorageService JavaScriptStatsStorageService { get; private set; }
         public IFolderPresenter FolderPresenter { get; private set; }
         public event EventHandler ScrollDown;
 
 
-        public GroupedJavaScriptEvaluator(IPathExistenceEvaluator pathExistenceEvaluator, IDirectoryGroupEvaluator directoryGroupEvaluator, IHumanInterface ux, IJavaScriptStatsPresenter javaScriptStatsPresenter, IJavaScriptStatsStorer javaScriptStatsStorer, IFolderPresenter folderPresenter)
+        public GroupedJavaScriptEvaluator(IPathExistenceEvaluator pathExistenceEvaluator, IDirectoryGroupEvaluator directoryGroupEvaluator, IHumanInterface ux, IJavaScriptStatsPresenter javaScriptStatsPresenter, IJavaScriptStatsStorageService javaScriptStatsStorageService, IFolderPresenter folderPresenter)
         {
             FolderPresenter = folderPresenter;
-            JavaScriptStatsStorer = javaScriptStatsStorer;
+            JavaScriptStatsStorageService = javaScriptStatsStorageService;
             JavaScriptStatsPresenter = javaScriptStatsPresenter;
             Ux = ux;
             DirectoryGroupEvaluator = directoryGroupEvaluator;
@@ -54,7 +54,7 @@ namespace MetricsUtility.Clients.Wpf.Services.Evaluators
                 i = 1;
                 foreach (var resultGroup in groupedResults)
                 {
-                    JavaScriptStatsStorer.Store(resultGroup, string.Format("Group {0}", specificGroup > 0 ? specificGroup : i));
+                    JavaScriptStatsStorageService.Store(resultGroup, string.Format("Group {0}", specificGroup > 0 ? specificGroup : i));
                     ScrollDown(null, null);
                     i++;
                 }
