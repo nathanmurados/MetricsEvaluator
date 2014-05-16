@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests
 {
@@ -24,6 +25,8 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Extract_Razor_2()
         {
+            throw new NotImplementedException("Would who ever works on this please discuss this with Nathan");
+
             // Arrange
             var evaluator = new JsGetRazorFragment();
             string input = "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';";
