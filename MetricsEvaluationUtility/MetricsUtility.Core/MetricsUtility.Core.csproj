@@ -51,13 +51,15 @@
     <Compile Include="Services\Evaluators\Css\ICssValidationEvaluator.cs" />
     <Compile Include="Services\Evaluators\Css\BlockContent.cs" />
     <Compile Include="Services\Evaluators\Css\BlockContentEvaluator.cs" />
+    <Compile Include="Services\Evaluators\IDirectoryDescendentFilesEvaluator.cs" />
+    <Compile Include="Services\Evaluators\IRelevantAttributesEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsModuleBlockEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsModuleLineEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsVariableNameEvaluator.cs" />
     <Compile Include="Enums\JsPageEvaluationMode.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsModuleBlockEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsBlockContentEvaluator.cs" />
-    <Compile Include="Services\Evaluators\DirectoryFileEvaluator.cs" />
+    <Compile Include="Services\Evaluators\DirectoryDescendentFilesEvaluator.cs" />
     <Compile Include="Services\Evaluators\FilteredFilesEvaluator.cs" />
     <Compile Include="Services\Evaluators\IFilteredFilesEvaluator.cs" />
     <Compile Include="Services\Evaluators\ISettingsEvaluator.cs" />
@@ -76,6 +78,8 @@
     <Compile Include="Services\Evaluators\RelevantAttributesEvaluator.cs" />
     <Compile Include="Services\Evaluators\SettingsEvaluator.cs" />
     <Compile Include="Services\Extensions\StringExtensions.cs" />
+    <Compile Include="Services\IDateTimeProvider.cs" />
+    <Compile Include="Services\IHasDateTimeProvider.cs" />
     <Compile Include="Services\IHasHumanInterface.cs" />
     <Compile Include="Services\IHasListPresenter.cs" />
     <Compile Include="Services\IHumanInterface.cs" />

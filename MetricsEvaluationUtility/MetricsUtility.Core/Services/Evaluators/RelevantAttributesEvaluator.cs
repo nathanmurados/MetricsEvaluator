@@ -29,9 +29,4 @@ namespace MetricsUtility.Core.Services.Evaluators
             return attributesInUse;
         }
     }
-
-    public interface IRelevantAttributesEvaluator
-    {
-        List<string> Evaluate(List<JavaScriptEvaluationResult> results);
-    }
 }

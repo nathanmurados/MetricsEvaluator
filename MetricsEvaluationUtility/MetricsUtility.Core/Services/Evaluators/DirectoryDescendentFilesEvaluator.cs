@@ -18,9 +18,4 @@ namespace MetricsUtility.Core.Services.Evaluators
             return files;
         }
     }
-
-    public interface IDirectoryDescendentFilesEvaluator
-    {
-        IEnumerable<string> Evaluate(string directory);
-    }
 }
