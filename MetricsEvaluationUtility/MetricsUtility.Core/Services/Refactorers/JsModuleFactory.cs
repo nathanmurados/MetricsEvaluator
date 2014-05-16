@@ -14,16 +14,16 @@ namespace MetricsUtility.Core.Services.Refactorers
         /// </summary>
         public string[] Build(List<JsModuleViewModel> data)
         {
-            // Currently the razor fragment is surrounded by quotes, but that may not always be the case...
-            //
             // input:
             //      supplierList    '@supplierList'
             //      elements        '@elements'
+            //      SomeInt          @Model.SomeInt
             //
             // output:
             //    var ap2 = (function (ap2) {
             //        ap2.supplierList = '@supplierList';
             //        ap2.elements = '@elements';
+            //        ap2.SomeInt = @Model.SomeInt;
             //        return ap2;
             //    }(ap2 || {}));
 
