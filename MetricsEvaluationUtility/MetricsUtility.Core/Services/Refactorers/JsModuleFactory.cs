@@ -7,7 +7,7 @@ namespace MetricsUtility.Core.Services.Refactorers
 
     public class JsModuleFactory : IJsModuleFactory
     {
-        private const string jsContainerName = "ap2";
+        private const string JsContainerName = "ap2";
 
         /// <summary>
         /// Takes a list of razor fragments and corresponding variables names and turns into a JS module.
@@ -34,19 +34,19 @@ namespace MetricsUtility.Core.Services.Refactorers
 
             int i = 0;
             int moduleLines = data.Count + 3;
-            string indent1 = "    ";       // may change to tabs
-            string indent2 = "        ";   // may change to tabs
+            const string indent1 = "    "; // may change to tabs
+            const string indent2 = "        "; // may change to tabs
             string[] result = new string[moduleLines];
 
-            result[i++] = String.Format("{0}var {1} = (function({1}) {{",indent1, jsContainerName);
+            result[i++] = String.Format("{0}var {1} = (function({1}) {{",indent1, JsContainerName);
 
             foreach (JsModuleViewModel item in data)
             {
-                result[i++] = string.Format("{0}{1}.{2} = {3};", indent2, jsContainerName ,item.JavaScriptName, item.OriginalRazorText);
+                result[i++] = string.Format("{0}{1}.{2} = {3};", indent2, JsContainerName ,item.JavaScriptName, item.OriginalRazorText);
             }
 
-            result[i++] = String.Format("{0}return {1};", indent2, jsContainerName);
-            result[i++] = String.Format("{0}}} ({1} || {{}}));",indent1, jsContainerName);
+            result[i++] = String.Format("{0}return {1};", indent2, JsContainerName);
+            result[i++] = String.Format("{0}}} ({1} || {{}}));",indent1, JsContainerName);  //TODO: Discuss with Nathan
 
             return result;
         }

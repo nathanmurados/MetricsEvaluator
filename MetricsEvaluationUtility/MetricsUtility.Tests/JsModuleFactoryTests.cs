@@ -23,7 +23,6 @@ namespace MetricsUtiltiy.Tests
 
             var result = obj.Build(data);
 
-<<<<<<< HEAD
             Assert.AreEqual("    var ap2 = (function(ap2) {", result[0]);
             Assert.AreEqual("        ap2.ViewDataSubject = '@ViewData[\"Subject\"]';", result[1]);
             Assert.AreEqual("        ap2.Model0MessageListActivitiesConstantsPleaseEnterValue = '@Model[0].MessageList[ActivitiesConstants.PleaseEnterValue]';", result[2]);
@@ -31,15 +30,6 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("        ap2.SomeInt = @Model.SomeInt;", result[4]);
             Assert.AreEqual("        return ap2;", result[5]);
             Assert.AreEqual("    } (ap2 || {}));", result[6]);
-=======
-            Assert.AreEqual("var ap2 = (function(ap2) {", result[0]);
-            Assert.AreEqual("   ap2.ViewDataSubject = '@ViewData[\"Subject\"]';", result[1]);
-            Assert.AreEqual("   ap2.Model0MessageListActivitiesConstantsPleaseEnterValue = '@Model[0].MessageList[ActivitiesConstants.PleaseEnterValue]';", result[2]);
-            Assert.AreEqual("   ap2.ModelMessageListMSG1005884 = '@Model.MessageList[\"MSG1005884\"]';", result[3]);
-            Assert.AreEqual("   ap2.SomeInt = @Model.SomeInt;", result[4]);
-            Assert.AreEqual("   return ap2;", result[5]);
-            Assert.AreEqual("} (ap2 || {}));", result[6]);
->>>>>>> 67a73306cd4aada5347bd70f656738be282af702
 
         }
     }
