@@ -77,7 +77,8 @@ namespace MetricsUtiltiy.Tests
             string[] result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual("'@ViewBag.doctype'", result[0]);
+            Assert.AreEqual("'@ViewBag.docid'", result[0]);
+            Assert.AreEqual("'@ViewBag.doctype'", result[1]);
         }
         [Test]
         public void Extract_Razor_6()
