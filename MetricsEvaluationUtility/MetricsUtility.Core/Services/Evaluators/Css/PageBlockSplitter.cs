@@ -60,7 +60,11 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 if (within && line.Contains(closeTag, StringComparison.OrdinalIgnoreCase))
                 {
                     within = false;
-                    if (mode.AllowAtVars() || atSymbols == 0)
+                    if (
+                            (mode==JsPageEvaluationMode.RazorOnly && atSymbols > 0)
+                        ||  (mode==JsPageEvaluationMode.NonRazorOnly && atSymbols == 0)
+                        ||  (mode==JsPageEvaluationMode.Any)
+                    )
                     {
                         if (isWhitSpaceSinceLastBlock && matches.Any())
                         {
@@ -87,11 +91,11 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
         }
     }
 
-    public static class JsPageEvaluationModeExtensions
-    {
-        public static bool AllowAtVars(this JsPageEvaluationMode mode)
-        {
-            return mode != JsPageEvaluationMode.OnlyBlocksWithoutAtVars;
-        }
-    }
+    //public static class JsPageEvaluationModeExtensions
+    //{
+    //    public static bool AllowAtVars(this JsPageEvaluationMode mode)
+    //    {
+    //        return mode != JsPageEvaluationMode.NonRazorOnly;
+    //    }
+    //}
 }

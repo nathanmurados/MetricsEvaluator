@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvancedJsSplitterTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="FoldermakerTests.cs" />
     <Compile Include="GetRazorCodeTests.cs" />

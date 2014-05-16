@@ -28,7 +28,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 return null;
             }
 
-            var page = CssPageBlockSplitter.Split(contents, JsPageEvaluationMode.AnyBlock);
+            var page = CssPageBlockSplitter.Split(contents, JsPageEvaluationMode.Any);
             var block = CssBlockEvaluator.Evaluate(joinedString);
             var razor = CssRazorEvaluator.Evaluate(joinedString);
 

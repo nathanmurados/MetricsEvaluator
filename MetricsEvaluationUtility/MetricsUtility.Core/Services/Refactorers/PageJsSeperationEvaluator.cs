@@ -28,7 +28,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                     .Replace("<script language=\"javascript\" type=\"text/javascript\">", correct);
             }
 
-            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.OnlyBlocksWithoutAtVars);
+            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.NonRazorOnly);
 
             GeneratedJsViewModel[] extractedJsBlocks;
             List<string> strippedContent;

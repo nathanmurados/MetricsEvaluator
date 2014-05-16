@@ -14,7 +14,7 @@ namespace MetricsUtiltiy.Tests
 
             var evaluator = new JsPageEvaluator();
 
-            var result = evaluator.Evaluate(raw.Contents, JsPageEvaluationMode.AnyBlock);
+            var result = evaluator.Evaluate(raw.Contents, JsPageEvaluationMode.Any);
 
             Assert.AreEqual(2, result.Count);
         }

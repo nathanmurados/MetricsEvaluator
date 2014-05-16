@@ -32,7 +32,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 return null;
             }
 
-            var pageLevel = JsPageEvaluator.Evaluate(contents, JsPageEvaluationMode.AnyBlock);
+            var pageLevel = JsPageEvaluator.Evaluate(contents, JsPageEvaluationMode.Any);
             var references = JsReferencesEvaluator.Evaluate(joinedString);
             var block = JsBlockEvaluator.Evaluate(joinedString, attributes);
             var razor = JsRazorEvaluator.Evaluate(joinedString, attributes);

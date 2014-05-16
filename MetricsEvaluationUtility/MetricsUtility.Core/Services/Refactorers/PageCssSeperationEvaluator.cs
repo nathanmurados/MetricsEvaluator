@@ -26,7 +26,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                 cleanedLines[i] = lines[i].Replace("<style>", "<style type=\"text/css\">");
             }
 
-            var inlineCss = CssPageBlockSplitter.Split(cleanedLines, JsPageEvaluationMode.OnlyBlocksWithoutAtVars);
+            var inlineCss = CssPageBlockSplitter.Split(cleanedLines, JsPageEvaluationMode.NonRazorOnly);
 
             GeneratedCssViewModel[] extractedCssBlocks;
             List<string> strippedContent;

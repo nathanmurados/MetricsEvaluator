@@ -29,7 +29,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                     .Replace("<script language=\"javascript\" type=\"text/javascript\">", correct);
             }
 
-            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.OnlyBlocksWithAtVars);
+            var inlineJs = JsPageEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.RazorOnly);
 
             GeneratedJsViewModel[] extractedJsBlocks;
             List<string> strippedContent;
@@ -48,8 +48,7 @@ namespace MetricsUtility.Core.Services.Refactorers
                 for (var i = 0; i < inlineJs.Count; i++)
                 {
                     extractedJsBlocks[i] = new GeneratedJsViewModel { Lines = new List<string>() };
-                    jsFileDetails[i] = JsFileNameEvaluator.Evaluate(solutionRouteDirectory, generatedResultDirectory,
-                        fileName, i);
+                    jsFileDetails[i] = JsFileNameEvaluator.Evaluate(solutionRouteDirectory, generatedResultDirectory, fileName, i);
                 }
 
                 var openingTagWrittenFor = -1;
@@ -65,11 +64,11 @@ namespace MetricsUtility.Core.Services.Refactorers
                             var hasStartTag = Regex.Matches(toReplace, RegexConstants.ScriptOpeningTag, RegexOptions.IgnoreCase).Count > 0;
                             var line = l;
 
-                            var cssReplacement = Regex.Replace(toReplace, RegexConstants.ScriptClosingTag, "", RegexOptions.IgnoreCase);
+                            var replacement = Regex.Replace(toReplace, RegexConstants.ScriptClosingTag, "", RegexOptions.IgnoreCase);
 
                             if (hasStartTag)
                             {
-                                cssReplacement = Regex.Replace(cssReplacement, RegexConstants.ScriptOpeningTag, "", RegexOptions.IgnoreCase);
+                                replacement = Regex.Replace(replacement, RegexConstants.ScriptOpeningTag, "", RegexOptions.IgnoreCase);
                                 if (openingTagWrittenFor != blockIndex)
                                 {
                                     line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
@@ -82,11 +81,6 @@ namespace MetricsUtility.Core.Services.Refactorers
                             }
                             else
                             {
-                                if (line.Contains("@"))
-                                {
-                                    throw new NotImplementedException("ERROR: '@' sign detected");
-                                }
-
                                 line = line.Remove(toReplace);
                             }
 
@@ -95,9 +89,9 @@ namespace MetricsUtility.Core.Services.Refactorers
                                 strippedContent.Add(line.Trim());
                             }
 
-                            if (cssReplacement.Trim().Length > 0)
+                            if (replacement.Trim().Length > 0)
                             {
-                                extractedJsBlocks[blockIndex].Lines.Add(cssReplacement);
+                                extractedJsBlocks[blockIndex].Lines.Add(replacement);
                             }
 
                             if (lineIndex == inlineJs[blockIndex].Lines.Count - 1)

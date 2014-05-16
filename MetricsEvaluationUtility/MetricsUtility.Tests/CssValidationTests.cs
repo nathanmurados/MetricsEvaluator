@@ -14,7 +14,7 @@ namespace MetricsUtiltiy.Tests
 
             var evaluator = new CssPagePageBlockSplitter();
 
-            var result = evaluator.Split(raw.Contents, JsPageEvaluationMode.AnyBlock);
+            var result = evaluator.Split(raw.Contents, JsPageEvaluationMode.Any);
 
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(6, result[0].Lines.Count);
