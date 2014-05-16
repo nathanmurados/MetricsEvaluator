@@ -32,5 +32,28 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("    } (ap2 || {}));", result[6]);
 
         }
+
+        [Test]
+        public void Test2()
+        {
+            var obj = new JsModuleFactory();
+
+            var data = new List<JsModuleViewModel>
+            {
+                new JsModuleViewModel{ JavaScriptName = "ViewBagMenuInstanceName", OriginalRazorText = "'@ViewBag.MenuInstanceName'" },
+                new JsModuleViewModel{ JavaScriptName = "UrlActionConfigureConfigureMenu", OriginalRazorText = "'@Url.Action(\"Configure\", \"ConfigureMenu\")'" },
+                new JsModuleViewModel{ JavaScriptName = "condition", OriginalRazorText = "'@condition'"},
+            };
+
+            var result = obj.Build(data);
+
+            Assert.AreEqual("    var ap2 = (function(ap2) {", result[0]);
+            Assert.AreEqual("        ap2.ViewBagMenuInstanceName = '@ViewBag.MenuInstanceName';", result[1]);
+            Assert.AreEqual("        ap2.UrlActionConfigureConfigureMenu = '@Url.Action(\"Configure\", \"ConfigureMenu\")';", result[2]);
+            Assert.AreEqual("        ap2.condition = '@condition';", result[3]);
+            Assert.AreEqual("        return ap2;", result[4]);
+            Assert.AreEqual("    } (ap2 || {}));", result[5]);
+
+        }
     }
 }
