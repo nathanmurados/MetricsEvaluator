@@ -20,17 +20,16 @@ namespace MetricsUtiltiy.Tests
                 new JsModuleViewModel{ JavaScriptName = "ap2.SomeInt", OriginalRazorText = "@Model.SomeInt"},
             };
 
-            var result = JsModuleFactory.Build(data);
+            var result = obj.Build(data);
 
             Assert.AreEqual("var ap2 = (function(ap2) {", result[0]);
-            Assert.AreEqual("   ap2.ViewDataSubject = '@ViewData[\"Subject\"]';", result[0]);
-            Assert.AreEqual("   ap2.Model0MessageListActivitiesConstantsPleaseEnterValue = '@Model[0].MessageList[ActivitiesConstants.PleaseEnterValue]';", result[0]);
-            Assert.AreEqual("   ap2.ModelMessageListMSG1005884 = '@Model.MessageList[\"MSG1005884\"]';", result[0]);
-            Assert.AreEqual("   ap2.SomeInt = @Model.SomeInt;", result[0]);
-            Assert.AreEqual("   return ap2;", result[0]);
-            Assert.AreEqual("} (ap2 || {}));", result[0]);
+            Assert.AreEqual("   ap2.ViewDataSubject = '@ViewData[\"Subject\"]';", result[1]);
+            Assert.AreEqual("   ap2.Model0MessageListActivitiesConstantsPleaseEnterValue = '@Model[0].MessageList[ActivitiesConstants.PleaseEnterValue]';", result[2]);
+            Assert.AreEqual("   ap2.ModelMessageListMSG1005884 = '@Model.MessageList[\"MSG1005884\"]';", result[3]);
+            Assert.AreEqual("   ap2.SomeInt = @Model.SomeInt;", result[4]);
+            Assert.AreEqual("   return ap2;", result[5]);
+            Assert.AreEqual("} (ap2 || {}));", result[6]);
 
         }
     }
-
 }
