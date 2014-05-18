@@ -10,6 +10,11 @@ namespace MetricsUtility.Core.ViewModels
         /// </summary>
         public override bool Equals(object obj)
         {
+            if (obj == null )
+            {
+                return false;
+            }
+            
             return ((JsModuleViewModel)obj).JavaScriptName == this.JavaScriptName;
         }
 

@@ -15,9 +15,9 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         }
 
         /// <summary>
-        /// From a block of JS, extract razor fragments and generate a variable name for each
+        /// From a block of JS, extract razor fragments and generate a variable name for each.
         /// </summary>
-        public IEnumerable<JsModuleViewModel> Evaluate(IEnumerable<string> jsLines)
+        public List<JsModuleViewModel> Evaluate(IEnumerable<string> jsLines)
         {
             // input:
             // multiple lines of JS, some of which use @razor variable/functions
@@ -28,7 +28,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
             List<JsModuleViewModel> output = new List<JsModuleViewModel>();
 
-            JsModuleLineEvaluator lineEvaluator = new JsModuleLineEvaluator();
+            
             JsVariableNameEvaluator variableNameEvaluator = new JsVariableNameEvaluator();
 
             foreach (string jsLine in jsLines)
@@ -38,7 +38,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                     continue;
                 }
 
-                IEnumerable<string> razorFragments = lineEvaluator.Evaluate(jsLine);
+                IEnumerable<string> razorFragments = JsModuleLineEvaluator.Evaluate(jsLine);
 
                 foreach (string fragment in razorFragments)
                 {

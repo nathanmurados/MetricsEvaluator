@@ -5,7 +5,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
     
     public class JsVariableNameEvaluator : IJsVariableNameEvaluator
     {
-        private static char[] charactersToRemove = new char[] { '@', '"', '[', ']', '(', ')', ' ', ';', ',', '.'};
+        private static char[] charactersToRemove = new char[] { '@', '"', '[', ']', '(', ')', ' ', ';', ',', '.', '\''};
         /// <summary>
         /// Extract a variable name from the razor code.
         /// Example input: @ViewData["Subject"]"

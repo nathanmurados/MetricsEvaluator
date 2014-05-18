@@ -22,6 +22,20 @@ namespace MetricsUtiltiy.Tests
         }
 
         [Test]
+        public void Extract_Varable_Name_1_quoted_razor()
+        {
+            // Arrange
+            var evaluator = new JsVariableNameEvaluator();
+            string input = "'@ViewData[\"Subject\"]'";
+
+            // Act
+            string result = evaluator.Evaluate(input);
+
+            // Assert
+            Assert.AreEqual("ViewDataSubject", result);
+        }
+
+        [Test]
         public void Extract_Varable_Name_2()
         {
             // Arrange
