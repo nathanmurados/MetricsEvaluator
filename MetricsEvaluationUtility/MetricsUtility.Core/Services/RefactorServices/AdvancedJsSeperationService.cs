@@ -56,13 +56,13 @@ namespace MetricsUtility.Core.Services.RefactorServices
                     IEnumerable<JsModuleViewModel> blockRazorLines = JsModuleBlockEvaluator.Evaluate(blockContent.Lines);
                     totalRazorLines.AddRange(blockRazorLines);
                 }
+                
+                totalRazorLines = totalRazorLines.Distinct().ToList(); // de-duplicate
 
-                // de-duplicate
-                totalRazorLines = totalRazorLines.Distinct().ToList();
-
-                string[] jsModule = JsModuleFactory.Build(totalRazorLines); // the new sp2.xyz = @xyz stuff that's injected into the view.
-                jsModuleToInsert.Add(jsModule);
+                var jsModule = JsModuleFactory.Build(totalRazorLines); // the new sp2.xyz = @xyz stuff that's injected into the view.
                 //Mike's work - End
+                
+                jsModuleToInsert.Add(jsModule);
 
                 throw new NotImplementedException("NATHAN YOU ARE HERE");
                 

@@ -55,7 +55,6 @@
     <Compile Include="BaseTests.cs" />
     <Compile Include="DirectoryMimickerTests.cs" />
     <Compile Include="JsModuleLineEvaluatorTests.cs" />
-    <Compile Include="JsToRefactorEvaluatorTests.cs" />
     <Compile Include="JsModuleFactoryTests.cs" />
     <Compile Include="JsVariableNameEvaluatorTests.cs" />
     <Compile Include="PagJsSeperationEvaluatorTests.cs" />

@@ -1,7 +1,8 @@
-﻿namespace MetricsUtility.Core.Services.Evaluators.JavaScript
+﻿using System.Collections.Generic;
+namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
     public interface IJsModuleLineEvaluator
     {
-        string[] Evaluate(string jsLine);
+        List<string> Evaluate(string jsLine);
     }
 }
