@@ -3,6 +3,9 @@ using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
 using NUnit.Framework;
+using System.Linq;
+using MetricsUtility.Core.ViewModels;
+using System.Collections.Generic;
 
 namespace MetricsUtiltiy.Tests
 {
@@ -101,6 +104,29 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
             Assert.AreEqual(3, result.ExtractedJsBlocks[0].Lines.Count);
             Assert.IsNull(result.ExtractedJsBlocks[0].Lines.FirstOrDefault(x => x.Contains("@")));
+        }
+
+        [Test]
+        public void DeDuplicationTest()
+        {
+            // Just a quick test of the de-duplication of a list of objects based on an object property value.
+
+            // Arrange
+            List<JsModuleViewModel> totalRazorLines = new List<JsModuleViewModel>();
+            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable1'", JavaScriptName = "serverVariable1" });
+            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable1'", JavaScriptName = "serverVariable1" }); // Duplicate
+            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable2'", JavaScriptName = "serverVariable2" });
+            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable3'", JavaScriptName = "serverVariable3" });
+            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable2'", JavaScriptName = "serverVariable2" }); // Duplicate
+
+            // Act
+            totalRazorLines = totalRazorLines.Distinct().ToList();
+
+            // Assert
+            Assert.AreEqual(3, totalRazorLines.Count);
+            Assert.AreEqual(totalRazorLines[0].JavaScriptName, "serverVariable1");
+            Assert.AreEqual(totalRazorLines[1].JavaScriptName, "serverVariable2");
+            Assert.AreEqual(totalRazorLines[2].JavaScriptName, "serverVariable3");
         }
     }
 }
