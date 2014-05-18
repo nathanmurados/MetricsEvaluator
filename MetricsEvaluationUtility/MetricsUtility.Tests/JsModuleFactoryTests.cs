@@ -5,6 +5,9 @@ using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests
 {
+    /// <summary>
+    /// Testing generation of the new ap2 module that holds the extracted razor variables
+    /// </summary>
     [TestFixture]
     public class JsModuleFactoryTests
     {
@@ -23,14 +26,16 @@ namespace MetricsUtiltiy.Tests
 
             var result = obj.Build(data);
 
-            Assert.AreEqual("    var ap2 = (function(ap2) {", result[0]);
-            Assert.AreEqual("        ap2.ViewDataSubject = '@ViewData[\"Subject\"]';", result[1]);
-            Assert.AreEqual("        ap2.Model0MessageListActivitiesConstantsPleaseEnterValue = '@Model[0].MessageList[ActivitiesConstants.PleaseEnterValue]';", result[2]);
-            Assert.AreEqual("        ap2.ModelMessageListMSG1005884 = \"@Model.MessageList[\"MSG1005884\"]\";", result[3]);
-            Assert.AreEqual("        ap2.SomeInt = @Model.SomeInt;", result[4]);
-            Assert.AreEqual("        return ap2;", result[5]);
-            Assert.AreEqual("    } (ap2 || {}));", result[6]);
-
+            int i = 0;
+            Assert.AreEqual("<script type=\"text/javascript\">", result[i++]);
+            Assert.AreEqual("    var ap2 = (function(ap2) {", result[i++]);
+            Assert.AreEqual("        ap2.ViewDataSubject = '@ViewData[\"Subject\"]';", result[i++]);
+            Assert.AreEqual("        ap2.Model0MessageListActivitiesConstantsPleaseEnterValue = '@Model[0].MessageList[ActivitiesConstants.PleaseEnterValue]';", result[i++]);
+            Assert.AreEqual("        ap2.ModelMessageListMSG1005884 = \"@Model.MessageList[\"MSG1005884\"]\";", result[i++]);
+            Assert.AreEqual("        ap2.SomeInt = @Model.SomeInt;", result[i++]);
+            Assert.AreEqual("        return ap2;", result[i++]);
+            Assert.AreEqual("    } (ap2 || {}));", result[i++]);
+            Assert.AreEqual("</script>", result[i++]);
         }
 
         [Test]
@@ -47,13 +52,15 @@ namespace MetricsUtiltiy.Tests
 
             var result = obj.Build(data);
 
-            Assert.AreEqual("    var ap2 = (function(ap2) {", result[0]);
-            Assert.AreEqual("        ap2.ViewBagMenuInstanceName = '@ViewBag.MenuInstanceName';", result[1]);
-            Assert.AreEqual("        ap2.UrlActionConfigureConfigureMenu = '@Url.Action(\"Configure\", \"ConfigureMenu\")';", result[2]);
-            Assert.AreEqual("        ap2.condition = '@condition';", result[3]);
-            Assert.AreEqual("        return ap2;", result[4]);
-            Assert.AreEqual("    } (ap2 || {}));", result[5]);
-
+            int i = 0;
+            Assert.AreEqual("<script type=\"text/javascript\">", result[i++]);
+            Assert.AreEqual("    var ap2 = (function(ap2) {", result[i++]);
+            Assert.AreEqual("        ap2.ViewBagMenuInstanceName = '@ViewBag.MenuInstanceName';", result[i++]);
+            Assert.AreEqual("        ap2.UrlActionConfigureConfigureMenu = '@Url.Action(\"Configure\", \"ConfigureMenu\")';", result[i++]);
+            Assert.AreEqual("        ap2.condition = '@condition';", result[i++]);
+            Assert.AreEqual("        return ap2;", result[i++]);
+            Assert.AreEqual("    } (ap2 || {}));", result[i++]);
+            Assert.AreEqual("</script>", result[i++]);
         }
     }
 }

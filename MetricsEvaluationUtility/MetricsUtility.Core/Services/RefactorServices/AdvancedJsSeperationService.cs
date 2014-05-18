@@ -60,7 +60,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 // de-duplicate
                 totalRazorLines = totalRazorLines.Distinct().ToList();
 
-                string[] jsModule = JsModuleFactory.Build(totalRazorLines); // the new sp2.xyz stuff that's injected into the view.
+                string[] jsModule = JsModuleFactory.Build(totalRazorLines); // the new sp2.xyz = @xyz stuff that's injected into the view.
                 jsModuleToInsert.Add(jsModule);
                 //Mike's work - End
 
