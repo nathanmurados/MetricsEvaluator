@@ -1,4 +1,3 @@
-using System.Linq;
 using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using NUnit.Framework;

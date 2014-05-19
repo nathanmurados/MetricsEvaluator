@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MetricsUtility.Core.Services.RefactorServices;
 using MetricsUtility.Core.ViewModels;
 using NUnit.Framework;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;

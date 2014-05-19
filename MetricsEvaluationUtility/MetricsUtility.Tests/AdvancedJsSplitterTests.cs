@@ -3,7 +3,6 @@ using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
 using NUnit.Framework;
-using System.Linq;
 using MetricsUtility.Core.ViewModels;
 using System.Collections.Generic;
 

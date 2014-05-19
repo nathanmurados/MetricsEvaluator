@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    using System.Text;
-
     public class JsModuleBlockEvaluator : IJsModuleBlockEvaluator
     {
         public IJsModuleLineEvaluator JsModuleLineEvaluator { get; private set; }

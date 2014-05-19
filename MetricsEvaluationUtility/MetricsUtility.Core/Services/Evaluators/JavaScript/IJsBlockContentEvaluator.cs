@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.Css;
 

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
-using System.Collections;
-using System.Linq;
 
 namespace MetricsUtiltiy.Tests
 {
     using MetricsUtility.Core.Services.Evaluators.JavaScript;
-    using MetricsUtility.Core.ViewModels;
-    
+
     /// <summary>
     /// Testing ability to pull razor fragments from a line of javascript.
     /// </summary>

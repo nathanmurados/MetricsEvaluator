@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
-using System.Collections;
 using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Core.Services.RefactorServices
@@ -47,7 +46,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 // We may have several blocks of JS in the view. But we can have only one new AP2 module (the ap2 variable would be repeated)
                 // Therefore we must process all JS blocks, de-duplicated any razor variables between the blocks, and then generate the new ap2 module.
                 
-                var jsModuleToInsert = new List<string[]>();
+                var jsModulesToInsert = new List<string[]>();
 
                 List<JsModuleViewModel> totalRazorLines = new List<JsModuleViewModel>();
                 
@@ -62,7 +61,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 var jsModule = JsModuleFactory.Build(totalRazorLines); // the new sp2.xyz = @xyz stuff that's injected into the view.
                 //Mike's work - End
                 
-                jsModuleToInsert.Add(jsModule);
+                jsModulesToInsert.Add(jsModule);
 
                 throw new NotImplementedException("NATHAN YOU ARE HERE");
                 
