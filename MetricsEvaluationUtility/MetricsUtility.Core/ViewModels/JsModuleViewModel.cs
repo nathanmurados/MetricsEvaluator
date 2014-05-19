@@ -17,7 +17,7 @@ namespace MetricsUtility.Core.ViewModels
                 return false;
             }
 
-            return jsModuleViewModel.JavaScriptName == this.JavaScriptName;
+            return jsModuleViewModel.JavaScriptName == this.JavaScriptName && jsModuleViewModel.OriginalRazorText == this.OriginalRazorText;
         }
 
         /// <summary>
