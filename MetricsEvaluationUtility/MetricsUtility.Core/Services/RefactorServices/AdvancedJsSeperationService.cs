@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using MetricsUtility.Core.Enums;
+using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
+using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Core.Services.RefactorServices
 {
@@ -43,9 +45,9 @@ namespace MetricsUtility.Core.Services.RefactorServices
             {
                 var jsModulesToInsert = new List<string[]>();
                 
-                foreach (var blockContent in jsBlockContents)
+                foreach (BlockContent blockContent in jsBlockContents)
                 {
-                    var razorToSwap = JsModuleBlockEvaluator.Evaluate(blockContent.Lines);
+                    IEnumerable<JsModuleViewModel> razorToSwap = JsModuleBlockEvaluator.Evaluate(blockContent.Lines);
                     
                     jsModulesToInsert.Add(JsModuleFactory.Build(razorToSwap));
                 }
