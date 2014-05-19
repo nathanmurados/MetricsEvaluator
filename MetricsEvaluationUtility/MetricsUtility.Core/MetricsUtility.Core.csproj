@@ -100,11 +100,13 @@
     <Compile Include="Services\RefactorServices\IAdvancedJsSeperationService.cs" />
     <Compile Include="Services\RefactorServices\ICssFileNameEvaluator.cs" />
     <Compile Include="Services\RefactorServices\IJsFileNameEvaluator.cs" />
+    <Compile Include="Services\RefactorServices\IJsInjectNewModuleVariables.cs" />
     <Compile Include="Services\RefactorServices\IJsModuleFactory.cs" />
     <Compile Include="Services\RefactorServices\IPageCssSeperationEvaluator.cs" />
     <Compile Include="Services\RefactorServices\IJsSeperationService.cs" />
     <Compile Include="Services\RefactorServices\ISolutionRelativeDirectoryEvaluator.cs" />
     <Compile Include="Services\RefactorServices\JsFileNameEvaluator.cs" />
+    <Compile Include="Services\RefactorServices\JsInjectNewModuleVariables.cs" />
     <Compile Include="Services\RefactorServices\JsModuleFactory.cs" />
     <Compile Include="Services\RefactorServices\PageCssSeperationEvaluator.cs" />
     <Compile Include="Services\RefactorServices\JsSeperationService.cs" />

@@ -75,7 +75,16 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void IgnoreNonRazorJs()
         {
-            var obj = new AdvancedJsSeperationService(new JsBlockContentEvaluator(), new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()), new JsModuleBlockEvaluator(new JsModuleLineEvaluator()), new JsModuleFactory());
+            var obj = new AdvancedJsSeperationService(
+                new JsBlockContentEvaluator(), 
+                new JsFileNameEvaluator(
+                    new SolutionRelativeDirectoryEvaluator()
+                ), 
+                new JsModuleBlockEvaluator(
+                    new JsModuleLineEvaluator()
+                ), 
+                new JsModuleFactory(),
+                new JsInjectNewModuleVariables());
 
             var data = new[]
             {

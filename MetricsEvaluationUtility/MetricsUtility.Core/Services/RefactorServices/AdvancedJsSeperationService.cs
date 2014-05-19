@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using MetricsUtility.Core.Enums;
-using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.ViewModels;
 
@@ -14,11 +14,11 @@ namespace MetricsUtility.Core.Services.RefactorServices
         public IJsFileNameEvaluator JsFileNameEvaluator { get; private set; }
         public IJsModuleBlockEvaluator JsModuleBlockEvaluator { get; private set; }
         public IJsModuleFactory JsModuleFactory { get; private set; }
-        public IJsRazorRemovalService JsRazorRemovalService { get; private set; }
+        public IJsInjectNewModuleVariables JsInjectNewModuleVariables { get; private set; }
 
-        public AdvancedJsSeperationService(IJsBlockContentEvaluator jsBlockContentEvaluator, IJsFileNameEvaluator jsFileNameEvaluator, IJsModuleBlockEvaluator jsModuleBlockEvaluator, IJsModuleFactory jsModuleFactory, IJsRazorRemovalService jsRazorRemovalService)
+        public AdvancedJsSeperationService(IJsBlockContentEvaluator jsBlockContentEvaluator, IJsFileNameEvaluator jsFileNameEvaluator, IJsModuleBlockEvaluator jsModuleBlockEvaluator, IJsModuleFactory jsModuleFactory, IJsInjectNewModuleVariables jsInjectNewModuleVariables)
         {
-            JsRazorRemovalService = jsRazorRemovalService;
+            JsInjectNewModuleVariables = jsInjectNewModuleVariables;
             JsModuleFactory = jsModuleFactory;
             JsModuleBlockEvaluator = jsModuleBlockEvaluator;
             JsFileNameEvaluator = jsFileNameEvaluator;
@@ -44,37 +44,35 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
             if (jsBlockContents.Any())
             {
-                // Mike's work - Start
-                // We may have several blocks of JS in the view. But we can have only one new AP2 module (the ap2 variable would be repeated)
-                // Therefore we must process all JS blocks, de-duplicated any razor variables between the blocks, and then generate the new ap2 module.
+                // We may have several blocks of JS in the view. But we will have only one new AP2 module.
+                // There may be duplicated razor fragments in the existing JS blocks. The duplication must be removed
+                // before adding the fragments to the new ap2 module.
+
+                var refactoredJs = new List<string[]>();
 
                 List<JsModuleViewModel> razorLines = new List<JsModuleViewModel>();
-
-                var cleanedJs = new List<string[]>();
-
-                foreach (var jsToClean in jsBlockContents)
+                foreach (var blockContent in jsBlockContents)
                 {
-                    razorLines.AddRange(JsModuleBlockEvaluator.Evaluate(jsToClean.Lines));
+                    razorLines.AddRange(JsModuleBlockEvaluator.Evaluate(blockContent.Lines));
 
-                    cleanedJs.Add(JsRazorRemovalService.Remove(jsToClean));
+                    refactoredJs.Add(JsInjectNewModuleVariables.Build(blockContent.Lines, razorLines));
                 }
 
-                razorLines = razorLines.Distinct().ToList(); // de-duplicate
-
-                var jsModule = JsModuleFactory.Build(razorLines); // the new sp2.xyz = @xyz stuff that's injected into the view.
-                //Mike's work - End
+                var jsModule = JsModuleFactory.Build(razorLines.Distinct().ToList()); // generate the new ap2 module from the de-duplicated razor fragments
 
                 /*
-                 * find the first script reference
-                 * 
-                 * Replace it with the js module
-                 * 
-                 * Create new js files without razor and references to them
-                 * 
-                 * put in references to new Js files where old files WERE
-                 * 
-                 * Done?
-                 */
+                * find the first script reference
+                * 
+                * Replace it with the js module
+                * 
+                * Create new js files without razor and references to them
+                * 
+                * put in references to new Js files where old files WERE
+                * 
+                * Done?
+                */
+
+
 
                 refactoredLines = new List<string>();
                 jsRemoved = new GeneratedJsViewModel[jsBlockContents.Count];
@@ -108,22 +106,15 @@ namespace MetricsUtility.Core.Services.RefactorServices
                             if (hasStartTag)
                             {
                                 replacement = Regex.Replace(replacement, RegexConstants.ScriptOpeningTag, "", RegexOptions.IgnoreCase);
-                                //if (openingTagWrittenFor != blockIndex)
-                                //{
-                                //    line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
-                                //    openingTagWrittenFor = blockIndex;
-                                //}
-                                //else
-                                //{
-                                //    line = Regex.Replace(line, toReplace, "", RegexOptions.IgnoreCase);
-                                //}
-
-                                refactoredLines.Add("<script type='text/javascript'>");
-                                refactoredLines.AddRange(jsModule);
-                                refactoredLines.Add("</script>");
-                                
-                                line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
-
+                                if (openingTagWrittenFor != blockIndex)
+                                {
+                                    line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
+                                    openingTagWrittenFor = blockIndex;
+                                }
+                                else
+                                {
+                                    line = Regex.Replace(line, toReplace, "", RegexOptions.IgnoreCase);
+                                }
                             }
                             else
                             {
@@ -174,19 +165,6 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 JsRemoved = jsRemoved,
                 RefactoredLines = refactoredLines.ToArray()
             };
-        }
-    }
-
-    //THIS IS GOING TO BE REPLACED BY MIKES CODE
-    public interface IJsRazorRemovalService
-    {
-        string[] Remove(BlockContent jsToClean);
-    }
-    public class JsRazorRemovalService : IJsRazorRemovalService
-    {
-        public string[] Remove(BlockContent jsToClean)
-        {
-            throw new NotImplementedException();
         }
     }
 }
