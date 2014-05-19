@@ -62,6 +62,19 @@ namespace MetricsUtility.Core.Services.RefactorServices
              
                 jsModuleToInsert.Add(jsModule);
 
+                // TODO insert ap2 module into the view
+
+
+                // Replace the razor fragments in the original JS blocks with our new ap2 module variables
+
+                JsInjectNewModuleVariables converter = new JsInjectNewModuleVariables();
+                foreach (var blockContent in jsBlockContents)
+                {
+                    blockContent.Lines = converter.Build(blockContent.Lines, totalRazorLines);
+                }
+                
+                // TODO take the modified JS blocks and turn into JS files
+
                 throw new NotImplementedException("NATHAN YOU ARE HERE");
                 
 
