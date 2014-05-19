@@ -8,6 +8,8 @@ namespace MetricsUtility.Core.Services.RefactorServices
 {
     public class JsInjectNewModuleVariables : IJsInjectNewModuleVariables
     {
+        private const string JsContainerName = "ap2";
+
         /// <summary>
         /// Take a JS block and replace razor fragments with ap2 variables
         /// </summary>
@@ -30,15 +32,24 @@ namespace MetricsUtility.Core.Services.RefactorServices
             //    "   });",
             //    "</script>",
 
-            foreach (string line in lines)
+            
+            for (int i = 0; i < lines.Count; i++)
             {
-                foreach (JsModuleViewModel razorVariable in razorVariables)
+                foreach (JsModuleViewModel razor in razorVariables)
                 {
-                    
+                    string lineToProcess = lines[i];
+
+                    string newLine = string.Empty;
+
+                    if (lineToProcess.Contains(razor.OriginalRazorText))
+                    {
+                        newLine = lineToProcess.Replace(razor.OriginalRazorText, string.Format("{0}.{1}", JsContainerName, razor.JavaScriptName));
+                        lines[i] = newLine;
+                    }
                 }
             }
 
-            return null;
+            return lines;
         }
     }
 }
