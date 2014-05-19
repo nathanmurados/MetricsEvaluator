@@ -54,6 +54,7 @@
     <Compile Include="AdvancedJsSplitterTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="DirectoryMimickerTests.cs" />
+    <Compile Include="JsBlockContentEvaluatorTests.cs" />
     <Compile Include="JsModuleBlockEvaluatorTests.cs" />
     <Compile Include="JSModuleLineEvaluatorRegexTests.cs" />
     <Compile Include="JsModuleLineEvaluatorTests.cs" />

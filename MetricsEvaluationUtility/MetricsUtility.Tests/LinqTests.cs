@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace MetricsUtiltiy.Tests
 {
+    [TestFixture]
     public class LinqTests
     {
         [Test]

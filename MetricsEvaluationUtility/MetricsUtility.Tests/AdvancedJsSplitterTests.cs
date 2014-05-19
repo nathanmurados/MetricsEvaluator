@@ -12,65 +12,12 @@ namespace MetricsUtiltiy.Tests
     [TestFixture]
     public class AdvancedJsSplitterIntegrationTests
     {
-        [Test]
-        public void BreakUpMixedRazorBlocks()
+        private AdvancedJsSeperationService GetAdvancedJsSeperationService()
         {
-            var obj = new JsBlockContentEvaluator();
+            var mockJsInjectNewModuleVariables = new Mock<IJsInjectNewModuleVariables>();
+            mockJsInjectNewModuleVariables.Setup(x => x.Build(It.IsAny<List<string>>(), It.IsAny<IEnumerable<JsModuleViewModel>>())).Returns(() => new[] { "   $(function(){", "       alert('I am a script with an ' + ap2.ViewmodelVariable);", "   });" });
 
-            var data = new[]
-            {
-                "<html>",
-                "<head>",
-                "</head>",
-                "<body>",
-                "<script type='text/javascript'>",
-                "   $(function(){",
-                "       alert('I am a script without any at variables);",
-                "   });",
-                "</script>",
-                "<script type='text/javascript'>",
-                "   $(function(){",
-                "       alert('I am a script with an @Viewmodel.Variable);",
-                "   });",
-                "</script>",
-                "</body>",
-                "</html>",
-            };
-            var result = obj.Evaluate(data, JsPageEvaluationMode.RazorOnly);
-
-            Assert.AreEqual(1, result.Length);
-            Assert.AreEqual(5, result[0].Lines.Count);
-        }
-
-        [Test]
-        public void EnsureJsPageEvaluatorRespectsMode()
-        {
-            var obj = new JsBlockContentEvaluator();
-
-            var data = new[]
-            {
-                "<html>",
-                "<head>",
-                "</head>",
-                "<body>",
-                "<script type='text/javascript'>",
-                "   $(function(){",
-                "       alert('I am a script without any at variables);",
-                "   });",
-                "</script>",
-                "<!-- some text-->", //TODO: Consider how to treat "joined" blocks.
-                "<script type='text/javascript'>",
-                "   $(function(){",
-                "       alert('I am a script with an @Viewmodel.Variable);",
-                "   });",
-                "</script>",
-                "</body>",
-                "</html>",
-            };
-
-            var result = obj.Evaluate(data, JsPageEvaluationMode.RazorOnly);
-
-            Assert.AreEqual(1, result.Length);
+            return new AdvancedJsSeperationService(new JsBlockContentEvaluator(), new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()), new JsModuleBlockEvaluator(new JsModuleLineEvaluator()), new JsModuleFactory(), mockJsInjectNewModuleVariables.Object);
         }
 
         [Test]
@@ -107,7 +54,6 @@ namespace MetricsUtiltiy.Tests
             Assert.IsNull(result.JsRemoved[0].Lines.FirstOrDefault(x => x.Contains("@")));
         }
 
-
         [Test]
         public void CorrectNumberOfScriptReferences()
         {
@@ -137,12 +83,5 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual(3, result.RefactoredLines.Count(x => x.Contains("script")));
         }
 
-        private AdvancedJsSeperationService GetAdvancedJsSeperationService()
-        {
-            var mockJsInjectNewModuleVariables = new Mock<IJsInjectNewModuleVariables>();
-            mockJsInjectNewModuleVariables.Setup(x => x.Build(It.IsAny<List<string>>(), It.IsAny<IEnumerable<JsModuleViewModel>>())).Returns(() => new[] { "   $(function(){", "       alert('I am a script with an ' + ap2.ViewmodelVariable);", "   });" });
-
-            return new AdvancedJsSeperationService(new JsBlockContentEvaluator(), new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()), new JsModuleBlockEvaluator(new JsModuleLineEvaluator()), new JsModuleFactory(), mockJsInjectNewModuleVariables.Object);
-        }
     }
 }
