@@ -64,7 +64,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
         private List<string> PatternNotHandled()
         {
-            throw new System.NotImplementedException();
+            throw new System.NotImplementedException("Pattern not handled");
         }
 
         private List<string> ProcessMultiFragmentLine(string jsline)
