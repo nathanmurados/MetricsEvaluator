@@ -1,28 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Work\MetricsEvaluator\MetricsEvaluationUtility\Metrics Evaluator.nunit" total="10" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-05-15" time="20:40:25">
-  <environment nunit-version="2.6.0.12051" clr-version="2.0.50727.5477" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Work\MetricsEvaluator\MetricsEvaluationUtility" machine-name="SEAN" user="Sean" user-domain="SEAN" />
+<test-results name="C:\work\metricsevaluator\MetricsEvaluationUtility\Metrics Evaluator.nunit" total="9" errors="0" failures="5" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-05-19" time="10:34:20">
+  <environment nunit-version="2.6.0.12051" clr-version="2.0.50727.5477" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\work\metricsevaluator\MetricsEvaluationUtility" machine-name="SEAN" user="Sean" user-domain="SEAN" />
   <culture-info current-culture="en-GB" current-uiculture="en-US" />
-  <test-suite type="Project" name="C:\Work\MetricsEvaluator\MetricsEvaluationUtility\Metrics Evaluator.nunit" executed="True" result="Success" success="True" time="0.520" asserts="0">
+  <test-suite type="Project" name="C:\work\metricsevaluator\MetricsEvaluationUtility\Metrics Evaluator.nunit" executed="True" result="Failure" success="False" time="2.935" asserts="0">
     <results>
-      <test-suite type="Assembly" name="C:\Work\MetricsEvaluator\MetricsEvaluationUtility\MetricsUtility.Tests\bin\Debug\MetricsUtiltiy.Tests.dll" executed="True" result="Success" success="True" time="0.459" asserts="0">
+      <test-suite type="Assembly" name="C:\work\metricsevaluator\MetricsEvaluationUtility\MetricsUtility.Tests\bin\Debug\MetricsUtiltiy.Tests.dll" executed="True" result="Failure" success="False" time="2.866" asserts="0">
         <results>
-          <test-suite type="Namespace" name="MetricsUtiltiy" executed="True" result="Success" success="True" time="0.458" asserts="0">
+          <test-suite type="Namespace" name="MetricsUtiltiy" executed="True" result="Failure" success="False" time="2.864" asserts="0">
             <results>
-              <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="0.457" asserts="0">
+              <test-suite type="Namespace" name="Tests" executed="True" result="Failure" success="False" time="2.863" asserts="0">
                 <results>
-                  <test-suite type="TestFixture" name="GetVariableNameTests" executed="True" result="Success" success="True" time="0.445" asserts="0">
+                  <test-suite type="TestFixture" name="JsModuleLineEvaluatorTests" executed="True" result="Failure" success="False" time="2.855" asserts="0">
                     <results>
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_1" executed="True" result="Success" success="True" time="0.242" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_10" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_2" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_3" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_4" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_5" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_6" executed="True" result="Success" success="True" time="0.002" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_7" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_8" executed="True" result="Success" success="True" time="0.001" asserts="1" />
-                      <test-case name="MetricsUtiltiy.Tests.GetVariableNameTests.Extract_Varable_Name_9" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_2_Fragments" executed="True" result="Failure" success="False" time="1.015" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected: 2
+  But was:  1
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_2_Fragments() in c:\Work\metricsevaluator\MetricsEvaluationUtility\MetricsUtility.Tests\JsModuleLineEvaluatorTests.cs:line 84
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_ConertToString" executed="True" result="Success" success="True" time="0.006" asserts="2" />
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_JQuery_val" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_No_Quotes" executed="True" result="Failure" success="False" time="0.048" asserts="2">
+                        <failure>
+                          <message><![CDATA[  Expected string length 82 but was 1. Strings differ at index 0.
+  Expected: "@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.G..."
+  But was:  " "
+  -----------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_No_Quotes() in c:\Work\metricsevaluator\MetricsEvaluationUtility\MetricsUtility.Tests\JsModuleLineEvaluatorTests.cs:line 69
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_UrlAction" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_ViewBag" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_wth_text_eitherside" executed="True" result="Failure" success="False" time="0.003" asserts="2">
+                        <failure>
+                          <message><![CDATA[  Expected string length 17 but was 24. Strings differ at index 0.
+  Expected: "@Viewbag.Variable"
+  But was:  " @Viewbag.Variable text "
+  -----------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_wth_text_eitherside() in c:\Work\metricsevaluator\MetricsEvaluationUtility\MetricsUtility.Tests\JsModuleLineEvaluatorTests.cs:line 164
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_wth_text_to_left" executed="True" result="Failure" success="False" time="0.003" asserts="2">
+                        <failure>
+                          <message><![CDATA[  Expected string length 18 but was 1. Strings differ at index 0.
+  Expected: "@Viewbag.Variable'"
+  But was:  " "
+  -----------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_wth_text_to_left() in c:\Work\metricsevaluator\MetricsEvaluationUtility\MetricsUtility.Tests\JsModuleLineEvaluatorTests.cs:line 124
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_wth_text_to_right" executed="True" result="Failure" success="False" time="0.002" asserts="2">
+                        <failure>
+                          <message><![CDATA[  Expected string length 18 but was 30. Strings differ at index 18.
+  Expected: "'@Viewbag.Variable"
+  But was:  "'@Viewbag.Variable text right'"
+  -----------------------------^
+]]></message>
+                          <stack-trace><![CDATA[at MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests.Extract_Razor_wth_text_to_right() in c:\Work\metricsevaluator\MetricsEvaluationUtility\MetricsUtility.Tests\JsModuleLineEvaluatorTests.cs:line 144
+]]></stack-trace>
+                        </failure>
+                      </test-case>
                     </results>
                   </test-suite>
                 </results>

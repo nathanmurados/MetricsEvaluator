@@ -69,6 +69,7 @@
     <Compile Include="Services\Evaluators\JavaScript\IJsValidationEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsAttributesProvider.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsBlockEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JSModuleLineEvaluatorRegex.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsPageEvaluator.old.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsRazorEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsReferencesEvaluator.cs" />

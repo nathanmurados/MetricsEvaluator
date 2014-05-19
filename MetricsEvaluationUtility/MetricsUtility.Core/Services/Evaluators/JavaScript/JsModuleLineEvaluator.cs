@@ -10,7 +10,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// Note the line may contain several fragments of razor.
         /// The razor code is prefixed with @, it will probably be surrounded by quotes (single or double), but not always!
         /// </summary>
-        public List<string> Evaluate(string jsLine)
+        public IEnumerable<string> Evaluate(string jsLine)
         {
             List<string> output = new List<string>();
             
