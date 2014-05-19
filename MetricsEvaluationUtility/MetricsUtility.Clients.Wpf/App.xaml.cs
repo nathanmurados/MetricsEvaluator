@@ -101,10 +101,16 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IJsSeperationService>().To<JsSeperationService>();
             _container.Bind<IJsFileNameEvaluator>().To<JsFileNameEvaluator>();
             _container.Bind<IDirectoryMimicker>().To<DirectoryMimicker>();
-            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
-            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
-            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
-            //_container.Bind<IJavaScriptStatsFileNameEvaluator>().To<JavaScriptStatsFileNameEvaluator>();
+            _container.Bind<IJsRefactorResultsPresenter>().To<JsRefactorResultsPresenter>();
+            _container.Bind<ISplitJsFileCreator>().To<SplitJsFileCreator>();
+            _container.Bind<IAdvancedJsSplitter>().To<AdvancedJsSplitter>();
+            _container.Bind<IAdvancedJsSeperationService>().To<AdvancedJsSeperationService>();
+            _container.Bind<IJsModuleBlockEvaluator>().To<JsModuleBlockEvaluator>();
+            _container.Bind<IJsModuleLineEvaluator>().To<JsModuleLineEvaluator>();
+            _container.Bind<IJsModuleFactory>().To<JsModuleFactory>();
+            _container.Bind<IJsInjectNewModuleVariables>().To<JsInjectNewModuleVariables>();
+            //_container.Bind<IAdvancedJsSeperationService>().To<AdvancedJsSeperationService>();
+            //_container.Bind<IAdvancedJsSeperationService>().To<AdvancedJsSeperationService>();
         
         }
 

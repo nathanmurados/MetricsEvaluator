@@ -8,6 +8,11 @@ namespace MetricsUtility.Clients.Wpf.Services
     {
         public IHumanInterface Ux { get; private set; }
 
+        public JsRefactorResultsPresenter(IHumanInterface ux)
+        {
+            Ux = ux;
+        }
+
         public void Present(List<string> failedFiles, List<string> avoidedOverWrites)
         {
             if (!failedFiles.Any() && !avoidedOverWrites.Any())

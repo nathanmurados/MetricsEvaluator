@@ -15,7 +15,7 @@ namespace MetricsUtility.Clients.Wpf.Services
             Ux = ux;
         }
 
-        public void Create(SeperatedJs seperatedJs, string newPath, List<string> avoidedOverWrites, ref int filesCreated, string file)
+        public void Create(SeperatedJs seperatedJs, string newPath, List<string> avoidedOverWrites, ref int filesCreated, string file, bool reportAtsigns)
         {
             if (seperatedJs.JsRemoved.Any())
             {
@@ -39,7 +39,7 @@ namespace MetricsUtility.Clients.Wpf.Services
 
                     var atSigns = newFile.Lines.Count(x => x.Contains("@"));
                     var dotDotSlashes = newFile.Lines.Count(x => x.Contains("../"));
-                    if (atSigns > 0)
+                    if (atSigns > 0 && reportAtsigns)
                     {
                         Ux.WriteLine(string.Format("---WARNING: {0} lines containing @ were detected", atSigns));
                     }

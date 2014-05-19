@@ -49,7 +49,7 @@ namespace MetricsUtility.Clients.Wpf.Services
                     continue;
                 }
 
-                SplitJsFileCreator.Create(seperatedJs, newPath, avoidedOverWrites, ref filesCreated, file);
+                SplitJsFileCreator.Create(seperatedJs, newPath, avoidedOverWrites, ref filesCreated, file, true);
             }
 
             Ux.WriteLine(string.Format("Created {0} failedFiles", filesCreated));
