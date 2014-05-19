@@ -5,12 +5,12 @@ using NUnit.Framework;
 namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
-    public class CssValidationTests : BaseTests
+    public class CssValidationTests 
     {
         [Test]
         public void Page()
         {
-            var raw = GetFileAndContent();
+            var raw = AssetRetriever.GetFileAndContent(AvailableTestingResources.TestingResource);
 
             var evaluator = new CssBlockContentEvaluator();
 
@@ -24,7 +24,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Block()
         {
-            var raw = GetFileAndContent();
+            var raw = AssetRetriever.GetFileAndContent(AvailableTestingResources.TestingResource);
 
             var evaluator = new CssBlockEvaluator();
 
@@ -38,7 +38,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Razor()
         {
-            var raw = GetFileAndContent();
+            var raw = AssetRetriever.GetFileAndContent(AvailableTestingResources.TestingResource);
 
             var evaluator = new CssRazorEvaluator();
 

@@ -4,22 +4,28 @@ namespace MetricsUtiltiy.Tests
 {
     using System.Reflection;
 
-    public abstract class BaseTests
+    public class AvailableTestingResources
     {
-        public FileAndContents GetFileAndContent()
+        public const string TestingResource = "TestingResource.cshtml";
+        public const string GetComplianceMatrix = "GetComplianceMatrix.cshtml";
+    }
+
+    public class AssetRetriever
+    {
+        public static FileAndContents GetFileAndContent(string availableTestingResource)
         {
-            const string path = "MetricsUtiltiy.Tests.Assets.TestingResource.cshtml";
-            Assembly asm = Assembly.GetExecutingAssembly();
-            string fileText = null;
-            using (Stream s = asm.GetManifestResourceStream("MetricsUtiltiy.Tests.Assets.TestingResource.cshtml"))
+            var path = "MetricsUtiltiy.Tests.Assets." + availableTestingResource;
+            var asm = Assembly.GetExecutingAssembly();
+            string fileText;
+            using (var s = asm.GetManifestResourceStream(path))
             using (TextReader r = new StreamReader(s))
             {
                 fileText = r.ReadToEnd();
             }
-                return new FileAndContents
+            return new FileAndContents
             {
-                Path =path,
-                Contents =fileText.Split(new char[] {'\n'})
+                Path = path,
+                Contents = fileText.Split(new[] { '\n' })
             };
         }
     }

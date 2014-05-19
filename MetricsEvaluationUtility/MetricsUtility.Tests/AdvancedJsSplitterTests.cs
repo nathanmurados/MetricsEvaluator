@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
 using Moq;
@@ -12,10 +13,9 @@ namespace MetricsUtiltiy.Tests
     [TestFixture]
     public class AdvancedJsSplitterIntegrationTests
     {
-        [Test]
-        public void IntegrationTest1()
+        public AdvancedJsSeperationService GetObj()
         {
-            var obj = new AdvancedJsSeperationService(
+            return new AdvancedJsSeperationService(
                 new JsBlockContentEvaluator(),
                 new JsFileNameEvaluator(
                     new SolutionRelativeDirectoryEvaluator()),
@@ -25,6 +25,12 @@ namespace MetricsUtiltiy.Tests
                 new JsModuleFactory(),
                 new JsInjectNewModuleVariables()
                 );
+        }
+
+        [Test]
+        public void IntegrationTest1()
+        {
+            var obj = GetObj();
 
             var input = new[]
             {
@@ -152,5 +158,15 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual(3, result.RefactoredLines.Count(x => x.Contains("script")));
         }
 
+        [Test]
+        public void GetComplianceMatrixShouldWork()
+        {
+            var raw = AssetRetriever.GetFileAndContent(AvailableTestingResources.GetComplianceMatrix);
+
+            var obj = GetObj();
+
+            var result = obj.Evaluate(raw.Contents, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs", "somefile.cshtml");
+
+        }
     }
 }

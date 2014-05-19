@@ -9,7 +9,7 @@ namespace MetricsUtiltiy.Tests
     public class LinqTests
     {
         [Test]
-        public void AssertThatDistictWorks()
+        public void AssertThatDistinctWorks()
         {
             // Just a quick test of the de-duplication of a list of objects based on an object property value.
             // See JsModuleViewModel.Equals() override.

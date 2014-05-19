@@ -5,12 +5,12 @@ using NUnit.Framework;
 namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
-    public class JavaScriptValidationTests : BaseTests
+    public class JavaScriptValidationTests
     {
         [Test]
         public void Page()
         {
-            var raw = GetFileAndContent();
+            var raw = AssetRetriever.GetFileAndContent(AvailableTestingResources.TestingResource);
 
             var evaluator = new JsBlockContentEvaluator();
 
@@ -23,7 +23,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Block()
         {
-            var raw = GetFileAndContent();
+            var raw = AssetRetriever.GetFileAndContent(AvailableTestingResources.TestingResource);
 
             var evaluator = new JsBlockEvaluator();
 
@@ -39,7 +39,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Razor()
         {
-            var raw = GetFileAndContent();
+            var raw = AssetRetriever.GetFileAndContent(AvailableTestingResources.TestingResource);
 
             var evaluator = new JsRazorEvaluator();
 

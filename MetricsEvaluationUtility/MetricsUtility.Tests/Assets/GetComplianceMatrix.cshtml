@@ -1,0 +1,152 @@
+﻿@model List<object>
+@{
+    var urlHelper = new UrlHelper(Html.ViewContext.RequestContext);
+    var baseurl = urlHelper.Content("~");
+    @Html.Hidden("baseurl", baseurl)
+}
+
+ @{
+
+     //Dictionary<string, string> answerList = (Dictionary<string, string>)Model[0];
+     //Dictionary<string, string> operatorList = (Dictionary<string, string>)Model[1];
+     //Dictionary<string, string> resultList = (Dictionary<string, string>)Model[2];
+     Dictionary<string, string> factList = (Dictionary<string, string>)Model[0];
+     Dictionary<string, string> count = (Dictionary<string, string>)Model[1];
+     string matrixId = Model[2].ToString();
+     int noOfRows = 3;
+     int noOfCols = 3;
+     int num = 0;
+     int rownum = 0;
+     int column = -1;
+ }
+ 
+    <script src="~/Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <!-- js for Master Taxonomy Management left panel links -->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/style1.css" rel="stylesheet" type="text/css" />
+ <script type="text/javascript">
+
+     $(document).ready(function() { 
+         GenerateCompliance();
+     });
+      
+     function GenerateCompliance() {
+        
+         var matrixid = document.getElementById("MatrixNo").value;
+         $.ajax({
+             type: "POST",
+             url:  $('#baseurl').val() + "ComplianceMatrix/GenerateComplianceMatrixHtmlWithData",
+             data:"matrixGuid="+matrixid,
+//              contentType: "application/json; charset=utf-8",
+             success: function(response) {
+                 $.each(response, function(index, item) {
+                     if(index==0)
+                         $('#CompMatrix').append(item);
+                     if(index==1)
+                         $('#RowResult').append(item);
+                 });
+                     
+             }
+         });
+     }
+
+     function GenerateHtml()
+     {
+         var noOfRows = document.getElementById("RowNo").value;
+         var noOfCols = document.getElementById("ColNo").value; 
+         for (var n = 0; n < noOfCols; n++) { 
+             dropNewColumn(document.getElementById("FactID" + n).value, n);
+             @{ column++;}
+             @{ rownum=1;}
+         }
+         //dropNewColumn(document.getElementById("FactID0").value,0);
+     }
+
+     </script>
+
+  
+ @*<script type="text/javascript" language="javascript">
+     
+     function dropNewColumn(factId, colnum) { 
+         var hrdata =  factId;
+         var hrfound = false; 
+
+         $('#PlaceHolder option').each(function ()
+         {
+             if ($('#CMControls').children('#' + hrdata).attr('id') != undefined)
+             {
+                 hrfound = true;
+             }
+         }); 
+         var ctltype = 'Fact';//$('#' + hrdata).attr('type');
+          
+         //$('#' + hrdata).closest('tr').remove();
+         var noOfCol = document.getElementById("ColNo").value;
+         var noOfRows = document.getElementById("RowNo").value;
+         var tableExist = document.getElementById("flgTableExist").value;
+         var conditionType = '';
+         var indexVal = '';
+         if (!hrfound)
+         {
+             if (ctltype == "Fact")
+             {
+                 $.ajax({
+                     type: "POST",
+                     url: $('#baseurl').val() + "ComplianceMatrix/GenerateComplianceMatrixHtml",
+                     data: "{'factId' : '" + hrdata + "','noOfRows':" + noOfRows + ",'noOfCol':" + colnum }",
+                     contentType: "application/json; charset=utf-8",
+                     success: function (response)
+                     {
+                         
+                     },
+                     error: function (e)
+                     {
+                     },
+                     complete: function ()
+                     {
+                     }
+                 });
+             }
+         }
+     }
+ </script> *@
+ 
+<input type="hidden" name="tmpRowNo" id="tmpRowNo" value="@rownum" /> 
+     <input type="hidden" id="flgTableExist" name="flgTableExist" value="false"/>
+
+      @Html.Hidden("RowNo", count["row"].ToString(), new { id = "RowNo" }) 
+@Html.Hidden("ColNo", count["col"].ToString(), new { id = "ColNo" }) 
+@Html.Hidden("MatrixNo", matrixId, new { id = "MatrixNo" }) 
+@for (int i = 0; i < int.Parse(count["col"].ToString()); i++)
+     { 
+          @Html.Hidden("FactID" + i, factList["Fact_"+i], new { id = "FactID" + i }) 
+     }
+
+     
+       @*   @Html.Hidden("FactID0", "021bcee9-a963-4aa4-8a89-e4e994b08f06", new { id = "FactID0"  }) 
+          @Html.Hidden("FactID1", "175239fe-ac71-41a4-b0c5-30d1dc6eee0c", new { id = "FactID1" }) 
+          @Html.Hidden("FactID2", "178c04eb-62ab-4d99-a0c5-9efefc8e2fa4", new { id = "FactID2" }) *@
+
+ <div id="ParentDiv">
+     <div id="ChileDiv">
+         <table style="width:100%; height: 90%" >
+             <tr>
+                 <td style="width:100%; height: 90%">
+                     <div id="CMControls" ondragover="allowDrop(event)" ondrop="drop(event)" style="background-color: White; width: 100%; height: 100%; display: block;" name="CMcontrols">
+                         <table id="CompMatrix" class="table">
+                         </table>
+                         @*         <input id="Save" name="Submit" type="button" value="Add" onclick="javascript:return addRow();"/>*@
+                     </div>
+                 </td>
+                 <td style="height: 90%">
+                     <div id="divResult" style="background-color: White; display: block; height:100%; vertical-align:top" name="divResult">
+                         <table id="RowResult" class="table">
+                         </table>
+                     </div>
+                 </td>
+             </tr>
+         </table>
+     </div>
+ </div>
+ 
