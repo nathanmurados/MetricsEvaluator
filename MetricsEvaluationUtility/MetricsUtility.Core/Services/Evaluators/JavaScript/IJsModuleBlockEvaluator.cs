@@ -5,6 +5,9 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
     public interface IJsModuleBlockEvaluator
     {
-        IEnumerable<JsModuleViewModel> Evaluate(IEnumerable<string> jsLines);
+        /// <summary>
+        /// From a block of JS, extract razor fragments and generate a variable name for each
+        /// </summary>
+        List<JsModuleViewModel> Evaluate(IEnumerable<string> jsLines);
     }
 }

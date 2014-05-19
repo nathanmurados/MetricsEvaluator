@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using MetricsUtility.Core.Enums;
-using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
+using System.Collections;
 using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Core.Services.RefactorServices
@@ -43,14 +43,27 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
             if (jsBlockContents.Any())
             {
-                var jsModulesToInsert = new List<string[]>();
+                // Mike's work - Start
+                // We may have several blocks of JS in the view. But we can have only one new AP2 module (the ap2 variable would be repeated)
+                // Therefore we must process all JS blocks, de-duplicated any razor variables between the blocks, and then generate the new ap2 module.
                 
-                foreach (BlockContent blockContent in jsBlockContents)
+                var jsModuleToInsert = new List<string[]>();
+
+                List<JsModuleViewModel> totalRazorLines = new List<JsModuleViewModel>();
+                
+                foreach (var blockContent in jsBlockContents)
                 {
-                    IEnumerable<JsModuleViewModel> razorToSwap = JsModuleBlockEvaluator.Evaluate(blockContent.Lines);
-                    
-                    jsModulesToInsert.Add(JsModuleFactory.Build(razorToSwap));
+                    IEnumerable<JsModuleViewModel> blockRazorLines = JsModuleBlockEvaluator.Evaluate(blockContent.Lines);
+                    totalRazorLines.AddRange(blockRazorLines);
                 }
+                
+                totalRazorLines = totalRazorLines.Distinct().ToList(); // de-duplicate
+
+                var jsModule = JsModuleFactory.Build(totalRazorLines); // the new sp2.xyz = @xyz stuff that's injected into the view.
+                //Mike's work - End
+                
+                jsModuleToInsert.Add(jsModule);
+
                 throw new NotImplementedException("NATHAN YOU ARE HERE");
                 
 

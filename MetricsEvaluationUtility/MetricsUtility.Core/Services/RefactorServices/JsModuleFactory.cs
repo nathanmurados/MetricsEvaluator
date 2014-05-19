@@ -20,12 +20,14 @@ namespace MetricsUtility.Core.Services.RefactorServices
             //      SomeInt          @Model.SomeInt
             //
             // output:
+            //<script type="text/javascript">
             //    var ap2 = (function (ap2) {
             //        ap2.supplierList = '@supplierList';
             //        ap2.elements = '@elements';
             //        ap2.SomeInt = @Model.SomeInt;
             //        return ap2;
             //    }(ap2 || {}));
+            //<\script>
 
             if (data == null || !data.Any())
             {
@@ -33,11 +35,12 @@ namespace MetricsUtility.Core.Services.RefactorServices
             }
 
             int i = 0;
-            int moduleLines = data.Count() + 3;
-            const string indent1 = "    "; // may change to tabs
+            int moduleLines = data.Count() + 5;
+            const string indent1 = "    ";     // may change to tabs
             const string indent2 = "        "; // may change to tabs
             string[] result = new string[moduleLines];
 
+            result[i++] = "<script type=\"text/javascript\">";
             result[i++] = String.Format("{0}var {1} = (function({1}) {{",indent1, JsContainerName);
 
             foreach (JsModuleViewModel item in data)
@@ -47,6 +50,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
             result[i++] = String.Format("{0}return {1};", indent2, JsContainerName);
             result[i++] = String.Format("{0}}} ({1} || {{}}));",indent1, JsContainerName);  //TODO: Discuss with Nathan
+            result[i++] = "</script>";
 
             return result;
         }
