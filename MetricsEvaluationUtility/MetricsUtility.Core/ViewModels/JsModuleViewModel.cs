@@ -10,14 +10,19 @@ namespace MetricsUtility.Core.ViewModels
         /// </summary>
         public override bool Equals(object obj)
         {
+            JsModuleViewModel jsModuleViewModel = obj as JsModuleViewModel;
+            
             if (obj == null )
             {
                 return false;
             }
-            
-            return ((JsModuleViewModel)obj).JavaScriptName == this.JavaScriptName;
+
+            return jsModuleViewModel.JavaScriptName == this.JavaScriptName;
         }
 
+        /// <summary>
+        /// Normally overriding equals is sufficient, but Linq.Distinct seems to require this too.
+        /// </summary>
         public override int GetHashCode()
         {
             return JavaScriptName.GetHashCode();
