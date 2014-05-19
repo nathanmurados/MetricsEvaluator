@@ -112,12 +112,6 @@ namespace MetricsUtiltiy.Tests
         /// 
         /// For example: alert('text left @Viewbag.Variable');
         /// Will become: alert('text left' + ap2.ViewbagVariable);
-        /// 
-        /// For example: alert('text left @Viewbag.Variable right text');
-        /// Will become: alert('text left' + ap2.ViewbagVariable + 'right text');
-        /// 
-        /// For example: alert('@Viewbag.Variable right text');
-        /// Will become: alert(ap2.ViewbagVariable + 'right text');
         /// </summary>
         [Test]
         public void Extract_Razor_wth_text_to_left()
@@ -134,6 +128,11 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("@Viewbag.Variable'", result[0]);
         }
         
+        /// <summary>
+        /// Text to right. 
+        /// For example: alert('@Viewbag.Variable right text');
+        /// Will become: alert(ap2.ViewbagVariable + 'right text');/// 
+        /// </summary>
         [Test]
         public void Extract_Razor_wth_text_to_right()
         {
@@ -149,6 +148,11 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("'@Viewbag.Variable", result[0]);
         }
 
+        /// <summary>
+        /// Text either side.
+        // For example: alert('text left @Viewbag.Variable right text');
+        /// Will become: alert('text left' + ap2.ViewbagVariable + 'right text');
+        /// </summary>
         [Test]
         public void Extract_Razor_wth_text_eitherside()
         {

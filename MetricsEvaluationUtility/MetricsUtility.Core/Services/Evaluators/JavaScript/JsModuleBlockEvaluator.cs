@@ -21,7 +21,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         {
             // input:
             // multiple lines of JS, some of which use @razor variable/functions
-            // NB there might be lines containing @@ to ignore, although the same line might also contain a @ to process, but unlikely.
+            // NB there might be lines containing @@ to ignore, although the same line might also contain a @ to process, ignore for now.
 
             // output:
             // a collection of those razor fragments, each with a corresponding variable name (generated from the razor fragment)
