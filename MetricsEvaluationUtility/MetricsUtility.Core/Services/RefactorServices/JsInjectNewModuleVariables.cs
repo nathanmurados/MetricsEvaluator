@@ -32,6 +32,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
             //    "   });",
             //    "</script>",
 
+            var output = new List<string>();
             
             for (int i = 0; i < lines.Count; i++)
             {
@@ -39,12 +40,9 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 {
                     string lineToProcess = lines[i];
 
-                    string newLine = string.Empty;
-
                     if (lineToProcess.Contains(razor.OriginalRazorText))
                     {
-                        newLine = lineToProcess.Replace(razor.OriginalRazorText, string.Format("{0}.{1}", JsContainerName, razor.JavaScriptName));
-                        lines[i] = newLine;
+                        output.Add(lineToProcess.Replace(razor.OriginalRazorText, string.Format("{0}.{1}", JsContainerName, razor.JavaScriptName)));
                     }
                 }
             }

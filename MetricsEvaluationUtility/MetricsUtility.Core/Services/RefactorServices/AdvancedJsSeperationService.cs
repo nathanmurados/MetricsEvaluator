@@ -132,7 +132,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
                             if (line.Trim().Length > 0)
                             {
-                                refactoredLines.Add(line.Trim());
+                                refactoredLines.Add(line);
                             }
 
                             if (lineIndex == jsBlockContents[blockIndex].Lines.Count - 1)

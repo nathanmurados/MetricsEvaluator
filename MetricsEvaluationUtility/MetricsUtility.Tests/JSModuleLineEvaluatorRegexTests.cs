@@ -9,9 +9,9 @@ using MetricsUtility.Core.Services.Evaluators.JavaScript;
 namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
-    public class JSModuleLineEvaluatorRegexTests
+    public class JsModuleLineEvaluatorRegexTests
     {
-[Test]
+        [Test]
         public void Extract_Razor_ViewBag()
         {
             // Arrange
@@ -123,7 +123,7 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("@Viewbag.Variable'", result[0]);
         }
-        
+
         /// <summary>
         /// Text to right. 
         /// For example: alert('@Viewbag.Variable right text');
