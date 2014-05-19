@@ -58,6 +58,7 @@
     <Compile Include="JsModuleLineEvaluatorTests.cs" />
     <Compile Include="JsModuleFactoryTests.cs" />
     <Compile Include="JsVariableNameEvaluatorTests.cs" />
+    <Compile Include="LinqTests.cs" />
     <Compile Include="PagJsSeperationEvaluatorTests.cs" />
     <Compile Include="PageCssSeperationEvaluatorTests.cs" />
     <Compile Include="DirectoryGroupEvaluatorTests.cs" />

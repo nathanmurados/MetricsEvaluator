@@ -2,6 +2,7 @@
 using MetricsUtility.Core.Enums;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
+using Moq;
 using NUnit.Framework;
 using MetricsUtility.Core.ViewModels;
 using System.Collections.Generic;
@@ -24,12 +25,12 @@ namespace MetricsUtiltiy.Tests
                 "<body>",
                 "<script type='text/javascript'>",
                 "   $(function(){",
-                "       alert('I am a script without any at variables);",                    
+                "       alert('I am a script without any at variables);",
                 "   });",
                 "</script>",
                 "<script type='text/javascript'>",
                 "   $(function(){",
-                "       alert('I am a script with an @Viewmodel.Variable);",                    
+                "       alert('I am a script with an @Viewmodel.Variable);",
                 "   });",
                 "</script>",
                 "</body>",
@@ -38,7 +39,7 @@ namespace MetricsUtiltiy.Tests
             var result = obj.Evaluate(data, JsPageEvaluationMode.RazorOnly);
 
             Assert.AreEqual(1, result.Length);
-            Assert.AreEqual(3, result[0].Lines.Count);
+            Assert.AreEqual(5, result[0].Lines.Count);
         }
 
         [Test]
@@ -54,13 +55,13 @@ namespace MetricsUtiltiy.Tests
                 "<body>",
                 "<script type='text/javascript'>",
                 "   $(function(){",
-                "       alert('I am a script without any at variables);",                    
+                "       alert('I am a script without any at variables);",
                 "   });",
                 "</script>",
-                "<!-- some text-->",    //TODO: Consider how to treat "joined" blocks.
+                "<!-- some text-->", //TODO: Consider how to treat "joined" blocks.
                 "<script type='text/javascript'>",
                 "   $(function(){",
-                "       alert('I am a script with an @Viewmodel.Variable);",                    
+                "       alert('I am a script with an @Viewmodel.Variable);",
                 "   });",
                 "</script>",
                 "</body>",
@@ -75,16 +76,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void IgnoreNonRazorJs()
         {
-            var obj = new AdvancedJsSeperationService(
-                new JsBlockContentEvaluator(), 
-                new JsFileNameEvaluator(
-                    new SolutionRelativeDirectoryEvaluator()
-                ), 
-                new JsModuleBlockEvaluator(
-                    new JsModuleLineEvaluator()
-                ), 
-                new JsModuleFactory(),
-                new JsInjectNewModuleVariables());
+            var obj = GetAdvancedJsSeperationService();
 
             var data = new[]
             {
@@ -94,52 +86,63 @@ namespace MetricsUtiltiy.Tests
                 "<body>",
                 "<script type='text/javascript'>",
                 "   $(function(){",
-                "       alert('I am a script without any at variables);",                    
+                "       alert('I am a script without any at variables);",
                 "   });",
                 "</script>",
-                "<!-- some text-->",    //TODO: Consider how to treat "joined" blocks.
+                "<!-- some text-->", //TODO: Consider how to treat "joined" blocks.
                 "<script type='text/javascript'>",
                 "   $(function(){",
-                "       alert('I am a script with an @Viewmodel.Variable);",                    
+                "       alert('I am a script with an @Viewmodel.Variable);",
                 "   });",
                 "</script>",
                 "</body>",
                 "</html>",
             };
 
-            var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs", "somefile.cshtml");
+            var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs",
+                "somefile.cshtml");
 
             Assert.AreEqual(1, result.JsRemoved.Count());
             Assert.AreEqual(3, result.JsRemoved[0].Lines.Count);
             Assert.IsNull(result.JsRemoved[0].Lines.FirstOrDefault(x => x.Contains("@")));
         }
 
+
         [Test]
-        public void DeDuplicationTest()
+        public void CorrectNumberOfScriptReferences()
         {
-            // Just a quick test of the de-duplication of a list of objects based on an object property value.
-            // See JsModuleViewModel.Equals() override.
-            // Without the override the items below wouldn't be considered duplicates because by default the equality is based on reference to objects.
+            var obj = GetAdvancedJsSeperationService();
 
-            // Arrange
-            List<JsModuleViewModel> totalRazorLines = new List<JsModuleViewModel>();
-            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable1'", JavaScriptName = "serverVariable1" });
-            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable1'", JavaScriptName = "serverVariable1" }); // Duplicate
-            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable2'", JavaScriptName = "serverVariable2" });
-            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable3'", JavaScriptName = "serverVariable3" });
-            totalRazorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable2'", JavaScriptName = "serverVariable2" }); // Duplicate
+            var data = new[]
+            {
+                "<html>",
+                "<head>",
+                "</head>",
+                "<body>",
+                "<script type='text/javascript'>",
+                "   $(function(){",
+                "       alert('I am a script with an @Viewmodel.Variable);",
+                "   });",
+                "</script>",
+                "</body>",
+                "</html>",
+            };
 
-            // Act
-            totalRazorLines = totalRazorLines.Distinct().ToList();
+            var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs",
+                "somefile.cshtml");
 
-            // Assert
-            // To illustrate, without the equals override, this wouldn't work because although the values match they are different objects.
-            Assert.IsTrue(totalRazorLines.Contains(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable2'", JavaScriptName = "serverVariable2" }));
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual(3, result.JsRemoved[0].Lines.Count);
+            Assert.IsNull(result.JsRemoved[0].Lines.FirstOrDefault(x => x.Contains("@")));
+            Assert.AreEqual(3, result.RefactoredLines.Count(x => x.Contains("script")));
+        }
 
-            Assert.AreEqual(3, totalRazorLines.Count);
-            Assert.AreEqual(totalRazorLines[0].JavaScriptName, "serverVariable1");
-            Assert.AreEqual(totalRazorLines[1].JavaScriptName, "serverVariable2");
-            Assert.AreEqual(totalRazorLines[2].JavaScriptName, "serverVariable3");
+        private AdvancedJsSeperationService GetAdvancedJsSeperationService()
+        {
+            var mockJsInjectNewModuleVariables = new Mock<IJsInjectNewModuleVariables>();
+            mockJsInjectNewModuleVariables.Setup(x => x.Build(It.IsAny<List<string>>(), It.IsAny<IEnumerable<JsModuleViewModel>>())).Returns(() => new[] { "   $(function(){", "       alert('I am a script with an ' + ap2.ViewmodelVariable);", "   });" });
+
+            return new AdvancedJsSeperationService(new JsBlockContentEvaluator(), new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()), new JsModuleBlockEvaluator(new JsModuleLineEvaluator()), new JsModuleFactory(), mockJsInjectNewModuleVariables.Object);
         }
     }
 }

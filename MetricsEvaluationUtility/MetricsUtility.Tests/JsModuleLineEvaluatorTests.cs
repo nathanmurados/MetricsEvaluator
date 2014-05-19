@@ -68,6 +68,7 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList))", result[0]);
         }
+
         [Test]
         public void Extract_Razor_2_Fragments()
         {
@@ -85,6 +86,7 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("'@ViewBag.docid'", result[0]);
             Assert.AreEqual("'@ViewBag.doctype'", result[1]);
         }
+
         [Test]
         public void Extract_Razor_ConertToString()
         {

@@ -43,24 +43,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
 
             if (jsBlockContents.Any())
-            {
-                // We may have several blocks of JS in the view. But we will have only one new AP2 module.
-                // There may be duplicated razor fragments in the existing JS blocks. The duplication must be removed
-                // before adding the fragments to the new ap2 module.
-
-                var refactoredJs = new List<string[]>();
-
-                List<JsModuleViewModel> razorLines = new List<JsModuleViewModel>();
-                foreach (var blockContent in jsBlockContents)
-                {
-                    razorLines.AddRange(JsModuleBlockEvaluator.Evaluate(blockContent.Lines));
-
-                    refactoredJs.Add(JsInjectNewModuleVariables.Build(blockContent.Lines, razorLines));
-                }
-
-                var jsModule = JsModuleFactory.Build(razorLines.Distinct().ToList()); // generate the new ap2 module from the de-duplicated razor fragments
-
-                /*
+            {/*
                 * find the first script reference
                 * 
                 * Replace it with the js module
@@ -74,8 +57,24 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
 
 
-                refactoredLines = new List<string>();
+                // We may have several blocks of JS in the view. But we will have only one new AP2 module.
+                // There may be duplicated razor fragments in the existing JS blocks. The duplication must be removed
+                // before adding the fragments to the new ap2 module.
+
                 jsRemoved = new GeneratedJsViewModel[jsBlockContents.Count];
+
+                List<JsModuleViewModel> razorLines = new List<JsModuleViewModel>();
+                for (int i = 0; i < jsBlockContents.Count; i++)
+                {
+                    var blockContent = jsBlockContents[i];
+                    razorLines.AddRange(JsModuleBlockEvaluator.Evaluate(blockContent.Lines));
+
+                    jsRemoved[i] = new GeneratedJsViewModel { Lines = JsInjectNewModuleVariables.Build(blockContent.Lines, razorLines).ToList() };
+                }
+
+                var jsModule = JsModuleFactory.Build(razorLines.Distinct().ToList()); // generate the new ap2 module from the de-duplicated razor fragments
+
+                refactoredLines = new List<string>();
 
                 var jsFileDetails = new RefactoredFileNameViewModel[jsBlockContents.Count];
                 var blockIndex = 0;
@@ -84,11 +83,10 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
                 for (var i = 0; i < jsBlockContents.Count; i++)
                 {
-                    jsRemoved[i] = new GeneratedJsViewModel { Lines = new List<string>() };
                     jsFileDetails[i] = JsFileNameEvaluator.Evaluate(solutionRouteDirectory, generatedResultDirectory, fileName, i);
                 }
 
-                var openingTagWrittenFor = -1;
+                var moduleHasBeenIncluded = false;
 
                 foreach (var l in cleanedLines)
                 {
@@ -106,15 +104,26 @@ namespace MetricsUtility.Core.Services.RefactorServices
                             if (hasStartTag)
                             {
                                 replacement = Regex.Replace(replacement, RegexConstants.ScriptOpeningTag, "", RegexOptions.IgnoreCase);
-                                if (openingTagWrittenFor != blockIndex)
+                                //if (openingTagWrittenFor != blockIndex)
+                                //{
+                                //    line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
+                                //    openingTagWrittenFor = blockIndex;
+                                //}
+                                //else
+                                //{
+                                //    line = Regex.Replace(line, toReplace, "", RegexOptions.IgnoreCase);
+                                //}
+
+                                if (!moduleHasBeenIncluded)
                                 {
-                                    line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
-                                    openingTagWrittenFor = blockIndex;
+                                    //refactoredLines.Add("<script type='text/javascript'>");
+                                    refactoredLines.AddRange(jsModule);
+                                    //refactoredLines.Add("</script>");
+                                    moduleHasBeenIncluded = true;
                                 }
-                                else
-                                {
-                                    line = Regex.Replace(line, toReplace, "", RegexOptions.IgnoreCase);
-                                }
+
+                                line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
+
                             }
                             else
                             {
@@ -124,11 +133,6 @@ namespace MetricsUtility.Core.Services.RefactorServices
                             if (line.Trim().Length > 0)
                             {
                                 refactoredLines.Add(line.Trim());
-                            }
-
-                            if (replacement.Trim().Length > 0)
-                            {
-                                jsRemoved[blockIndex].Lines.Add(replacement);
                             }
 
                             if (lineIndex == jsBlockContents[blockIndex].Lines.Count - 1)
