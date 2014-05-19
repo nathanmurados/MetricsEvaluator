@@ -56,9 +56,11 @@
     <Compile Include="DirectoryMimickerTests.cs" />
     <Compile Include="JsInjectNewModuleVariablesTests.cs" />
     <Compile Include="JsModuleBlockEvaluatorTests.cs" />
+    <Compile Include="JSModuleLineEvaluatorRegexTests.cs" />
     <Compile Include="JsModuleLineEvaluatorTests.cs" />
     <Compile Include="JsModuleFactoryTests.cs" />
     <Compile Include="JsVariableNameEvaluatorTests.cs" />
+    <Compile Include="LinqTests.cs" />
     <Compile Include="PagJsSeperationEvaluatorTests.cs" />
     <Compile Include="PageCssSeperationEvaluatorTests.cs" />
     <Compile Include="DirectoryGroupEvaluatorTests.cs" />
