@@ -30,7 +30,7 @@ namespace MetricsUtiltiy.Tests
 
             // Assert
             Assert.IsTrue(result.Count == 3);
-            Assert.AreEqual(result[1], "       something=ap2.abc");
+            Assert.AreEqual("       something=ap2.abc", result[1]);
         }
 
         [Test]

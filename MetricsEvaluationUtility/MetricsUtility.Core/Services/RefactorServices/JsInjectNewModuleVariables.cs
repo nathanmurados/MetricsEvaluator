@@ -33,18 +33,20 @@ namespace MetricsUtility.Core.Services.RefactorServices
             
             for (int i = 0; i < lines.Count; i++)
             {
+                string line = lines[i];
+                
                 foreach (JsModuleViewModel razor in razorVariables)
                 {
-                    string lineToProcess = lines[i];
-
-                    if (lineToProcess.Contains(razor.OriginalRazorText))
+                    if (line.Contains(razor.OriginalRazorText))
                     {
-                        output.Add(lineToProcess.Replace(razor.OriginalRazorText, string.Format("{0}.{1}", JsContainerName, razor.JavaScriptName)));
+                        line = line.Replace(razor.OriginalRazorText, string.Format("{0}.{1}", JsContainerName, razor.JavaScriptName));
                     }
                 }
+
+                output.Add(line);
             }
 
-            return lines;
+            return output;
         }
     }
 }
