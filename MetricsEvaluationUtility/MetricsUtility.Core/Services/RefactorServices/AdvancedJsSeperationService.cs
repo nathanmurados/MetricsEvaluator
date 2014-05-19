@@ -14,9 +14,11 @@ namespace MetricsUtility.Core.Services.RefactorServices
         public IJsFileNameEvaluator JsFileNameEvaluator { get; private set; }
         public IJsModuleBlockEvaluator JsModuleBlockEvaluator { get; private set; }
         public IJsModuleFactory JsModuleFactory { get; private set; }
+        public IJsInjectNewModuleVariables JsInjectNewModuleVariables { get; private set; }
 
-        public AdvancedJsSeperationService(IJsBlockContentEvaluator jsBlockContentEvaluator, IJsFileNameEvaluator jsFileNameEvaluator, IJsModuleBlockEvaluator jsModuleBlockEvaluator, IJsModuleFactory jsModuleFactory)
+        public AdvancedJsSeperationService(IJsBlockContentEvaluator jsBlockContentEvaluator, IJsFileNameEvaluator jsFileNameEvaluator, IJsModuleBlockEvaluator jsModuleBlockEvaluator, IJsModuleFactory jsModuleFactory, IJsInjectNewModuleVariables jsInjectNewModuleVariables)
         {
+            JsInjectNewModuleVariables = jsInjectNewModuleVariables;
             JsModuleFactory = jsModuleFactory;
             JsModuleBlockEvaluator = jsModuleBlockEvaluator;
             JsFileNameEvaluator = jsFileNameEvaluator;
@@ -36,8 +38,8 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
             var jsBlockContents = JsBlockContentEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.RazorOnly).ToList();
 
-            GeneratedJsViewModel[] extractedJsBlocks;
-            List<string> strippedContent;
+            GeneratedJsViewModel[] jsRemoved;
+            List<string> refactoredLines;
 
 
             if (jsBlockContents.Any())
@@ -45,41 +47,35 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 // We may have several blocks of JS in the view. But we will have only one new AP2 module.
                 // There may be duplicated razor fragments in the existing JS blocks. The duplication must be removed
                 // before adding the fragments to the new ap2 module.
-                
-                var jsModuleToInsert = new List<string[]>();
 
-                List<JsModuleViewModel> totalRazorLines = new List<JsModuleViewModel>();
-                
+                var refactoredJs = new List<string[]>();
+
+                List<JsModuleViewModel> razorLines = new List<JsModuleViewModel>();
                 foreach (var blockContent in jsBlockContents)
                 {
-                    IEnumerable<JsModuleViewModel> blockRazorLines = JsModuleBlockEvaluator.Evaluate(blockContent.Lines);
-                    totalRazorLines.AddRange(blockRazorLines);
+                    razorLines.AddRange(JsModuleBlockEvaluator.Evaluate(blockContent.Lines));
+
+                    refactoredJs.Add(JsInjectNewModuleVariables.Build(blockContent.Lines, razorLines));
                 }
-                
-                totalRazorLines = totalRazorLines.Distinct().ToList(); // de-duplicate razor fragments
 
-                var jsModule = JsModuleFactory.Build(totalRazorLines); // generate the new ap2 module
-             
-                jsModuleToInsert.Add(jsModule);
+                var jsModule = JsModuleFactory.Build(razorLines.Distinct().ToList()); // generate the new ap2 module from the de-duplicated razor fragments
 
-                // TODO insert ap2 module into the view
+                /*
+                * find the first script reference
+                * 
+                * Replace it with the js module
+                * 
+                * Create new js files without razor and references to them
+                * 
+                * put in references to new Js files where old files WERE
+                * 
+                * Done?
+                */
 
 
-                // Replace the razor fragments in the original JS blocks with our new ap2 module variables
 
-                JsInjectNewModuleVariables converter = new JsInjectNewModuleVariables();
-                foreach (var blockContent in jsBlockContents)
-                {
-                    blockContent.Lines = converter.Build(blockContent.Lines, totalRazorLines);
-                }
-                
-                // TODO take the modified JS blocks and turn into JS files
-
-                throw new NotImplementedException("NATHAN YOU ARE HERE");
-                
-
-                strippedContent = new List<string>();
-                extractedJsBlocks = new GeneratedJsViewModel[jsBlockContents.Count];
+                refactoredLines = new List<string>();
+                jsRemoved = new GeneratedJsViewModel[jsBlockContents.Count];
 
                 var jsFileDetails = new RefactoredFileNameViewModel[jsBlockContents.Count];
                 var blockIndex = 0;
@@ -88,7 +84,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
                 for (var i = 0; i < jsBlockContents.Count; i++)
                 {
-                    extractedJsBlocks[i] = new GeneratedJsViewModel { Lines = new List<string>() };
+                    jsRemoved[i] = new GeneratedJsViewModel { Lines = new List<string>() };
                     jsFileDetails[i] = JsFileNameEvaluator.Evaluate(solutionRouteDirectory, generatedResultDirectory, fileName, i);
                 }
 
@@ -127,17 +123,17 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
                             if (line.Trim().Length > 0)
                             {
-                                strippedContent.Add(line.Trim());
+                                refactoredLines.Add(line.Trim());
                             }
 
                             if (replacement.Trim().Length > 0)
                             {
-                                extractedJsBlocks[blockIndex].Lines.Add(replacement);
+                                jsRemoved[blockIndex].Lines.Add(replacement);
                             }
 
                             if (lineIndex == jsBlockContents[blockIndex].Lines.Count - 1)
                             {
-                                extractedJsBlocks[blockIndex].ProposedFileName = jsFileDetails[blockIndex].Filename;
+                                jsRemoved[blockIndex].ProposedFileName = jsFileDetails[blockIndex].Filename;
                                 lineIndex = -1;
                                 blockIndex++;
                                 if (blockIndex == jsBlockContents.Count)
@@ -149,25 +145,25 @@ namespace MetricsUtility.Core.Services.RefactorServices
                         }
                         else
                         {
-                            strippedContent.Add(l);
+                            refactoredLines.Add(l);
                         }
                     }
                     else
                     {
-                        strippedContent.Add(l);
+                        refactoredLines.Add(l);
                     }
                 }
             }
             else
             {
-                extractedJsBlocks = new GeneratedJsViewModel[0];
-                strippedContent = cleanedLines.ToList();
+                jsRemoved = new GeneratedJsViewModel[0];
+                refactoredLines = cleanedLines.ToList();
             }
 
             return new SeperatedJs
             {
-                ExtractedJsBlocks = extractedJsBlocks,
-                ReplacementLines = strippedContent.ToArray()
+                JsRemoved = jsRemoved,
+                RefactoredLines = refactoredLines.ToArray()
             };
         }
     }

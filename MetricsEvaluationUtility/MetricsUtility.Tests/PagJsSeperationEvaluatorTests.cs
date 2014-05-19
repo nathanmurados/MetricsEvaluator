@@ -26,10 +26,10 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            Assert.AreEqual(1, result.ReplacementLines.Count());
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("   body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
-            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.ReplacementLines[0]);
+            Assert.AreEqual(1, result.RefactoredLines.Count());
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual("   body{float:left;}", result.JsRemoved[0].Lines[0]);
+            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.RefactoredLines[0]);
         }
 
 
@@ -46,10 +46,10 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            Assert.AreEqual(2, result.ReplacementLines.Count());
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("   body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
-            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.ReplacementLines[1]);
+            Assert.AreEqual(2, result.RefactoredLines.Count());
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual("   body{float:left;}", result.JsRemoved[0].Lines[0]);
+            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.RefactoredLines[1]);
         }
 
         [Test]
@@ -65,8 +65,8 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            Assert.AreEqual(4, result.ReplacementLines.Count());
-            Assert.AreEqual(0, result.ExtractedJsBlocks.Count());
+            Assert.AreEqual(4, result.RefactoredLines.Count());
+            Assert.AreEqual(0, result.JsRemoved.Count());
             Assert.AreEqual("<script src=\"~/Scripts/ThirdPartyFeeds.js\" type=\"text/javascript\"></script>", testData[0]);
             Assert.AreEqual("<script type=\"text/javascript\">", testData[1]);
             Assert.AreEqual("   body{float:left;} = @something", testData[2]);
@@ -85,10 +85,10 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            Assert.AreEqual(1, result.ReplacementLines.Count());
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("   body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
-            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.ReplacementLines[0]);
+            Assert.AreEqual(1, result.RefactoredLines.Count());
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual("   body{float:left;}", result.JsRemoved[0].Lines[0]);
+            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.RefactoredLines[0]);
             //<script src="@Url.Content("~/Scripts/ThirdPartyFeeds.js")" type="text/javascript"></script>
 
         }
@@ -113,10 +113,10 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            Assert.AreEqual(8, result.ReplacementLines.Count());
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("         body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
-            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.ReplacementLines[2]);
+            Assert.AreEqual(8, result.RefactoredLines.Count());
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual("         body{float:left;}", result.JsRemoved[0].Lines[0]);
+            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.RefactoredLines[2]);
         }
 
         [Test]
@@ -140,14 +140,14 @@ namespace MetricsUtiltiy.Tests
 
 
 
-            Assert.AreEqual("<html>", result.ReplacementLines[0]);
-            Assert.AreEqual("   <head>", result.ReplacementLines[1]);
-            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.ReplacementLines[2]);
-            Assert.AreEqual("   </head>", result.ReplacementLines[3]);
-            Assert.AreEqual("   <body>", result.ReplacementLines[4]);
-            Assert.AreEqual("      <div>some text</div>", result.ReplacementLines[5]);
-            Assert.AreEqual("   <body>", result.ReplacementLines[6]);
-            Assert.AreEqual("</html>", result.ReplacementLines[7]);
+            Assert.AreEqual("<html>", result.RefactoredLines[0]);
+            Assert.AreEqual("   <head>", result.RefactoredLines[1]);
+            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.RefactoredLines[2]);
+            Assert.AreEqual("   </head>", result.RefactoredLines[3]);
+            Assert.AreEqual("   <body>", result.RefactoredLines[4]);
+            Assert.AreEqual("      <div>some text</div>", result.RefactoredLines[5]);
+            Assert.AreEqual("   <body>", result.RefactoredLines[6]);
+            Assert.AreEqual("</html>", result.RefactoredLines[7]);
         }
 
         [Test]
@@ -171,9 +171,9 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            Assert.AreEqual("         $(function(){", result.ExtractedJsBlocks[0].Lines[0]);
-            Assert.AreEqual("             alert('hello world');", result.ExtractedJsBlocks[0].Lines[1]);
-            Assert.AreEqual("         });", result.ExtractedJsBlocks[0].Lines[2]);
+            Assert.AreEqual("         $(function(){", result.JsRemoved[0].Lines[0]);
+            Assert.AreEqual("             alert('hello world');", result.JsRemoved[0].Lines[1]);
+            Assert.AreEqual("         });", result.JsRemoved[0].Lines[2]);
         }
 
         [Test]
@@ -201,15 +201,15 @@ namespace MetricsUtiltiy.Tests
 
 
 
-            Assert.AreEqual("<html>", result.ReplacementLines[0]);
-            Assert.AreEqual("   <head>", result.ReplacementLines[1]);
-            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.ReplacementLines[2]);
-            Assert.AreEqual("", result.ReplacementLines[3]);
-            Assert.AreEqual("   </head>", result.ReplacementLines[4]);
-            Assert.AreEqual("   <body>", result.ReplacementLines[5]);
-            Assert.AreEqual("      <div>some text</div>", result.ReplacementLines[6]);
-            Assert.AreEqual("   <body>", result.ReplacementLines[7]);
-            Assert.AreEqual("</html>", result.ReplacementLines[8]);
+            Assert.AreEqual("<html>", result.RefactoredLines[0]);
+            Assert.AreEqual("   <head>", result.RefactoredLines[1]);
+            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.RefactoredLines[2]);
+            Assert.AreEqual("", result.RefactoredLines[3]);
+            Assert.AreEqual("   </head>", result.RefactoredLines[4]);
+            Assert.AreEqual("   <body>", result.RefactoredLines[5]);
+            Assert.AreEqual("      <div>some text</div>", result.RefactoredLines[6]);
+            Assert.AreEqual("   <body>", result.RefactoredLines[7]);
+            Assert.AreEqual("</html>", result.RefactoredLines[8]);
         }
 
         [Test]
@@ -237,16 +237,16 @@ namespace MetricsUtiltiy.Tests
 
 
 
-            Assert.AreEqual("<html>", result.ReplacementLines[0]);
-            Assert.AreEqual("   <head>", result.ReplacementLines[1]);
-            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.ReplacementLines[2]);
-            Assert.AreEqual("      <!-- A reason not to join these two scripts together in holy matrimony-->", result.ReplacementLines[3]);
-            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid_fragment1.js\" type=\"text/javascript\"></script>", result.ReplacementLines[4]);
-            Assert.AreEqual("   </head>", result.ReplacementLines[5]);
-            Assert.AreEqual("   <body>", result.ReplacementLines[6]);
-            Assert.AreEqual("      <div>some text</div>", result.ReplacementLines[7]);
-            Assert.AreEqual("   <body>", result.ReplacementLines[8]);
-            Assert.AreEqual("</html>", result.ReplacementLines[9]);
+            Assert.AreEqual("<html>", result.RefactoredLines[0]);
+            Assert.AreEqual("   <head>", result.RefactoredLines[1]);
+            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid.js\" type=\"text/javascript\"></script>", result.RefactoredLines[2]);
+            Assert.AreEqual("      <!-- A reason not to join these two scripts together in holy matrimony-->", result.RefactoredLines[3]);
+            Assert.AreEqual("<script src=\"~/Content/BlockJs/Search/LoggingResultGrid_fragment1.js\" type=\"text/javascript\"></script>", result.RefactoredLines[4]);
+            Assert.AreEqual("   </head>", result.RefactoredLines[5]);
+            Assert.AreEqual("   <body>", result.RefactoredLines[6]);
+            Assert.AreEqual("      <div>some text</div>", result.RefactoredLines[7]);
+            Assert.AreEqual("   <body>", result.RefactoredLines[8]);
+            Assert.AreEqual("</html>", result.RefactoredLines[9]);
         }
 
         [Test]
@@ -267,9 +267,9 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            Assert.AreEqual(8, result.ReplacementLines.Count());
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("      body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
+            Assert.AreEqual(8, result.RefactoredLines.Count());
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual("      body{float:left;}", result.JsRemoved[0].Lines[0]);
         }
 
         [Test]
@@ -290,9 +290,9 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            Assert.AreEqual(8, result.ReplacementLines.Count());
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("           body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
+            Assert.AreEqual(8, result.RefactoredLines.Count());
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual("           body{float:left;}", result.JsRemoved[0].Lines[0]);
         }
 
         [Test]
@@ -312,9 +312,9 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            // Assert.AreEqual(7, result.ReplacementLines.Count());
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("           body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
+            // Assert.AreEqual(7, result.RefactoredLines.Count());
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual("           body{float:left;}", result.JsRemoved[0].Lines[0]);
         }
 
         [Test]
@@ -334,9 +334,9 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            // Assert.AreEqual(7, result.ReplacementLines.Count());
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual("      body{float:left;}   ", result.ExtractedJsBlocks[0].Lines[0]);
+            // Assert.AreEqual(7, result.RefactoredLines.Count());
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual("      body{float:left;}   ", result.JsRemoved[0].Lines[0]);
         }
 
         [Test]
@@ -360,10 +360,10 @@ namespace MetricsUtiltiy.Tests
 
             var result = Run(testData);
 
-            // Assert.AreEqual(7, result.ReplacementLines.Count());
-            Assert.AreEqual(2, result.ExtractedJsBlocks[0].Lines.Count());
-            Assert.AreEqual("           body{float:left;}", result.ExtractedJsBlocks[0].Lines[0]);
-            Assert.AreEqual("           div{float:left;}", result.ExtractedJsBlocks[0].Lines[1]);
+            // Assert.AreEqual(7, result.RefactoredLines.Count());
+            Assert.AreEqual(2, result.JsRemoved[0].Lines.Count());
+            Assert.AreEqual("           body{float:left;}", result.JsRemoved[0].Lines[0]);
+            Assert.AreEqual("           div{float:left;}", result.JsRemoved[0].Lines[1]);
         }
     }
 }
