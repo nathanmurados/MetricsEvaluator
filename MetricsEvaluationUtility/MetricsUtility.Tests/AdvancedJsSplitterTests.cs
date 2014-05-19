@@ -125,7 +125,7 @@ namespace MetricsUtiltiy.Tests
             totalRazorLines = totalRazorLines.Distinct().ToList();
 
             // Assert
-            // To illustrate, without the equals override, this wouldn't work because although the values match they are difference objects.
+            // To illustrate, without the equals override, this wouldn't work because although the values match they are different objects.
             Assert.IsTrue(totalRazorLines.Contains(new JsModuleViewModel() { OriginalRazorText = "'@serverVariable2'", JavaScriptName = "serverVariable2" }));
 
             Assert.AreEqual(3, totalRazorLines.Count);
