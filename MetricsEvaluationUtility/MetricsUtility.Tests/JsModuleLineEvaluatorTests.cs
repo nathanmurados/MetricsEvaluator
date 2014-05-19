@@ -55,7 +55,7 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("'@decommisionReason'", result[0]);
         }
         [Test]
-        public void Extract_Razor_No_Quotes()
+        public void Extract_Razor_Not_Quoted()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
@@ -76,6 +76,8 @@ namespace MetricsUtiltiy.Tests
             var evaluator = new JsModuleLineEvaluator();
 
             // NB contains 2 fragments of razor
+            // data: {'docId1':'" + '@ViewBag.docid' + "','conditionType1':'" + '@ViewBag.doctype' + "'}
+
             string input = " data: \"{'docId1':'\" + '@ViewBag.docid' + \"','conditionType1':'\" + '@ViewBag.doctype' + \"'}\",";
 
             // Act
@@ -88,7 +90,7 @@ namespace MetricsUtiltiy.Tests
         }
 
         [Test]
-        public void Extract_Razor_ConertToString()
+        public void Extract_Razor_ConvertToString()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
