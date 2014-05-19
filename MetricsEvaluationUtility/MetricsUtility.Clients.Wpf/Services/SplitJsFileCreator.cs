@@ -17,9 +17,9 @@ namespace MetricsUtility.Clients.Wpf.Services
 
         public void Create(SeperatedJs seperatedJs, string newPath, List<string> avoidedOverWrites, ref int filesCreated, string file)
         {
-            if (seperatedJs.ExtractedJsBlocks.Any())
+            if (seperatedJs.JsRemoved.Any())
             {
-                foreach (var newFile in seperatedJs.ExtractedJsBlocks)
+                foreach (var newFile in seperatedJs.JsRemoved)
                 {
                     var uri = newPath + "\\" + newFile.ProposedFileName;
 
@@ -51,7 +51,7 @@ namespace MetricsUtility.Clients.Wpf.Services
                     Ux.WriteLine("Created " + uri);
                     filesCreated++;
                 }
-                File.WriteAllLines(file, seperatedJs.ReplacementLines);
+                File.WriteAllLines(file, seperatedJs.RefactoredLines);
             }
         }
 

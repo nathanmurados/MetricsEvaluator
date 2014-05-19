@@ -100,9 +100,9 @@ namespace MetricsUtiltiy.Tests
 
             var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs", "somefile.cshtml");
 
-            Assert.AreEqual(1, result.ExtractedJsBlocks.Count());
-            Assert.AreEqual(3, result.ExtractedJsBlocks[0].Lines.Count);
-            Assert.IsNull(result.ExtractedJsBlocks[0].Lines.FirstOrDefault(x => x.Contains("@")));
+            Assert.AreEqual(1, result.JsRemoved.Count());
+            Assert.AreEqual(3, result.JsRemoved[0].Lines.Count);
+            Assert.IsNull(result.JsRemoved[0].Lines.FirstOrDefault(x => x.Contains("@")));
         }
 
         [Test]

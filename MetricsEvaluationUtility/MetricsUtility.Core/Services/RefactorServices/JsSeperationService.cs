@@ -122,8 +122,8 @@ namespace MetricsUtility.Core.Services.RefactorServices
             }
             return new SeperatedJs
             {
-                ExtractedJsBlocks = extractedJsBlocks,
-                ReplacementLines = replacmentContent.ToArray()
+                JsRemoved = extractedJsBlocks,
+                RefactoredLines = replacmentContent.ToArray()
             };
         }
     }
