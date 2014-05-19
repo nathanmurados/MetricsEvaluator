@@ -2,10 +2,13 @@
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
+    using System.ComponentModel.Design;
     using System.Linq;
 
     public class JsModuleLineEvaluator : IJsModuleLineEvaluator
     {
+        private string _patternNotHandled = "Pattern not handled";
+
         /// <summary>
         /// Extract the razor code from a line of javascript.
         /// Input: A line of Javascript containing an @. The @ prefixes the razor code.
@@ -14,6 +17,8 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// </summary>
         public List<string> Evaluate(string jsLine)
         {
+            CheckForNotHandledPatterns(jsLine);
+            
             List<string> output = new List<string>();
 
             // this is a quick and dirty implementation
@@ -62,9 +67,20 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             return output;
         }
 
+        /// <summary>
+        /// Check for patterns we know we don't yet handle.
+        /// </summary>
+        private void CheckForNotHandledPatterns(string jsLine)
+        {
+            if (jsLine.Contains("@") && jsLine.Contains("++"))
+            {
+                throw new System.NotImplementedException(_patternNotHandled + "@ && ++");
+            }
+        }
+
         private List<string> PatternNotHandled()
         {
-            throw new System.NotImplementedException("Pattern not handled");
+            throw new System.NotImplementedException(_patternNotHandled);
         }
 
         private List<string> ProcessMultiFragmentLine(string jsline)
@@ -114,7 +130,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 pos++;
             }
 
-            throw new System.NotImplementedException();
+            throw new System.NotImplementedException(_patternNotHandled);
         }
     }
 }
