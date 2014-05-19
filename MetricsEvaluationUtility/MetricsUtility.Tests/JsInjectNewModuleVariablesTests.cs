@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using MetricsUtility.Core.ViewModels;
 using NUnit.Framework;
-using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
 
 namespace MetricsUtiltiy.Tests
 {
-    using System.Text;
-
     /// <summary>
     /// Testing ability to replace razor fragments in JS blocks with ap2 variable names
     /// </summary>

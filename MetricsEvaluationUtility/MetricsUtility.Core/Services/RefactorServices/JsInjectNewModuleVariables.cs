@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using MetricsUtility.Core.ViewModels;
-using MetricsUtility.Core.Services.Evaluators.Css;
 
 namespace MetricsUtility.Core.Services.RefactorServices
 {
