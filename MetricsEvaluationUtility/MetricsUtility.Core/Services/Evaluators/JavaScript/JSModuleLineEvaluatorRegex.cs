@@ -9,7 +9,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
     public class JSModuleLineEvaluatorRegex: IJsModuleLineEvaluator
     {
-        public IEnumerable<string> Evaluate(string jsLine)
+        public List<string> Evaluate(string jsLine)
         {
             IList<string> output =new List<string>();
             MatchCollection mc = Regex.Matches(jsLine, @"'(.*?)'");
@@ -18,7 +18,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
             }
 
-            return output;
+            return output.ToList();
         }
     }
 }

@@ -15,7 +15,13 @@ namespace MetricsUtiltiy.Tests
         private AdvancedJsSeperationService GetAdvancedJsSeperationService()
         {
             var mockJsInjectNewModuleVariables = new Mock<IJsInjectNewModuleVariables>();
-            mockJsInjectNewModuleVariables.Setup(x => x.Build(It.IsAny<List<string>>(), It.IsAny<IEnumerable<JsModuleViewModel>>())).Returns(() => new[] { "   $(function(){", "       alert('I am a script with an ' + ap2.ViewmodelVariable);", "   });" });
+            mockJsInjectNewModuleVariables.Setup(x => x.Build(It.IsAny<List<string>>(), It.IsAny<IEnumerable<JsModuleViewModel>>())).Returns(() => 
+                new List<string>
+                {
+                    "   $(function(){", 
+                    "       alert('I am a script with an ' + ap2.ViewmodelVariable);", 
+                    "   });"
+                });
 
             return new AdvancedJsSeperationService(new JsBlockContentEvaluator(), new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()), new JsModuleBlockEvaluator(new JsModuleLineEvaluator()), new JsModuleFactory(), mockJsInjectNewModuleVariables.Object);
         }

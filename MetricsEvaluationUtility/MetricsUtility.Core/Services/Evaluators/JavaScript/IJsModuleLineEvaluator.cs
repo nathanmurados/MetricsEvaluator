@@ -6,6 +6,6 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// <summary>
         /// Extract the razor code from a line of javascript.
         /// </summary>
-        IEnumerable<string> Evaluate(string jsLine);
+        List<string> Evaluate(string jsLine);
     }
 }
