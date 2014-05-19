@@ -42,9 +42,9 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
             if (jsBlockContents.Any())
             {
-                // Mike's work - Start
-                // We may have several blocks of JS in the view. But we can have only one new AP2 module (the ap2 variable would be repeated)
-                // Therefore we must process all JS blocks, de-duplicated any razor variables between the blocks, and then generate the new ap2 module.
+                // We may have several blocks of JS in the view. But we will have only one new AP2 module.
+                // There may be duplicated razor fragments in the existing JS blocks. The duplication must be removed
+                // before adding the fragments to the new ap2 module.
                 
                 var jsModuleToInsert = new List<string[]>();
 
@@ -56,12 +56,24 @@ namespace MetricsUtility.Core.Services.RefactorServices
                     totalRazorLines.AddRange(blockRazorLines);
                 }
                 
-                totalRazorLines = totalRazorLines.Distinct().ToList(); // de-duplicate
+                totalRazorLines = totalRazorLines.Distinct().ToList(); // de-duplicate razor fragments
 
-                var jsModule = JsModuleFactory.Build(totalRazorLines); // the new sp2.xyz = @xyz stuff that's injected into the view.
-                //Mike's work - End
-                
+                var jsModule = JsModuleFactory.Build(totalRazorLines); // generate the new ap2 module
+             
                 jsModuleToInsert.Add(jsModule);
+
+                // TODO insert ap2 module into the view
+
+
+                // Replace the razor fragments in the original JS blocks with our new ap2 module variables
+
+                JsInjectNewModuleVariables converter = new JsInjectNewModuleVariables();
+                foreach (var blockContent in jsBlockContents)
+                {
+                    blockContent.Lines = converter.Build(blockContent.Lines, totalRazorLines);
+                }
+                
+                // TODO take the modified JS blocks and turn into JS files
 
                 throw new NotImplementedException("NATHAN YOU ARE HERE");
                 
