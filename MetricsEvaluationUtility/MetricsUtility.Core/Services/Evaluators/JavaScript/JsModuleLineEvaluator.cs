@@ -14,17 +14,35 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         {
             List<string> output = new List<string>();
             
-            //output.Add("'@fragment1'");
-            //output.Add("'@fragment2'");
 
             // this is a quick and dirty implementation
             // I'm assuming the fragment is surrounded by quotes
 
+            string fragment;
+            
             int atPosition = jsLine.IndexOf("@");
-            string firstQuoteCharaacter = jsLine.Substring(atPosition - 1, 1);     // I'm assuming @ is immediately prefixed by a ' or "
-            int lastQuotePosition = jsLine.LastIndexOf(firstQuoteCharaacter);
 
-            string fragment = jsLine.Substring(atPosition - 1, lastQuotePosition - atPosition + 2);
+            string firstDelimiterCharacter = jsLine.Substring(atPosition - 1, 1);   // take character to the left
+
+            // This is a HACK to cater for non string razor like below
+            // example: "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));"
+            // The dodgy assumption here is that the line is terminated with a ;
+            if (firstDelimiterCharacter == " ")
+            {
+                int endDelimierPosition = jsLine.LastIndexOf(";");
+                fragment = jsLine.Substring(atPosition, endDelimierPosition - atPosition); // don't include delimiters
+
+            }
+            else
+            {
+                // I'm assuming the delimiter is a quote, single or double, and that there is a matching end quote
+                // example: "$('#DecommisionReason').val('@decommisionReason');"
+                int lastQuotePosition = jsLine.LastIndexOf(firstDelimiterCharacter);
+
+                fragment = jsLine.Substring(atPosition - 1, lastQuotePosition - atPosition + 2); // include the quote delimiters
+            }
+
+            
 
             output.Add(fragment);
             
