@@ -9,7 +9,7 @@ namespace MetricsUtiltiy.Tests
     using System.Text;
 
     /// <summary>
-    /// Testing ability to replace razor fragments in JS blocks with ap2 vairable names
+    /// Testing ability to replace razor fragments in JS blocks with ap2 variable names
     /// </summary>
     [TestFixture]
     public class JsInjectNewModuleVariablesTests
@@ -17,50 +17,53 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Test_Single_Line()
         {
-            //var obj = new JsInjectNewModuleVariables();
-            
-            //var data = new[]
-            //{
-            //    "   $(function(){",
-            //    "       something='@abc'",                    
-            //    "   });"
-            //};
+            // Arrange
+            var obj = new JsInjectNewModuleVariables();
 
-            //List<JsModuleViewModel> blockRazorLines = new List<JsModuleViewModel>();
+            List<string> data = new List<string>();
+            data.Add("   $(function(){");
+            data.Add("       something='@abc'");
+            data.Add("   });");
 
-            //List<JsModuleViewModel> result = obj.Build(data, null);
+            List<JsModuleViewModel> razorLines = new List<JsModuleViewModel>();
+            razorLines.Add(new JsModuleViewModel(){OriginalRazorText = "'@abc'", JavaScriptName = "abc"});
 
-            //Assert.IsTrue(result.Count == 1);
-            //Assert.AreEqual(result[0].OriginalRazorText, "'@abc'");
-            //Assert.AreEqual(result[0].JavaScriptName, "abc");
+            // Act
+            List<string> result = obj.Build(data, razorLines);
+
+            // Assert
+            Assert.IsTrue(result.Count == 3);
+            Assert.AreEqual(result[1], "       something=ap2.abc");
         }
 
         [Test]
-        public void Test_Complex()
+        public void Test_Multi_Line()
         {
-            //var obj = new JsInjectNewModuleVariables();
+            // Arrange
+            var obj = new JsInjectNewModuleVariables();
 
-            //var data = new[]
-            //{
-            //    "   $(function(){",
-            //    "       something='@abc'",                    
-            //    "   });",
-            //    "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';",
-            //    "$('#DecommisionReason').val('@decommisionReason');"
-            //};
+            List<string> data = new List<string>();
+            data.Add("   $(function(){");
+            data.Add("       something='@abc'");
+            data.Add("       var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';");
+            data.Add("       $('#DecommisionReason').val('@decommisionReason');");
+            data.Add("   });");
 
-            //List<JsModuleViewModel> result = obj.Build(data, null);
 
-            //Assert.IsTrue(result.Count == 3);
-            
-            //Assert.AreEqual(result[0].OriginalRazorText, "'@abc'");
-            //Assert.AreEqual(result[0].JavaScriptName, "abc");
+            List<JsModuleViewModel> razorLines = new List<JsModuleViewModel>();
+            razorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@abc'", JavaScriptName = "abc" });
+            razorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@Url.Action(\"Configure\", \"ConfigureMenu\")'", JavaScriptName = "UrlActionConfigureConfigureMenu" });
+            razorLines.Add(new JsModuleViewModel() { OriginalRazorText = "'@decommisionReason'", JavaScriptName = "decommisionReason" });
 
-            //Assert.AreEqual(result[1].OriginalRazorText, "'@Url.Action(\"Configure\", \"ConfigureMenu\")'");
-            //Assert.AreEqual(result[1].JavaScriptName, "UrlActionConfigureConfigureMenu");
+            // Act
+            List<string> result = obj.Build(data, razorLines);
 
-            //Assert.AreEqual(result[2].OriginalRazorText, "'@decommisionReason'");
-            //Assert.AreEqual(result[2].JavaScriptName, "decommisionReason");
+            // Assert
+            Assert.IsTrue(result.Count == 5);
+            Assert.AreEqual("       something=ap2.abc", result[1]);
+            Assert.AreEqual("       var addPageUrl = ap2.UrlActionConfigureConfigureMenu;", result[2]);
+            Assert.AreEqual("       $('#DecommisionReason').val(ap2.decommisionReason);", result[3]);
+
         }
     }
 }
