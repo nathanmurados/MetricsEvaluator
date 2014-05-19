@@ -46,7 +46,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 // We may have several blocks of JS in the view. But we can have only one new AP2 module (the ap2 variable would be repeated)
                 // Therefore we must process all JS blocks, de-duplicated any razor variables between the blocks, and then generate the new ap2 module.
                 
-                var jsModulesToInsert = new List<string[]>();
+                var jsModuleToInsert = new List<string[]>();
 
                 List<JsModuleViewModel> totalRazorLines = new List<JsModuleViewModel>();
                 
@@ -61,7 +61,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 var jsModule = JsModuleFactory.Build(totalRazorLines); // the new sp2.xyz = @xyz stuff that's injected into the view.
                 //Mike's work - End
                 
-                jsModulesToInsert.Add(jsModule);
+                jsModuleToInsert.Add(jsModule);
 
                 throw new NotImplementedException("NATHAN YOU ARE HERE");
                 
