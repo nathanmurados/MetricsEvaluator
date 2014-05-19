@@ -37,14 +37,9 @@ namespace MetricsUtility.Core.Services.RefactorServices
             {
                 foreach (JsModuleViewModel razor in razorVariables)
                 {
-                    string lineToProcess = lines[i];
-
-                    string newLine = string.Empty;
-
-                    if (lineToProcess.Contains(razor.OriginalRazorText))
+                    if (lines[i].Contains(razor.OriginalRazorText))
                     {
-                        newLine = lineToProcess.Replace(razor.OriginalRazorText, string.Format("{0}.{1}", JsContainerName, razor.JavaScriptName));
-                        lines[i] = newLine;
+                        lines[i] = lines[i].Replace(razor.OriginalRazorText, string.Format("{0}.{1}", JsContainerName, razor.JavaScriptName));
                     }
                 }
             }
