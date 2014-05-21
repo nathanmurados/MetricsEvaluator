@@ -118,6 +118,7 @@
     <Compile Include="Services\RefactorServices\StringExtensions.cs" />
     <Compile Include="Services\StorageServices\ICssStatsStorageService.cs" />
     <Compile Include="Services\StorageServices\IStorageService.cs" />
+    <Compile Include="ViewModels\Fragment.cs" />
     <Compile Include="ViewModels\JsModuleViewModel.cs" />
     <Compile Include="ViewModels\SeperatedCssViewModel.cs" />
     <Compile Include="Services\StorageServices\CssStatsStorageService.cs" />

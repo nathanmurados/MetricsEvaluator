@@ -4,9 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
+    using MetricsUtility.Core.ViewModels;
+
     public class JSModuleLineEvaluatorRegex: IJsModuleLineEvaluator
     {
-        public List<string> Evaluate(string jsLine)
+        public List<Fragment> Evaluate(string jsLine)
         {
             IList<string> output =new List<string>();
             MatchCollection mc = Regex.Matches(jsLine, @"'(.*?)'");
@@ -15,7 +17,8 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
             }
 
-            return output.ToList();
+            //return output.ToList();
+            return null;
         }
     }
 }

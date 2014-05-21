@@ -88,7 +88,7 @@ namespace MetricsUtiltiy.Tests
                 new List<string>
                 {
                     "   $(function(){", 
-                    "       alert('I am a script with an ' + ap2.ViewmodelVariable);", 
+                    "       var item =  ap2.Variable;",
                     "   });"
                 });
 
@@ -114,7 +114,7 @@ namespace MetricsUtiltiy.Tests
                 "<!-- some text-->", //TODO: Consider how to treat "joined" blocks.
                 "<script type='text/javascript'>",
                 "   $(function(){",
-                "       alert('I am a script with an @Viewmodel.Variable);",
+                "       var item =  @Viewmodel.Variable;", // this is a typical js line with razor
                 "   });",
                 "</script>",
                 "</body>",
@@ -142,7 +142,7 @@ namespace MetricsUtiltiy.Tests
                 "<body>",
                 "<script type='text/javascript'>",
                 "   $(function(){",
-                "       alert('I am a script with an @Viewmodel.Variable);",
+                "       var item =  @Viewmodel.Variable;", // this is a typical js line with razor
                 "   });",
                 "</script>",
                 "</body>",

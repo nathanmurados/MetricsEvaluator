@@ -35,12 +35,12 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                     continue;
                 }
 
-                IEnumerable<string> razorFragments = JsModuleLineEvaluator.Evaluate(jsLine);
+                IEnumerable<Fragment> razorFragments = JsModuleLineEvaluator.Evaluate(jsLine);
 
-                foreach (string fragment in razorFragments)
+                foreach (Fragment fragment in razorFragments)
                 {
-                    string razorVariable = variableNameEvaluator.Evaluate(fragment);
-                    output.Add(new JsModuleViewModel() { JavaScriptName = razorVariable, OriginalRazorText = fragment });
+                    string razorVariable = variableNameEvaluator.Evaluate(fragment.Text);
+                    output.Add(new JsModuleViewModel() { JavaScriptName = razorVariable, OriginalRazorText = fragment.Text });
                 }
             }
 
