@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
+    using MetricsUtility.Core.ViewModels;
+
     public interface IJsModuleLineEvaluator
     {
         /// <summary>
         /// Extract the razor code from a line of javascript.
         /// </summary>
-        List<string> Evaluate(string jsLine);
+        List<Fragment> Evaluate(string jsLine);
     }
 }

@@ -4,6 +4,8 @@ using MetricsUtility.Core.Services.Evaluators.JavaScript;
 
 namespace MetricsUtiltiy.Tests
 {
+    using MetricsUtility.Core.ViewModels;
+
     [TestFixture]
     public class JsModuleLineEvaluatorRegexTests
     {
@@ -15,7 +17,7 @@ namespace MetricsUtiltiy.Tests
             string input = "var selectedMenu = '@ViewBag.MenuInstanceName';";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -30,7 +32,7 @@ namespace MetricsUtiltiy.Tests
             string input = "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -44,7 +46,7 @@ namespace MetricsUtiltiy.Tests
             string input = "$('#DecommisionReason').val('@decommisionReason');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -58,7 +60,7 @@ namespace MetricsUtiltiy.Tests
             string input = "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -74,7 +76,7 @@ namespace MetricsUtiltiy.Tests
             string input = " data: \"{'docId1':'\" + '@ViewBag.docid' + \"','conditionType1':'\" + '@ViewBag.doctype' + \"'}\",";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -89,7 +91,7 @@ namespace MetricsUtiltiy.Tests
             string input = "$('#HiddenName').val('@Convert.ToString(stateWatcherVM.LName)');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -113,7 +115,7 @@ namespace MetricsUtiltiy.Tests
             string input = "alert('text left @Viewbag.Variable');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -133,7 +135,7 @@ namespace MetricsUtiltiy.Tests
             string input = "alert('@Viewbag.Variable text right');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -153,7 +155,7 @@ namespace MetricsUtiltiy.Tests
             string input = "alert('text left @Viewbag.Variable text right');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);

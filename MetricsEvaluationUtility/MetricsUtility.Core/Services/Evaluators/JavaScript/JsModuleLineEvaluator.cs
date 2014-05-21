@@ -5,6 +5,8 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
     using System.ComponentModel.Design;
     using System.Linq;
 
+    using MetricsUtility.Core.ViewModels;
+
     public class JsModuleLineEvaluator : IJsModuleLineEvaluator
     {
         private string _patternNotHandled = "Pattern not handled";
@@ -15,56 +17,118 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// Note the line may contain several fragments of razor.
         /// The razor code is prefixed with @, it will probably be surrounded by quotes (single or double), but not always!
         /// </summary>
-        public List<string> Evaluate(string jsLine)
+        public List<Fragment> Evaluate(string jsLine)
         {
             CheckForNotHandledPatterns(jsLine);
             
-            List<string> output = new List<string>();
-
-            // this is a quick and dirty implementation
-
-            if (jsLine.ToCharArray().Count(c => c == '@') > 1) // has more than one fragment
+            List<Fragment> output = new List<Fragment>();
+            
+            // Multi fragment line?
+            if (jsLine.ToCharArray().Count(c => c == '@') > 1) 
             {
                 return ProcessMultiFragmentLine(jsLine);
             }
 
-            string fragment;
+            Fragment fragment = new Fragment();
             
             int atPosition = jsLine.IndexOf("@");
 
-            string firstDelimiterCharacter = jsLine.Substring(atPosition - 1, 1);   // take character to the left
+            char firstCharacterToLeft = jsLine.Substring(atPosition - 1, 1).ToCharArray()[0];   // take character to the left
 
-            // Cater for non quoted razor like below
-            // example: "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));"
-            // The dodgy assumption here is that the line is terminated with a ;
-            //
-            if (firstDelimiterCharacter == " ")
+            // Immediately Quoted? 
+            // example: '@decommisionReason'
+            if (firstCharacterToLeft == '\'' || firstCharacterToLeft == '"') // is a quote
             {
+                int rightDelimeterPos = GetRightDelimiterPosition(jsLine, atPosition, firstCharacterToLeft);
+
+                if (rightDelimeterPos > 0)
+                {
+                    fragment.Text = jsLine.Substring(atPosition - 1, rightDelimeterPos - atPosition + 2); // include the quote delimiters
+                    fragment.FragType = FragType.Quoted;
+                    output.Add(fragment);
+                    return output;    
+                }
+                else
+                {
+                    // We can't find the matching quote, or a space was hit before hitting the right quote
+                    throw new System.NotImplementedException(_patternNotHandled + ": " + jsLine);
+                }
+            }
+
+            // Non quoted?
+            // example: globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));
+            if (firstCharacterToLeft == ' ')
+            {
+                // if there's a quote, play safe and terminate
+                if (jsLine.IndexOf("'") > 0)
+                {
+                    throw new System.NotImplementedException(_patternNotHandled + ": " + jsLine);
+                }
+
+                // Assume its unquoted, but terminated by a ;
                 int endDelimierPosition = jsLine.LastIndexOf(";");
                 if (endDelimierPosition == -1) // is there a ; ?
                 {
-                    return PatternNotHandled();
+                    throw new System.NotImplementedException(_patternNotHandled + ": " + jsLine);
                 }
 
-                fragment = jsLine.Substring(atPosition, endDelimierPosition - atPosition); // don't include delimiters
-            }
-            else if (firstDelimiterCharacter == "'" || firstDelimiterCharacter == "\"")
-            {
-                // The delimiter is a quote, single or double, and I'm assuming there's a matching end quote
-                // example: "$('#DecommisionReason').val('@decommisionReason');"
-                //
-                int lastQuotePosition = jsLine.LastIndexOf(firstDelimiterCharacter);
-
-                fragment = jsLine.Substring(atPosition - 1, lastQuotePosition - atPosition + 2); // include the quote delimiters
-            }
-            else
-            {
-                return PatternNotHandled();
+                fragment.Text = jsLine.Substring(atPosition, endDelimierPosition - atPosition); // don't include delimiters
+                fragment.FragType = FragType.Unquoted;
+                output.Add(fragment);
+                return output;
             }
 
-            output.Add(fragment);
+            // Its not a pattern we are confident we recognize, it will have to be done manually
+            throw new System.NotImplementedException(this._patternNotHandled);
+        }
+
+        private int GetRightDelimiterPosition(string jsLine, int atPosition, char delimiterChar)
+        {
+            bool tolerateSpace = false;
             
-            return output;
+            // take text to right of the @
+            string chunk = jsLine.Substring(atPosition + 1);
+            int pos = atPosition +1;
+
+            // scan to right looking for a matching delimiter char, but if we find a space all bets are off
+            foreach (char c in chunk)
+            {
+                if (jsLine.Substring(pos).ToLower().Contains("url"))
+                {
+                    tolerateSpace = true;
+                }
+
+                if (c == ' ' && !tolerateSpace)
+                {
+                    return -1;
+                }
+
+                if (c == delimiterChar)
+                {
+                    return pos;
+                }
+                pos++; // we are moving on the the next char, so update its position
+            }
+
+            return -1;
+        }
+
+        private bool IsNoSpaces(string jsLine, int atPosition, int lastQuotePosition)
+        {
+            string chunck = jsLine.Substring(atPosition, lastQuotePosition - atPosition);
+            return chunck.IndexOf(" ") == -1;
+        }
+        
+        private int PositionOfQuoteToLeft(string jsLine, int atPosition)
+        {
+            string leftPiece = jsLine.Substring(0, atPosition);
+            return leftPiece.IndexOf("'");
+        }
+
+        private int PositionOfQuoteToRight(string jsLine, int atPosition)
+        {
+            string rightPiece = jsLine.Substring(atPosition);
+            return rightPiece.IndexOf("'");
         }
 
         /// <summary>
@@ -72,24 +136,20 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// </summary>
         private void CheckForNotHandledPatterns(string jsLine)
         {
-            if (jsLine.Contains("@") && jsLine.Contains("++"))
-            {
-                throw new System.NotImplementedException(_patternNotHandled + "@ && ++");
-            }
+            // We are handling
+            // @{ column++;}
+            //if (jsLine.Contains("@") && jsLine.Contains("++"))
+            //{
+            //    throw new System.NotImplementedException(_patternNotHandled + "@ && ++");
+            //}
         }
-
-        private List<string> PatternNotHandled()
-        {
-            throw new System.NotImplementedException(_patternNotHandled);
-        }
-
-        private List<string> ProcessMultiFragmentLine(string jsline)
+        
+        private List<Fragment> ProcessMultiFragmentLine(string jsline)
         {
             // I'm assuming the follow pattern of input
             // data: "{'docId1':'" + '@ViewBag.docid' + "','conditionType1':'" + '@ViewBag.doctype' + "'}"
 
-            List<string> result = new List<string>();
-            string fragment;
+            List<Fragment> result = new List<Fragment>();
 
             int pos = 0;
             foreach (char c in jsline) // scan the line char by char
@@ -101,12 +161,15 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                     if (previousChar == "'" || previousChar == "\"") // prefixed by quote ?
                     {
                         int endQuotePosition = GetEndQuotePosition(jsline, pos, previousChar);
-                        fragment = jsline.Substring(pos - 1, endQuotePosition - pos + 2);
+
+                        Fragment fragment = new Fragment();
+                        fragment.Text = jsline.Substring(pos - 1, endQuotePosition - pos + 2);
+                        fragment.FragType = FragType.Quoted;
                         result.Add(fragment);
                     }
                     else
                     {
-                        return this.PatternNotHandled();
+                        throw new System.NotImplementedException(_patternNotHandled + ": " + jsline);
                     }
                 }
                 pos++;
@@ -130,7 +193,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 pos++;
             }
 
-            throw new System.NotImplementedException(_patternNotHandled);
+            throw new System.NotImplementedException(_patternNotHandled + ": " + jsline );
         }
     }
 }

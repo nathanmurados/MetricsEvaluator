@@ -4,6 +4,8 @@ using NUnit.Framework;
 namespace MetricsUtiltiy.Tests
 {
     using MetricsUtility.Core.Services.Evaluators.JavaScript;
+    using MetricsUtility.Core.ViewModels;
+    using System;
 
     /// <summary>
     /// Testing ability to pull razor fragments from a line of javascript.
@@ -12,47 +14,51 @@ namespace MetricsUtiltiy.Tests
     public class JsModuleLineEvaluatorTests
     {
         [Test]
-        public void Extract_Razor_ViewBag()
+        public void Extract_Razor_Quoted_ViewBag()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
             string input = "var selectedMenu = '@ViewBag.MenuInstanceName';";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("'@ViewBag.MenuInstanceName'", result[0]);
+            Assert.IsTrue(result[0].FragType == FragType.Quoted);
+            Assert.AreEqual("'@ViewBag.MenuInstanceName'", result[0].Text);
         }
 
         [Test]
-        public void Extract_Razor_UrlAction()
+        public void Extract_Razor_Quoted_UrlAction()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
             string input = "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("'@Url.Action(\"Configure\", \"ConfigureMenu\")'", result[0]);
+            Assert.IsTrue(result[0].FragType == FragType.Quoted);
+            Assert.AreEqual("'@Url.Action(\"Configure\", \"ConfigureMenu\")'", result[0].Text);
         }
+
         [Test]
-        public void Extract_Razor_JQuery_val()
+        public void Extract_Razor_Quoted_JQuery_val()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
             string input = "$('#DecommisionReason').val('@decommisionReason');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("'@decommisionReason'", result[0]);
+            Assert.IsTrue(result[0].FragType == FragType.Quoted);
+            Assert.AreEqual("'@decommisionReason'", result[0].Text);
         }
         [Test]
         public void Extract_Razor_Not_Quoted()
@@ -62,15 +68,16 @@ namespace MetricsUtiltiy.Tests
             string input = "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList))", result[0]);
+            Assert.IsTrue(result[0].FragType == FragType.Unquoted);
+            Assert.AreEqual("@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList))", result[0].Text);
         }
 
         [Test]
-        public void Extract_Razor_2_Fragments()
+        public void Extract_Razor_2_Quoted_Fragments()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
@@ -81,27 +88,30 @@ namespace MetricsUtiltiy.Tests
             string input = " data: \"{'docId1':'\" + '@ViewBag.docid' + \"','conditionType1':'\" + '@ViewBag.doctype' + \"'}\",";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual("'@ViewBag.docid'", result[0]);
-            Assert.AreEqual("'@ViewBag.doctype'", result[1]);
+            Assert.IsTrue(result[0].FragType == FragType.Quoted);
+            Assert.IsTrue(result[1].FragType == FragType.Quoted);
+            Assert.AreEqual("'@ViewBag.docid'", result[0].Text);
+            Assert.AreEqual("'@ViewBag.doctype'", result[1].Text);
         }
 
         [Test]
-        public void Extract_Razor_ConvertToString()
+        public void Extract_Razor_Quoted_ConvertToString()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
             string input = "$('#HiddenName').val('@Convert.ToString(stateWatcherVM.LName)');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("'@Convert.ToString(stateWatcherVM.LName)'", result[0]);
+            Assert.IsTrue(result[0].FragType == FragType.Quoted);
+            Assert.AreEqual("'@Convert.ToString(stateWatcherVM.LName)'", result[0].Text);
         }
 
 
@@ -114,18 +124,21 @@ namespace MetricsUtiltiy.Tests
         /// Will become: alert('text left' + ap2.ViewbagVariable);
         /// </summary>
         [Test]
-        public void Extract_Razor_wth_text_to_left()
+        public void Extract_Razor_wth_text_to_left_Exception()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
             string input = "alert('text left @Viewbag.Variable');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            //List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("@Viewbag.Variable'", result[0]);
+            Assert.Throws<NotImplementedException>(() => evaluator.Evaluate(input));
+
+            //Assert.AreEqual(1, result.Count);
+            //Assert.AreEqual(FragType.RequiresManualCheck, result[0].FragType);
+            //Assert.AreEqual("REQUIRES MANUAL CHECK", result[0].Text);
         }
         
         /// <summary>
@@ -134,18 +147,21 @@ namespace MetricsUtiltiy.Tests
         /// Will become: alert(ap2.ViewbagVariable + 'right text');/// 
         /// </summary>
         [Test]
-        public void Extract_Razor_wth_text_to_right()
+        public void Extract_Razor_wth_text_to_right_Exception()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
             string input = "alert('@Viewbag.Variable text right');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            //List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("'@Viewbag.Variable", result[0]);
+            Assert.Throws<NotImplementedException>(() => evaluator.Evaluate(input));
+
+            //Assert.AreEqual(1, result.Count);
+            //Assert.AreEqual(FragType.RequiresManualCheck, result[0].FragType);
+            //Assert.AreEqual("REQUIRES MANUAL CHECK", result[0].Text);
         }
 
         /// <summary>
@@ -154,18 +170,21 @@ namespace MetricsUtiltiy.Tests
         /// Will become: alert('text left' + ap2.ViewbagVariable + 'right text');
         /// </summary>
         [Test]
-        public void Extract_Razor_wth_text_eitherside()
+        public void Extract_Razor_wth_text_eitherside_Exception()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
             string input = "alert('text left @Viewbag.Variable text right');";
 
             // Act
-            List<string> result = evaluator.Evaluate(input);
+            //List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("@Viewbag.Variable", result[0]);
+            Assert.Throws<NotImplementedException>(() => evaluator.Evaluate(input));
+
+            //Assert.AreEqual(1, result.Count);
+            //Assert.AreEqual(FragType.RequiresManualCheck, result[0].FragType);
+            //Assert.AreEqual("REQUIRES MANUAL CHECK", result[0].Text);
         }
     }
 }
