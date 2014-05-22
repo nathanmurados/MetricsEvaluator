@@ -30,6 +30,23 @@ namespace MetricsUtiltiy.Tests
         }
 
         [Test]
+        public void Extract_Razor_Double_Quoted_ViewBag()
+        {
+            // Arrange
+            var evaluator = new JsModuleLineEvaluator();
+            string input = "$(completionStatus).val(\"@Model.OtherDetails.PageCompletionStatus\");";
+
+            // Act
+            List<Fragment> result = evaluator.Evaluate(input);
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result[0].FragType == FragType.Quoted);
+            Assert.AreEqual("\"@Model.OtherDetails.PageCompletionStatus\"", result[0].Text);
+        }
+
+
+        [Test]
         public void Extract_Razor_Quoted_UrlAction()
         {
             // Arrange
@@ -74,6 +91,23 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual(1, result.Count);
             Assert.IsTrue(result[0].FragType == FragType.Unquoted);
             Assert.AreEqual("@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList))", result[0].Text);
+        }
+
+        // Can't cope with
+        //[Test]
+        public void Extract_Razor_Quoted_But_Contains_Spaces_1()
+        {
+            // Arrange
+            var evaluator = new JsModuleLineEvaluator();
+            string input = "if (\"@(Model.OtherDetails.ApplicantContactDetails == null)\" != \"true\") {";
+
+            // Act
+            List<Fragment> result = evaluator.Evaluate(input);
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result[0].FragType == FragType.Quoted);
+            Assert.AreEqual("@(Model.OtherDetails.ApplicantContactDetails", result[0].Text);
         }
 
         [Test]
