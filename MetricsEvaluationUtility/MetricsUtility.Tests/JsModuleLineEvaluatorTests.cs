@@ -47,7 +47,7 @@ namespace MetricsUtiltiy.Tests
 
 
         [Test]
-        public void Extract_Razor_Quoted_UrlAction()
+        public void Extract_Razor_Single_Quoted_UrlAction()
         {
             // Arrange
             var evaluator = new JsModuleLineEvaluator();
@@ -61,6 +61,23 @@ namespace MetricsUtiltiy.Tests
             Assert.IsTrue(result[0].FragType == FragType.Quoted);
             Assert.AreEqual("'@Url.Action(\"Configure\", \"ConfigureMenu\")'", result[0].Text);
         }
+
+        [Test]
+        public void Extract_Razor_Double_Quoted_UrlAction()
+        {
+            // Arrange
+            var evaluator = new JsModuleLineEvaluator();
+            string input = "var url = \"@Url.Action(\"LoadTrendAnalysisChart\", \"WidgetGallery\", new { communityId = \"_Id\", startYear = \"_Sdate\", endYear = \"_eDate\", trendParametr = \"_trend\" })\";";
+
+            // Act
+            List<Fragment> result = evaluator.Evaluate(input);
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result[0].FragType == FragType.Quoted);
+            Assert.AreEqual("\"@Url.Action(\"LoadTrendAnalysisChart\", \"WidgetGallery\", new { communityId = \"_Id\", startYear = \"_Sdate\", endYear = \"_eDate\", trendParametr = \"_trend\" })\";", result[0].Text);
+        }
+
 
         [Test]
         public void Extract_Razor_Quoted_JQuery_val()
