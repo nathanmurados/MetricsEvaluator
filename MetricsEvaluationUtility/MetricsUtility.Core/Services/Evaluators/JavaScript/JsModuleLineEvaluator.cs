@@ -2,15 +2,12 @@
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    using System.ComponentModel.Design;
     using System.Linq;
 
-    using MetricsUtility.Core.ViewModels;
+    using ViewModels;
 
     public class JsModuleLineEvaluator : IJsModuleLineEvaluator
     {
-        private string _patternNotHandled = "Pattern not handled";
-
         /// <summary>
         /// Extract the razor code from a line of javascript.
         /// Input: A line of Javascript containing an @. The @ prefixes the razor code.
@@ -20,17 +17,17 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         public List<Fragment> Evaluate(string jsLine)
         {
             CheckForNotHandledPatterns(jsLine);
-            
+
             List<Fragment> output = new List<Fragment>();
-            
+
             // Multi fragment line?
-            if (jsLine.ToCharArray().Count(c => c == '@') > 1) 
+            if (jsLine.ToCharArray().Count(c => c == '@') > 1)
             {
                 return ProcessMultiFragmentLine(jsLine);
             }
 
             Fragment fragment = new Fragment();
-            
+
             int atPosition = jsLine.IndexOf("@");
 
             char firstCharacterToLeft = jsLine.Substring(atPosition - 1, 1).ToCharArray()[0];   // take character to the left
@@ -46,12 +43,12 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                     fragment.Text = jsLine.Substring(atPosition - 1, rightDelimeterPos - atPosition + 2); // include the quote delimiters
                     fragment.FragType = FragType.Quoted;
                     output.Add(fragment);
-                    return output;    
+                    return output;
                 }
                 else
                 {
                     // We can't find the matching quote, or a space was hit before hitting the right quote
-                    throw new System.NotImplementedException(_patternNotHandled + ": " + jsLine);
+                    throw new UnhandledPatternException(jsLine);
                 }
             }
 
@@ -62,14 +59,14 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 // if there's a quote, play safe and terminate
                 if (jsLine.IndexOf("'") > 0)
                 {
-                    throw new System.NotImplementedException(_patternNotHandled + ": " + jsLine);
+                    throw new UnhandledPatternException(jsLine);
                 }
 
                 // Assume its unquoted, but terminated by a ;
                 int endDelimierPosition = jsLine.LastIndexOf(";");
                 if (endDelimierPosition == -1) // is there a ; ?
                 {
-                    throw new System.NotImplementedException(_patternNotHandled + ": " + jsLine);
+                    throw new UnhandledPatternException(jsLine);
                 }
 
                 fragment.Text = jsLine.Substring(atPosition, endDelimierPosition - atPosition); // don't include delimiters
@@ -79,16 +76,16 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             }
 
             // Its not a pattern we are confident we recognize, it will have to be done manually
-            throw new System.NotImplementedException(this._patternNotHandled);
+            throw new UncaughtPatternException();
         }
 
         private int GetRightDelimiterPosition(string jsLine, int atPosition, char delimiterChar)
         {
             bool tolerateSpace = false;
-            
+
             // take text to right of the @
             string chunk = jsLine.Substring(atPosition + 1);
-            int pos = atPosition +1;
+            int pos = atPosition + 1;
 
             // scan to right looking for a matching delimiter char, but if we find a space all bets are off
             foreach (char c in chunk)
@@ -118,7 +115,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             string chunck = jsLine.Substring(atPosition, lastQuotePosition - atPosition);
             return chunck.IndexOf(" ") == -1;
         }
-        
+
         private int PositionOfQuoteToLeft(string jsLine, int atPosition)
         {
             string leftPiece = jsLine.Substring(0, atPosition);
@@ -143,7 +140,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             //    throw new System.NotImplementedException(_patternNotHandled + "@ && ++");
             //}
         }
-        
+
         private List<Fragment> ProcessMultiFragmentLine(string jsline)
         {
             // I'm assuming the follow pattern of input
@@ -169,7 +166,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                     }
                     else
                     {
-                        throw new System.NotImplementedException(_patternNotHandled + ": " + jsline);
+                        throw new UnhandledPatternException (jsline);
                     }
                 }
                 pos++;
@@ -180,11 +177,11 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
         private int GetEndQuotePosition(string jsline, int pos, string quoteChar)
         {
-            int end = jsline.Length -1;
+            int end = jsline.Length - 1;
 
             // scan from first quote position until we hit another quote
 
-            while (pos < end &&  jsline.Substring(pos, 1) != quoteChar)
+            while (pos < end && jsline.Substring(pos, 1) != quoteChar)
             {
                 if (jsline.Substring(pos + 1, 1) == quoteChar)
                 {
@@ -193,7 +190,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 pos++;
             }
 
-            throw new System.NotImplementedException(_patternNotHandled + ": " + jsline );
+            throw new UnhandledPatternException(jsline);
         }
     }
 }

@@ -134,7 +134,7 @@ namespace MetricsUtiltiy.Tests
             //List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.Throws<NotImplementedException>(() => evaluator.Evaluate(input));
+            Assert.Throws<UnhandledPatternException>(() => evaluator.Evaluate(input));
 
             //Assert.AreEqual(1, result.Count);
             //Assert.AreEqual(FragType.RequiresManualCheck, result[0].FragType);
@@ -157,7 +157,7 @@ namespace MetricsUtiltiy.Tests
             //List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.Throws<NotImplementedException>(() => evaluator.Evaluate(input));
+            Assert.Throws<UnhandledPatternException>(() => evaluator.Evaluate(input));
 
             //Assert.AreEqual(1, result.Count);
             //Assert.AreEqual(FragType.RequiresManualCheck, result[0].FragType);
@@ -180,7 +180,7 @@ namespace MetricsUtiltiy.Tests
             //List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.Throws<NotImplementedException>(() => evaluator.Evaluate(input));
+            Assert.Throws<UnhandledPatternException>(() => evaluator.Evaluate(input));
 
             //Assert.AreEqual(1, result.Count);
             //Assert.AreEqual(FragType.RequiresManualCheck, result[0].FragType);

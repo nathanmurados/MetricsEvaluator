@@ -76,6 +76,8 @@
     <Compile Include="Services\Evaluators\JavaScript\JsValidationEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsModuleLineEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsVariableNameEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\UncaughtPatternException.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\UnhandledPatternException.cs" />
     <Compile Include="Services\Evaluators\RelevantAttributesEvaluator.cs" />
     <Compile Include="Services\Evaluators\SettingsEvaluator.cs" />
     <Compile Include="Services\Extensions\StringExtensions.cs" />
