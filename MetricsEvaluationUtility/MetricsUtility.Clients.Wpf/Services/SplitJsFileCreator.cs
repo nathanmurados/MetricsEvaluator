@@ -48,7 +48,7 @@ namespace MetricsUtility.Clients.Wpf.Services
                         Ux.WriteLine(string.Format("---WARNING: {0} lines containing ../ were detected", dotDotSlashes));
                     }
 
-                    //Ux.WriteLine("Created " + uri);
+                    Ux.WriteLine("Created " + uri);
                     filesCreated++;
                 }
                 File.WriteAllLines(file, seperatedJs.RefactoredLines);
