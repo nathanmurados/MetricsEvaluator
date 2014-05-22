@@ -46,7 +46,7 @@ namespace MetricsUtility.Clients.Wpf.Services
                 }
                 catch (Exception e)
                 {
-                    Ux.WriteLine(string.Format("{0} ({1})", e.Message, file));
+                    //Ux.WriteLine(string.Format("{0} ({1})", e.Message, file));
                     failedFiles.Add(file);
                     continue;
                 }
