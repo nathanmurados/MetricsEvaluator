@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
@@ -6,6 +7,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
     public class JsVariableNameEvaluator : IJsVariableNameEvaluator
     {
         private static char[] charactersToRemove = new char[] { '@', '"', '[', ']', '(', ')', ' ', ';', ',', '.', '\''};
+        
         /// <summary>
         /// Extract a variable name from the razor code.
         /// Example input: @ViewData["Subject"]"
@@ -15,7 +17,12 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// <returns></returns>
         public string Evaluate(string razorCode)
         {
-            return new string(razorCode.Where(c => !JsVariableNameEvaluator.charactersToRemove.Contains(c)).ToArray());
+            // blacklist approach
+            //return new string(razorCode.Where(c => !JsVariableNameEvaluator.charactersToRemove.Contains(c)).ToArray());
+
+            // white list approach. Accept only any word character including underscore.
+            return Regex.Replace(razorCode, @"[^\w]", "", RegexOptions.None); 
+
         }
     }
 }

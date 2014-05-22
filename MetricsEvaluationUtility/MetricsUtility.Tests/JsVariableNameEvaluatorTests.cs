@@ -160,5 +160,19 @@ namespace MetricsUtiltiy.Tests
             // Assert
             Assert.AreEqual("newHtmlStringJsonEncodeModelFrequency", result);
         }
+
+        [Test]
+        public void Extract_Varable_Ignore_Plus_Sign()
+        {
+            // Arrange
+            var evaluator = new JsVariableNameEvaluator();
+            string input = "@ViewBag.PageNumber + 1;";
+
+            // Act
+            string result = evaluator.Evaluate(input);
+
+            // Assert
+            Assert.AreEqual("ViewBagPageNumber1", result);
+        }
     }
 }
