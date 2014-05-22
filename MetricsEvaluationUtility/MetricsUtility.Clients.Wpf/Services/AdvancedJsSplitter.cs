@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using MetricsUtility.Core.Services;
+using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
 
 namespace MetricsUtility.Clients.Wpf.Services
@@ -37,7 +38,7 @@ namespace MetricsUtility.Clients.Wpf.Services
 
                 SeperatedJs seperatedJs;
 
-                Ux.WriteLine(string.Format("Processing item {0}", i.ToString(CultureInfo.InvariantCulture)));
+                //Ux.WriteLine(string.Format("Processing item {0}", i.ToString(CultureInfo.InvariantCulture)));
 
                 try
                 {
@@ -45,14 +46,15 @@ namespace MetricsUtility.Clients.Wpf.Services
                 }
                 catch (Exception e)
                 {
+                    Ux.WriteLine(string.Format("{0} ({1})", e.Message, file));
                     failedFiles.Add(file);
                     continue;
                 }
 
-                SplitJsFileCreator.Create(seperatedJs, newPath, avoidedOverWrites, ref filesCreated, file,false);
+                SplitJsFileCreator.Create(seperatedJs, newPath, avoidedOverWrites, ref filesCreated, file, false);
             }
 
-            Ux.WriteLine(string.Format("Created {0} failedFiles", filesCreated));
+            Ux.WriteLine(string.Format("Refactored {0} files", filesCreated));
 
             JsRefactorResultsPresenter.Present(failedFiles, avoidedOverWrites);
         }
