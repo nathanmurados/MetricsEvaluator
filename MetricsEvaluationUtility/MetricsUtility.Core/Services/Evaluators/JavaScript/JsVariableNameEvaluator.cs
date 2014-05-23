@@ -8,12 +8,10 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         //private static char[] charactersToRemove = new char[] { '@', '"', '[', ']', '(', ')', ' ', ';', ',', '.', '\''};
         
         /// <summary>
-        /// Extract a variable name from the razor code.
+        /// Extract a variable name from the razor fragment.
         /// Example input: @ViewData["Subject"]"
-        /// Note that the input string is not surrounded by quotes
+        /// Example output: ViewDataSubject
         /// </summary>
-        /// <param name="razorCode"></param>
-        /// <returns></returns>
         public string Evaluate(string razorCode)
         {
             // blacklist approach
@@ -21,7 +19,6 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
             // white list approach. Accept only any word character including underscore.
             return Regex.Replace(razorCode, @"[^\w]", "", RegexOptions.None); 
-
         }
     }
 }

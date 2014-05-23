@@ -7,13 +7,20 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
     public class JsModuleLineEvaluator : IJsModuleLineEvaluator
     {
         /// <summary>
-        /// Extract the razor code from a line of javascript.
+        /// Extract the razor code fragment from a line of Javascript.
         /// Input: A line of Javascript containing an @. The @ prefixes the razor code.
-        /// Note the line may contain several fragments of razor.
+        /// Note. the line may contain several fragments of razor.
         /// The razor code is prefixed with @, it will probably be surrounded by quotes (single or double), but not always!
         /// </summary>
         public List<Fragment> Evaluate(string jsLine)
         {
+            // we can't handle lines containing "@Url
+            if (jsLine.Contains("\"@Url"))
+            {
+                throw new UnhandledPatternException(jsLine);
+            }
+
+
             List<Fragment> output = new List<Fragment>();
 
             // Multi fragment line?
@@ -30,7 +37,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
             // Immediately Quoted? 
             // example: '@decommisionReason'
-            if (firstCharacterToLeft == '\'' || firstCharacterToLeft == '"') // is a quote
+            if (Constants.CharacterConstants.Quotes.Contains(firstCharacterToLeft)) // is a quote?
             {
                 int rightDelimeterPos = GetRightDelimiterPosition(jsLine, atPosition, firstCharacterToLeft);
 
@@ -80,14 +87,14 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             string chunk = jsLine.Substring(atPosition + 1);
             int pos = atPosition + 1;
 
+            if (jsLine.Contains("@Url"))
+            {
+                tolerateSpace = true;
+            }
+
             // scan to right looking for a matching delimiter char, but if we find a space all bets are off
             foreach (char c in chunk)
             {
-                if (jsLine.Substring(pos).ToLower().Contains("url"))
-                {
-                    tolerateSpace = true;
-                }
-
                 if (c == ' ' && !tolerateSpace)
                 {
                     return -1;
