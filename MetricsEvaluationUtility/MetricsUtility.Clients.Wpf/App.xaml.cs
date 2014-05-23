@@ -7,6 +7,7 @@ using MetricsUtility.Core.Services;
 using MetricsUtility.Core.Services.Evaluators;
 using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
+using MetricsUtility.Core.Services.Evaluators.JavaScript.LineEvaluator2;
 using MetricsUtility.Core.Services.Presenters;
 using MetricsUtility.Core.Services.RefactorServices;
 using MetricsUtility.Core.Services.StorageServices;
@@ -105,12 +106,27 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<ISplitJsFileCreator>().To<SplitJsFileCreator>();
             _container.Bind<IAdvancedJsSplitter>().To<AdvancedJsSplitter>();
             _container.Bind<IAdvancedJsSeperationService>().To<AdvancedJsSeperationService>();
-            _container.Bind<IJsModuleBlockEvaluator>().To<JsModuleBlockEvaluator>();
-            _container.Bind<IJsModuleLineEvaluator>().To<JsModuleLineEvaluator>();
+            //_container.Bind<IJsModuleBlockEvaluator>().To<JsModuleBlockEvaluator>();
+            //_container.Bind<IJsModuleLineEvaluator>().To<JsModuleLineEvaluator>();
+            //_container.Bind<IJsInjectNewModuleVariables>().To<JsInjectNewModuleVariables>();
             _container.Bind<IJsModuleFactory>().To<JsModuleFactory>();
-            _container.Bind<IJsInjectNewModuleVariables>().To<JsInjectNewModuleVariables>();
-            //_container.Bind<IAdvancedJsSeperationService>().To<AdvancedJsSeperationService>();
-            //_container.Bind<IAdvancedJsSeperationService>().To<AdvancedJsSeperationService>();
+            
+            const bool useMikes = true;
+
+            if (useMikes)
+            {
+                _container.Bind<IJsModuleLineEvaluator>().To<JsModuleLineEvaluator>();
+                _container.Bind<IJsModuleBlockEvaluator>().To<JsModuleBlockEvaluator>();
+                _container.Bind<IJsInjectNewModuleVariables>().To<JsInjectNewModuleVariables>();
+
+            }
+            else
+            {
+                _container.Bind<IJsModuleLineEvaluator>().To<JsModuleLineEvaluator2>();
+                _container.Bind<IJsModuleBlockEvaluator>().To<JsModuleBlockEvaluator2>();
+                _container.Bind<IJsInjectNewModuleVariables>().To<JsInjectNewModuleVariables2>();
+                
+            }
         
         }
 

@@ -7,7 +7,7 @@ using MetricsUtility.Core.ViewModels;
 namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
-    public class JsModuleLineEvaluator2Tests
+    public class JsModuleLineEvaluatorTestsNathan
     {
         private static IJsModuleLineEvaluator GetEvaluator()
         {

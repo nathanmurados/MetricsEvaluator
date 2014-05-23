@@ -1,16 +1,16 @@
-﻿using System.Diagnostics;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
+using MetricsUtility.Core.ViewModels;
 using Moq;
 using NUnit.Framework;
-using MetricsUtility.Core.ViewModels;
-using System.Collections.Generic;
 
 namespace MetricsUtiltiy.Tests
 {
     [TestFixture]
-    public class AdvancedJsSplitterIntegrationTests
+    public class AdvancedJsSplitterIntegrationTestsMikes
     {
         public AdvancedJsSeperationService GetObj()
         {
@@ -18,9 +18,9 @@ namespace MetricsUtiltiy.Tests
                 new JsBlockContentEvaluator(),
                 new JsFileNameEvaluator(
                     new SolutionRelativeDirectoryEvaluator()),
-                    ProcessorsToTest.GetJsModuleBlockEvaluator(),
+                new JsModuleBlockEvaluator(new JsModuleLineEvaluator(), new JsVariableNameEvaluator()), 
                 new JsModuleFactory(),
-                ProcessorsToTest.GetJsInjectNewModuleVariables()
+                new JsInjectNewModuleVariables()
                 );
         }
 
@@ -78,7 +78,6 @@ namespace MetricsUtiltiy.Tests
             }
         }
 
-
         [Test]
         public void EmbeddedWithinQuotes3()
         {
@@ -132,7 +131,6 @@ namespace MetricsUtiltiy.Tests
                 Assert.AreEqual(expected[i], result.RefactoredLines[i]);
             }
         }
-
 
         [Test]
         public void EmbeddedWithinQuotes4()
@@ -258,10 +256,10 @@ namespace MetricsUtiltiy.Tests
                 new AdvancedJsSeperationService(
                     new JsBlockContentEvaluator(),
                     new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()),
-                    ProcessorsToTest.GetJsModuleBlockEvaluator(),
+                    new JsModuleBlockEvaluator(new JsModuleLineEvaluator(), new JsVariableNameEvaluator()), 
                     new JsModuleFactory(),
                     mockJsInjectNewModuleVariables.Object
-                );
+                    );
         }
 
         [Test]

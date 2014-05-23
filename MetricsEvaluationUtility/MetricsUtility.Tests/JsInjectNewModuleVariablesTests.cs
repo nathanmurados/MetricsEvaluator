@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MetricsUtility.Core.Services.RefactorServices;
 using MetricsUtility.Core.ViewModels;
 using NUnit.Framework;
 
@@ -8,13 +9,13 @@ namespace MetricsUtiltiy.Tests
     /// Testing ability to replace razor fragments in JS blocks with ap2 variable names
     /// </summary>
     [TestFixture]
-    public class JsInjectNewModuleVariablesTests
+    public class JsInjectNewModuleVariablesTestsMikes
     {
         [Test]
         public void Test_Single_Line()
         {
             // Arrange
-            var obj = ProcessorsToTest.GetJsInjectNewModuleVariables();
+            var obj = new JsInjectNewModuleVariables();
 
             List<string> data = new List<string>();
             data.Add("   $(function(){");
@@ -36,7 +37,7 @@ namespace MetricsUtiltiy.Tests
         public void Test_Multi_Line()
         {
             // Arrange
-            var obj = ProcessorsToTest.GetJsInjectNewModuleVariables();
+            var obj = new JsInjectNewModuleVariables();
 
             List<string> data = new List<string>();
             data.Add("   $(function(){");

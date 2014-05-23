@@ -6,14 +6,9 @@ namespace MetricsUtiltiy.Tests
 {
     public class ProcessorsToTest
     {
-        public static IJsModuleLineEvaluator GetJsModuleLineEvaluator()
-        {
-            return new JsModuleLineEvaluator2();
-        }
-
         public static IJsModuleBlockEvaluator GetJsModuleBlockEvaluator()
         {
-            return new JsModuleBlockEvaluator2(GetJsModuleLineEvaluator(), new JsVariableNameEvaluator());
+            return new JsModuleBlockEvaluator2(new JsModuleLineEvaluator2(), new JsVariableNameEvaluator());
         }
 
         public static IJsInjectNewModuleVariables GetJsInjectNewModuleVariables()
