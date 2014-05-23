@@ -85,7 +85,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_BlockRazor_Exception()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "@{ column++;}";
 
             // Act
