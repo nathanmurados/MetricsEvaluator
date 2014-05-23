@@ -65,7 +65,7 @@ namespace MetricsUtiltiy.Tests
         }
 
         [Test]
-        public void Extract_Razor_Double_Quoted_UrlAction()
+        public void Extract_Razor_Double_Quoted_UrlAction_Exception()
         {
             // Arrange
             var evaluator = GetEvaluator();
@@ -79,6 +79,21 @@ namespace MetricsUtiltiy.Tests
             //Assert.AreEqual(1, result.Count);
             //Assert.IsTrue(result[0].FragType == FragType.Quoted);
             //Assert.AreEqual("\"@Url.Action(\"LoadTrendAnalysisChart\", \"WidgetGallery\", new { communityId = \"_Id\", startYear = \"_Sdate\", endYear = \"_eDate\", trendParametr = \"_trend\" })\";", result[0].Text);
+        }
+
+        [Test]
+        public void Extract_Razor_BlockRazor_Exception()
+        {
+            // Arrange
+            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            string input = "@{ column++;}";
+
+            // Act
+            //List<Fragment> result = evaluator.Evaluate(input);
+            Assert.Throws<UnhandledPatternException>(() => evaluator.Evaluate(input));
+
+            // Assert
+            //Assert.AreEqual(1, result.Count);
         }
 
         [Test]
