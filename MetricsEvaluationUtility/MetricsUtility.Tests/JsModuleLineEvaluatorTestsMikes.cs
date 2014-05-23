@@ -129,19 +129,20 @@ namespace MetricsUtiltiy.Tests
 
         // Can't cope with
         [Test]
-        public void Extract_Razor_Quoted_But_Contains_Spaces_1()
+        public void Extract_Razor_Quoted_But_Contains_Spaces_Exception()
         {
             // Arrange
             var evaluator = GetEvaluator();
             string input = "if (\"@(Model.OtherDetails.ApplicantContactDetails == null)\" != \"true\") {";
 
             // Act
-            List<Fragment> result = evaluator.Evaluate(input);
+            //List<Fragment> result = evaluator.Evaluate(input);
 
             // Assert
-            Assert.AreEqual(1, result.Count);
-            //Assert.IsTrue(result[0].FragType == FragType.Quoted);
-            Assert.AreEqual("@(Model.OtherDetails.ApplicantContactDetails", result[0].Text);
+            Assert.Throws<UnhandledPatternException>(() => evaluator.Evaluate(input));
+
+            //Assert.AreEqual(1, result.Count);
+            //Assert.AreEqual("@(Model.OtherDetails.ApplicantContactDetails  == null)", result[0].Text);
         }
 
         [Test]

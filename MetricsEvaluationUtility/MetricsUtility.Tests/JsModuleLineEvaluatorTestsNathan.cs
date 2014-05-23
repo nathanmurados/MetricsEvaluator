@@ -94,6 +94,7 @@ namespace MetricsUtiltiy.Tests
 
             // Assert
             Assert.AreEqual(1, result.Count);
+            Assert.AreEqual("@{ column++;}", result[0].Text);
         }
 
 
