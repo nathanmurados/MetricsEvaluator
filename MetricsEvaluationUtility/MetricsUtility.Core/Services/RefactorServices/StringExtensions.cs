@@ -8,7 +8,7 @@ using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Core.Services.RefactorServices
 {
-    public static class StringExtensions
+    public static partial class StringExtensions
     {
         public static string Remove(this string str, string toRemove)
         {

@@ -8,12 +8,16 @@ namespace MetricsUtiltiy.Tests
     [TestFixture]
     public class JsModuleLineEvaluatorTests
     {
+        private IJsModuleLineEvaluator GetEvaluator()
+        {
+            return new JsModuleLineEvaluator();
+        }
         
         [Test]
         public void Extract_Razor_Quoted_ViewBag()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "var selectedMenu = '@ViewBag.MenuInstanceName';";
 
             // Act
@@ -29,7 +33,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_Double_Quoted_ViewBag()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "$(completionStatus).val(\"@Model.OtherDetails.PageCompletionStatus\");";
 
             // Act
@@ -48,7 +52,7 @@ namespace MetricsUtiltiy.Tests
             // Fragments using @Url will likely have spaces inside, we have to expect and tolerate this.
 
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';";
 
             // Act
@@ -64,7 +68,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_Double_Quoted_UrlAction()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "var url = \"@Url.Action(\"LoadTrendAnalysisChart\", \"WidgetGallery\", new { communityId = \"_Id\", startYear = \"_Sdate\", endYear = \"_eDate\", trendParametr = \"_trend\" })\";";
 
             // Act
@@ -81,7 +85,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_Quoted_JQuery_val()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "$('#DecommisionReason').val('@decommisionReason');";
 
             // Act
@@ -96,7 +100,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_Not_Quoted()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));";
 
             // Act
@@ -109,11 +113,11 @@ namespace MetricsUtiltiy.Tests
         }
 
         // Can't cope with
-        //[Test]
+        [Test]
         public void Extract_Razor_Quoted_But_Contains_Spaces_1()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "if (\"@(Model.OtherDetails.ApplicantContactDetails == null)\" != \"true\") {";
 
             // Act
@@ -129,7 +133,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_2_Quoted_Fragments()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
 
             // NB contains 2 fragments of razor
             // data: {'docId1':'" + '@ViewBag.docid' + "','conditionType1':'" + '@ViewBag.doctype' + "'}
@@ -151,7 +155,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_Quoted_ConvertToString()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "$('#HiddenName').val('@Convert.ToString(stateWatcherVM.LName)');";
 
             // Act
@@ -176,7 +180,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_wth_text_to_left_Exception()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "alert('text left @Viewbag.Variable');";
 
             // Act
@@ -199,7 +203,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_wth_text_to_right_Exception()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "alert('@Viewbag.Variable text right');";
 
             // Act
@@ -222,7 +226,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_wth_text_eitherside_Exception()
         {
             // Arrange
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "alert('text left @Viewbag.Variable text right');";
 
             // Act

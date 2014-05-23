@@ -63,7 +63,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 jsRemoved = new GeneratedJsViewModel[jsBlockContents.Count];
 
                 List<JsModuleViewModel> razorLines = new List<JsModuleViewModel>();
-                for (int i = 0; i < jsBlockContents.Count; i++)
+                for (var i = 0; i < jsBlockContents.Count; i++)
                 {
                     var blockContent = jsBlockContents[i];
                     razorLines.AddRange(JsModuleBlockEvaluator.Evaluate(blockContent.Lines));
@@ -74,6 +74,8 @@ namespace MetricsUtility.Core.Services.RefactorServices
                     };
                 }
 
+
+                //(LAST?) PROBLEM IS HERE!!
                 var jsModule = JsModuleFactory.Build(razorLines.Distinct().ToList()); // generate the new ap2 module from the de-duplicated razor fragments
 
                 refactoredLines = new List<string>();

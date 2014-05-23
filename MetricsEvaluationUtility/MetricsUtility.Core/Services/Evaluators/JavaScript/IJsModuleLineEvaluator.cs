@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    using MetricsUtility.Core.ViewModels;
+    using ViewModels;
 
     public interface IJsModuleLineEvaluator
     {

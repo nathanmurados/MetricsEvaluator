@@ -56,9 +56,9 @@
     <Compile Include="DirectoryMimickerTests.cs" />
     <Compile Include="IsLegitimateConnectingJsFragmentTests.cs" />
     <Compile Include="JsInjectNewModuleVariablesTests.cs" />
+    <Compile Include="JsModuleBlockEvaluator2Tests.cs" />
     <Compile Include="RazorToJsConvertorTests.cs" />
     <Compile Include="JsModuleBlockEvaluatorTests.cs" />
-    <Compile Include="JSModuleLineEvaluatorRegexTests.cs" />
     <Compile Include="JsModuleLineEvaluatorTests - Copy.cs" />
     <Compile Include="JsModuleLineEvaluator2Tests.cs" />
     <Compile Include="JsModuleFactoryTests.cs" />

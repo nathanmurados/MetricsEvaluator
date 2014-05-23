@@ -17,6 +17,8 @@ namespace MetricsUtility.Core.ViewModels
         TextLeft,
         TextRight,
         TextLeftRight,
-        RequiresManualCheck
+        RequiresManualCheck,
+        SingleQuotes,
+        DoubleQuotes
     }
 }

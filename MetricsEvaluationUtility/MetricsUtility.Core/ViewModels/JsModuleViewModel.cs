@@ -4,6 +4,7 @@ namespace MetricsUtility.Core.ViewModels
     {
         public string OriginalRazorText { get; set; }
         public string JavaScriptName { get; set; }
+        public FragType FragType { get; set; }
 
         /// <summary>
         /// Override so that when dealing with a list of these objects, equality is based on a value rather than the reference to the objects.
@@ -17,7 +18,7 @@ namespace MetricsUtility.Core.ViewModels
                 return false;
             }
 
-            return jsModuleViewModel.JavaScriptName == this.JavaScriptName && jsModuleViewModel.OriginalRazorText == this.OriginalRazorText;
+            return jsModuleViewModel.JavaScriptName == JavaScriptName && jsModuleViewModel.OriginalRazorText == OriginalRazorText;
         }
 
         /// <summary>

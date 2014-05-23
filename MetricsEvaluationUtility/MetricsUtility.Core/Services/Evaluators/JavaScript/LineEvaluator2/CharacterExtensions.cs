@@ -24,6 +24,16 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript.LineEvaluator2
             return character == '\'' || character == '\"';
         }
 
+        public static bool IsSingleQuote(this char character)
+        {
+            return character == '\'';
+        }
+
+        public static bool IsDoubleQuote(this char character)
+        {
+            return character == '\"';
+        }
+
         public static BracketInfoModel GetBracketInfo(this char character)
         {
             var result = new BracketInfoModel { Type = BracketType.NotABracket };

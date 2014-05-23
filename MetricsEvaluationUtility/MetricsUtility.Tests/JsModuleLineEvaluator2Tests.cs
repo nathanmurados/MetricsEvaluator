@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using MetricsUtility.Core.Services.Evaluators.JavaScript;
+using MetricsUtility.Core.Services.Evaluators.JavaScript.LineEvaluator2;
 using NUnit.Framework;
 using MetricsUtility.Core.ViewModels;
 
@@ -7,12 +9,16 @@ namespace MetricsUtiltiy.Tests
     [TestFixture]
     public class JsModuleLineEvaluator2Tests
     {
+        private static IJsModuleLineEvaluator GetEvaluator()
+        {
+            return new JsModuleLineEvaluator2();
+        }
         
         [Test]
         public void Quoted_ViewBag()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
-            string input = "var selectedMenu = '@ViewBag.MenuInstanceName';";
+            var evaluator = GetEvaluator();
+            const string input = "var selectedMenu = '@ViewBag.MenuInstanceName';";
 
             List<Fragment> result = evaluator.Evaluate(input);
 
@@ -24,7 +30,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Double_Quoted_ViewBag()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             const string input = "$(completionStatus).val(\"@Model.OtherDetails.PageCompletionStatus\");";
 
             var result = evaluator.Evaluate(input);
@@ -38,7 +44,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Single_Quoted_UrlAction()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             const string input = "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';";
 
             var result = evaluator.Evaluate(input);
@@ -52,7 +58,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Double_Quoted_UrlAction_Simple()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             const string input = "var url = \"@x(\"y\")\";";
 
             var result = evaluator.Evaluate(input);
@@ -65,7 +71,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Double_Quoted_UrlAction()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             const string input = "var url = \"@Url.Action(\"LoadTrendAnalysisChart\", \"WidgetGallery\", new { communityId = \"_Id\", startYear = \"_Sdate\", endYear = \"_eDate\", trendParametr = \"_trend\" })\";";
 
             var result = evaluator.Evaluate(input);
@@ -79,7 +85,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Quoted_JQuery_val()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "$('#DecommisionReason').val('@decommisionReason');";
 
             List<Fragment> result = evaluator.Evaluate(input);
@@ -91,7 +97,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Extract_Razor_Not_Quoted()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));";
 
             List<Fragment> result = evaluator.Evaluate(input);
@@ -104,7 +110,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Quoted_But_Contains_Spaces_1()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "if (\"@(Model.OtherDetails.ApplicantContactDetails == null)\" != \"true\") {";
 
             List<Fragment> result = evaluator.Evaluate(input);
@@ -117,7 +123,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Two_Quoted_Fragments()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
 
             string input = " data: \"{'docId1':'\" + '@ViewBag.docid' + \"','conditionType1':'\" + '@ViewBag.doctype' + \"'}\",";
 
@@ -133,7 +139,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Quoted_ConvertToString()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "$('#HiddenName').val('@Convert.ToString(stateWatcherVM.LName)');";
 
             List<Fragment> result = evaluator.Evaluate(input);
@@ -146,7 +152,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void With_text_to_left_Exception()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             const string input = "alert('text left @Viewbag.Variable');";
 
             var result = evaluator.Evaluate(input);
@@ -161,7 +167,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void With_text_to_right_Exception()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             string input = "alert('@Viewbag.Variable text right');";
 
             List<Fragment> result = evaluator.Evaluate(input);
@@ -176,7 +182,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void With_text_eitherside_Exception()
         {
-            var evaluator = ProcessorsToTest.GetJsModuleLineEvaluator();
+            var evaluator = GetEvaluator();
             const string input = "alert('text left @Viewbag.Variable text right');";
 
             var result = evaluator.Evaluate(input);

@@ -33,7 +33,8 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                     output.Add(new JsModuleViewModel
                     {
                         JavaScriptName = razorVariable, 
-                        OriginalRazorText = fragment.Text
+                        OriginalRazorText = fragment.Text,
+                        FragType = fragment.FragType
                     });
                 }
             }

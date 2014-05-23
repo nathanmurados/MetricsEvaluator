@@ -22,12 +22,4 @@
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
   <MSTestThreadApartmentState>STA</MSTestThreadApartmentState>
   <BuildProcessArchitecture>x86</BuildProcessArchitecture>
-  <IgnoredTests>
-    <FixtureTestSelector>
-      <FixtureName>MetricsUtiltiy.Tests.PagJsSeperationEvaluatorTests</FixtureName>
-    </FixtureTestSelector>
-    <FixtureTestSelector>
-      <FixtureName>MetricsUtiltiy.Tests.JsModuleLineEvaluatorRegexTests</FixtureName>
-    </FixtureTestSelector>
-  </IgnoredTests>
 </ProjectConfiguration>

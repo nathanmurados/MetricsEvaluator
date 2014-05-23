@@ -41,15 +41,25 @@ namespace MetricsUtility.Core.Services.RefactorServices
             string[] result = new string[moduleLines];
 
             result[i++] = "<script type=\"text/javascript\">";
-            result[i++] = String.Format("{0}var {1} = (function({1}) {{",indent1, JsContainerName);
+            result[i++] = String.Format("{0}var {1} = (function({1}) {{", indent1, JsContainerName);
 
             foreach (JsModuleViewModel item in data)
             {
-                result[i++] = string.Format("{0}{1}.{2} = {3};", indent2, JsContainerName ,item.JavaScriptName, item.OriginalRazorText);
+                var surroundingQuote = "";
+                if (item.FragType == FragType.SingleQuotes)
+                {
+                    surroundingQuote = "\'";
+                }
+                else if (item.FragType == FragType.DoubleQuotes)
+                {
+                    surroundingQuote = "\"";
+                }
+
+                result[i++] = string.Format("{0}{1}.{2} = {4}{3}{4};", indent2, JsContainerName, item.JavaScriptName, item.OriginalRazorText, surroundingQuote);
             }
 
             result[i++] = String.Format("{0}return {1};", indent2, JsContainerName);
-            result[i++] = String.Format("{0}}} ({1} || {{}}));",indent1, JsContainerName);  //TODO: Discuss with Nathan
+            result[i++] = String.Format("{0}}} ({1} || {{}}));", indent1, JsContainerName);  //TODO: Discuss with Nathan
             result[i++] = "</script>";
 
             return result;
