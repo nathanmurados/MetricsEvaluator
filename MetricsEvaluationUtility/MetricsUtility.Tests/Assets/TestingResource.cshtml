@@ -525,7 +525,12 @@
         });
     });
 </script>
-@{
+
+<script type="text/javascript">
+    alert('hi there');
+</Script>
+
+    @{
 
     using (Html.BeginForm("Save", "CMS", FormMethod.Post, new { id = "formCreate" }))
     {
@@ -536,19 +541,19 @@
             <tr>
                 <td style="width: 140px" align="left">
                     @*   <div class="AddQuestionDetails TopLabel">*@
-                        @Html.Label(" Web PageInstances Layout ID") 
+                        @Html.Label(" Web PageInstances Layout ID")
                    @* <span class="field-validation-error">*</span>*@<br/>&nbsp;
-                    @Html.TextBoxFor(model => model.Title, new { id = "ID", style = "width:50%", @readonly = "readonly", onclick = "test" })
-                    @*   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    @Html.TextBoxFor(model => model.Title, new { id = "ID", style = "width:50%", @readonly = "readonly", onclick = "test" })
+    @*   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         @Html.ValidationMessageFor(model => model.Title)*@ @*  </div>*@
-                </td>
-                <td style="width: 140px" align="left">
-                    @*     <div class="AddQuestionDetails">*@
-                    @Html.Label("Web PageInstances Layout Title")
-                    <span class="field-validation-error">*</span><br/>
-              
-                    <span>
-                        @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+    </td>
+    <td style="width: 140px" align="left">
+        @*     <div class="AddQuestionDetails">*@
+        @Html.Label("Web PageInstances Layout Title")
+        <span class="field-validation-error">*</span><br/>
+
+        <span>
+            @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
                         {
                             @Html.TextBoxFor(model => model.LName, new { id = "LogicalName1", maxlength = "100", style = "width:200px", @disabled = "true" })
 
@@ -558,25 +563,25 @@
 
                             @Html.TextBoxFor(model => model.LName, new { id = "LogicalName", maxlength = "100", style = "width:200px" })
                         }
-                    </span>
-                </td>
-                <td style="width: 300px" align="left" valign="bottom">
-                    @Html.ValidationMessageFor(model => model.LName)
-                    <span class="field-validation-error" id="TitleErrorMessageBlank" style="display: none">
-                        <span>Title cannot be blank.</span></span> <span class="field-validation-error" id="TitleErrorMessagePresent"
-                                                                         style="display: none"><span>Title already present.</span></span> 
-                    <span class="field-validation-error" id="TitleErrorMessageError"
-                          style="display: none"><span>Elastic Search Server is not responding.</span></span>
-                          @*   @if (!string.IsNullOrWhiteSpace(ViewBag.LogicalUniqueErrorMsg))
+        </span>
+    </td>
+    <td style="width: 300px" align="left" valign="bottom">
+        @Html.ValidationMessageFor(model => model.LName)
+        <span class="field-validation-error" id="TitleErrorMessageBlank" style="display: none">
+            <span>Title cannot be blank.</span></span> <span class="field-validation-error" id="TitleErrorMessagePresent"
+    style="display: none"><span>Title already present.</span></span>
+<span class="field-validation-error" id="TitleErrorMessageError"
+    style="display: none"><span>Elastic Search Server is not responding.</span></span>
+    @*   @if (!string.IsNullOrWhiteSpace(ViewBag.LogicalUniqueErrorMsg))
                         {
                             <div style="margin-left: 104px;">
                                 <label id="LNameAvail" style="color: Red">@ViewBag.LogicalUniqueErrorMsg</label>
                             </div>
                         }*@ @* </div>*@
-                </td>
-                <td>
-                    <div class="work-status">
-                        @switch (@Convert.ToString(@Model.WorkflowStatus ?? string.Empty).ToLower())
+</td>
+<td>
+<div class="work-status">
+    @switch (@Convert.ToString(@Model.WorkflowStatus ?? string.Empty).ToLower())
                         {
                             case "live":
                             <span class="live">@Model.WorkflowStatus</span>
@@ -596,25 +601,25 @@
                             <span>@(Model.WorkflowStatus ?? string.Empty)</span>
                               break;
                         }
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 
     <div id="Middle">
-        <div class="Std-Layout">
-            <div class="StatusBar" style="margin-left: -24px; width: 103%">
-                <div class="QuestionDashboard">
-                    <li>
-                        <table>
-                            <tr>
-                                <td style="width: 99px;" valign="top">
-                                    @Html.Label("Subject/Purpose")
-                                    <span class="field-validation-error">*</span>
-                                </td>
-                                <td style="width: 250px; height: 45px" align="left">
-                                    @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+<div class="Std-Layout">
+    <div class="StatusBar" style="margin-left: -24px; width: 103%">
+        <div class="QuestionDashboard">
+            <li>
+                <table>
+                    <tr>
+                        <td style="width: 99px;" valign="top">
+                            @Html.Label("Subject/Purpose")
+                            <span class="field-validation-error">*</span>
+                        </td>
+                        <td style="width: 250px; height: 45px" align="left">
+                            @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
                                     {
                                         @Html.TextAreaFor(model => model.Desc, new { style = "width:100%;height:45px", id = "Desc", maxlength = "500", @disabled = "true" })
                                     }
@@ -622,22 +627,22 @@
                                     {
                                         @Html.TextAreaFor(model => model.Desc, new { style = "width:100%;height:45px", id = "Desc", maxlength = "500" })
                                     }
-                                    @*       @Html.ValidationMessageFor(model => model.Desc)*@
-                                </td>
-                                <td>
-                                    <span class="field-validation-error" id="DescErrorMessage" style="display: none"><span>
-                                                                                                                         Description cannot be blank.</span></span>
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="clear">
-                        </div>
-                    </li>
-                    <br />
-                    <li>
-                        @Html.Label("Select Theme")
-                        @* <span class="field-validation-error">*</span>*@
-                        @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                            @*       @Html.ValidationMessageFor(model => model.Desc)*@
+                        </td>
+                        <td>
+                            <span class="field-validation-error" id="DescErrorMessage" style="display: none"><span>
+                                                                                                                 Description cannot be blank.</span></span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="clear">
+                </div>
+            </li>
+            <br />
+            <li>
+                @Html.Label("Select Theme")
+                @* <span class="field-validation-error">*</span>*@
+                @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
                         {
 
                             @Html.DropDownListFor(model => model.CSSFile, Model.ThemesViewModelist.Select(a => new SelectListItem { Selected = false, Text = a.LogicalFieldName, Value = a.ThemeId }).ToList(), "-Select-", new { id = "CSSFile", @disabled = "true", style = "padding: 0%;" })
@@ -646,16 +651,16 @@
                         {
                             @Html.DropDownListFor(model => model.CSSFile, Model.ThemesViewModelist.Select(a => new SelectListItem { Selected = false, Text = a.LogicalFieldName, Value = a.ThemeId }).ToList(), "-Select-", new { id = "CSSFile", style = "padding: 0%;" })
                         }
-                        <div class="clear">
-                        </div>
-                    </li>
-                    <br />
-                    <li>
-                        <div class="editor-label" style="display:inline; float:left">
-                            @Html.Label("Template Type") 
-                            <span class="field-validation-error" style="display:inline;">*</span>
-                            <span class="field-validation-error" style="display:inline;">
-                                @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                <div class="clear">
+                </div>
+            </li>
+            <br />
+            <li>
+                <div class="editor-label" style="display:inline; float:left">
+                    @Html.Label("Template Type")
+                    <span class="field-validation-error" style="display:inline;">*</span>
+                    <span class="field-validation-error" style="display:inline;">
+                        @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
                                 {
                                     @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetNames(typeof(TemplateType))), "-Select-", new { id = "Type", @disabled = "true", style = "padding: 0%;" })
 
@@ -665,20 +670,20 @@
                                     @Html.DropDownListFor(model => model.Type, new SelectList(Enum.GetNames(typeof(TemplateType))), "-Select-", new { id = "Type", style = "padding: 0%;" })
 
                                 }
-                            </span>
-                        </div>
-                        <div style="float:left">
-                            <span class="field-validation-error" id="TemplateTypeErrorMessage" style="display: none"><span> Please Select Template Type.</span></span>
-                        </div>
-                        <div class="clear">
-                        </div>
-                    </li>
-                    <br />
-                    <li>
-                        <div id="divHtmlContent">
-                            @Html.Label("HTML Template Content")
-                            <span class="field-validation-error">*</span>
-                            @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
+                    </span>
+                </div>
+                <div style="float:left">
+                    <span class="field-validation-error" id="TemplateTypeErrorMessage" style="display: none"><span> Please Select Template Type.</span></span>
+                </div>
+                <div class="clear">
+                </div>
+            </li>
+            <br />
+            <li>
+                <div id="divHtmlContent">
+                    @Html.Label("HTML Template Content")
+                    <span class="field-validation-error">*</span>
+                    @if (Convert.ToBoolean(ViewBag.ShowViewUserButton) == true && Convert.ToBoolean(ViewBag.ShowEditUserButton) == false)
                             {
                                 @Html.TextAreaFor(model => model.HtmlContent, new { id = "HtmlContent", @disabled = "true" })
 
@@ -688,36 +693,38 @@
                                 @Html.TextAreaFor(model => model.HtmlContent, new { id = "HtmlContent" })
 
                             }
-                            @* @Html.ValidationMessageFor(model => model.HtmlContent)*@ <span class="field-validation-error"
-                                                                                              id="HtmlContentErrorMessage" style="display: none"><span>HTML Content cannot be blank.</span></span>
-                            @*   <label id="HtmlContent" style="color: Red; display: none; font-size: 0.9em; font-weight: normal;">
+                    @* @Html.ValidationMessageFor(model => model.HtmlContent)*@ <span class="field-validation-error"
+    id="HtmlContentErrorMessage" style="display: none"><span>HTML Content cannot be blank.</span></span>
+@*   <label id="HtmlContent" style="color: Red; display: none; font-size: 0.9em; font-weight: normal;">
                             </label>*@
-                            <script type="text/javascript">
-                                var Editor = CKEDITOR.replace('HtmlContent',
-                                {
-                                    //	    extraPlugins: 'placeholder',
-//                                        toolbar: [['Source', 'Maximize', 'Preview'], ['CreatePlaceholder']],
-                                    toolbar: [['Source', 'Bold', 'Italic', 'NumberedList', 'BulletedList', 
-                                        'Cut', 'Copy', 'Paste',  'PasteFromWord', 'Undo', 'Redo', 'Find', 'Replace', 'SelectAll', 'SpellChecker', 'Scayt',
-                                        'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat', 'Outdent', 'Indent', 'Inlinequote', 'CreateDiv',
-                                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyInline', 'BidiLtr', 'BidiRtl', 'Table',
-                                        'Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor', 'Maximize', 'ShowInlines'], ['CreatePlaceholder']],
-                                             
-//                                        toolbar: [['Source', 'Bold', 'Italic', 'NumberedList', 'BulletedList', 'Link', 'Unlink', 'Preview',
-//                                            'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo', 'Find', 'Replace', 'SelectAll', 'SpellChecker', 'Scayt',
-//                                            'Form', 'Checkbox', 'Radio', 'Select', 'Button', 'ImageButton',
-//                                            'HiddenField', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat', 'Outdent', 'Indent', 'Inlinequote', 'CreateDiv',
-//                                            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyInline', 'BidiLtr', 'BidiRtl', 'Anchor',
-//                                            'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageInstancesBreak', 'Iframe',
-//                                            'Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor', 'Maximize', 'ShowInlines'], ['CreatePlaceholder']],
-                                        
-                                    extraPlugins: 'placeholder',
-                                    language: 'en',
-                                    enterMode: CKEDITOR.ENTER_BR,
-                                    shiftEnterMode: CKEDITOR.ENTER_P
+<script type="text/javascript">
+    var Editor = CKEDITOR.replace('HtmlContent',
+    {
+        //	    extraPlugins: 'placeholder',
+        //                                        toolbar: [['Source', 'Maximize', 'Preview'], ['CreatePlaceholder']],
+        toolbar: [['Source', 'Bold', 'Italic', 'NumberedList', 'BulletedList',
+            'Cut', 'Copy', 'Paste',  'PasteFromWord', 'Undo', 'Redo', 'Find', 'Replace', 'SelectAll', 'SpellChecker', 'Scayt',
+            'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat', 'Outdent', 'Indent', 'Inlinequote', 'CreateDiv',
+            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyInline', 'BidiLtr', 'BidiRtl', 'Table',
+            'Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor', 'Maximize', 'ShowInlines'], ['CreatePlaceholder']],
 
-                                });
-                            </script>
+        //                                        toolbar: [['Source', 'Bold', 'Italic', 'NumberedList', 'BulletedList', 'Link', 'Unlink', 'Preview',
+        //                                            'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Undo', 'Redo', 'Find', 'Replace', 'SelectAll', 'SpellChecker', 'Scayt',
+        //                                            'Form', 'Checkbox', 'Radio', 'Select', 'Button', 'ImageButton',
+        //                                            'HiddenField', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat', 'Outdent', 'Indent', 'Inlinequote', 'CreateDiv',
+        //                                            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyInline', 'BidiLtr', 'BidiRtl', 'Anchor',
+        //                                            'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageInstancesBreak', 'Iframe',
+        //                                            'Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor', 'Maximize', 'ShowInlines'], ['CreatePlaceholder']],
+
+        extraPlugins: 'placeholder',
+        language: 'en',
+        enterMode: CKEDITOR.ENTER_BR,
+        shiftEnterMode: CKEDITOR.ENTER_P
+
+    });
+
+</script>
+
                         </div>
                     </li>
                 </div>

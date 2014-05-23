@@ -15,7 +15,8 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         public List<Fragment> Evaluate(string jsLine)
         {
             // we can't handle lines containing "@Url
-            if (jsLine.Contains("\"@Url"))
+            if (jsLine.Contains("\"@Url")
+            || jsLine.Contains("@{") )
             {
                 throw new UnhandledPatternException(jsLine);
             }
