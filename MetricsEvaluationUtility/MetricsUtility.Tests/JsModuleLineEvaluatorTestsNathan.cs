@@ -89,11 +89,11 @@ namespace MetricsUtiltiy.Tests
             string input = "@{ column++;}";
 
             // Act
-            //List<Fragment> result = evaluator.Evaluate(input);
-            Assert.Throws<UnhandledPatternException>(() => evaluator.Evaluate(input));
+            var result = evaluator.Evaluate(input);
+            //Assert.Throws<UnhandledPatternException>(() => evaluator.Evaluate(input));
 
             // Assert
-            //Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1, result.Count);
         }
 
 

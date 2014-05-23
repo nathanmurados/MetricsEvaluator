@@ -106,12 +106,12 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<ISplitJsFileCreator>().To<SplitJsFileCreator>();
             _container.Bind<IAdvancedJsSplitter>().To<AdvancedJsSplitter>();
             _container.Bind<IAdvancedJsSeperationService>().To<AdvancedJsSeperationService>();
-            //_container.Bind<IJsModuleBlockEvaluator>().To<JsModuleBlockEvaluator>();
+            _container.Bind<IJsVariableNameEvaluator>().To<JsVariableNameEvaluator>();
             //_container.Bind<IJsModuleLineEvaluator>().To<JsModuleLineEvaluator>();
             //_container.Bind<IJsInjectNewModuleVariables>().To<JsInjectNewModuleVariables>();
             _container.Bind<IJsModuleFactory>().To<JsModuleFactory>();
-            
-            const bool useMikes = true;
+
+            const bool useMikes = false;
 
             if (useMikes)
             {
