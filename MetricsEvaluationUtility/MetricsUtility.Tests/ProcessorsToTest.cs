@@ -1,5 +1,4 @@
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
-using MetricsUtility.Core.Services.Evaluators.JavaScript.LineEvaluator2;
 using MetricsUtility.Core.Services.RefactorServices;
 
 namespace MetricsUtiltiy.Tests
@@ -8,17 +7,17 @@ namespace MetricsUtiltiy.Tests
     {
         public static IJsModuleLineEvaluator GetJsModuleLineEvaluator()
         {
-            return new JsModuleLineEvaluator2();
+            return new JsModuleLineEvaluator();
         }
 
         public static IJsModuleBlockEvaluator GetJsModuleBlockEvaluator()
         {
-            return new JsModuleBlockEvaluator2(GetJsModuleLineEvaluator(), new JsVariableNameEvaluator());
+            return new JsModuleBlockEvaluator(GetJsModuleLineEvaluator(), new JsVariableNameEvaluator());
         }
 
         public static IJsInjectNewModuleVariables GetJsInjectNewModuleVariables()
         {
-            return new JsInjectNewModuleVariables2();
+            return new JsInjectNewModuleVariables();
         }
     }
 }

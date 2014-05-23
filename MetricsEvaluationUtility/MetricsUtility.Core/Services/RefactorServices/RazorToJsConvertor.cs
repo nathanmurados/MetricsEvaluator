@@ -32,20 +32,11 @@ namespace MetricsUtility.Core.Services.RefactorServices
             var result = HandleRazorEmbeddedInSingleString(line);
             if (result.Completed) return result.ConvertedLine;
 
-            //result = HandleRazorRightOfSingleString(line);
-            //if (result.Completed) return result.ConvertedLine;
-
-            //result = HandleRazorLeftOfSingleString(line);
-            //if (result.Completed) return result.ConvertedLine;
-
             result = HandleRazorDirectlyWithinQuotes(line);
             if (result.Completed) return result.ConvertedLine;
 
             result = HandleRazorBetweenClosedStrings(line);
             if (result.Completed) return result.ConvertedLine;
-
-            //result = HandleRazorWithinSingleString(line);
-            //if (result.Completed) return result.ConvertedLine;
 
             throw new NotImplementedException();
         }
@@ -57,7 +48,11 @@ namespace MetricsUtility.Core.Services.RefactorServices
             {
                 if (line.Contains(vm.OriginalRazorText))
                 {
-                    var parts = line.Split(new[] { vm.OriginalRazorText }, StringSplitOptions.None);
+                    line = line
+                            .Replace(string.Format("\"{0}\"", vm.OriginalRazorText), vm.OriginalRazorText)
+                            .Replace(string.Format("'{0}'", vm.OriginalRazorText), vm.OriginalRazorText);
+
+                    var parts = line.Split(new[] { vm.OriginalRazorText }, StringSplitOptions.RemoveEmptyEntries);
 
                     if (parts.Where(x => !x.Contains(vm.OriginalRazorText)).All(x => x.IsLegitimateConnectingJsFragment()))
                     {
@@ -95,36 +90,6 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 Completed = updatesMade,
                 ConvertedLine = updatesMade ? line : ""
             };
-        }
-
-        private Result HandleRazorLeftOfSingleString(string line)
-        {
-            if (CharacterConstants.Quotes.Any(quote => line.Count(quote) == 2 && line.EndsWith(quote.AsString()) && line.QuotesComeAfterRazorVariables(quote, RazorVariables)))
-            {
-                line = RazorVariables.Aggregate(line, (current, vm) => current.Replace(vm.OriginalRazorText, vm.GetAp2Name()));
-
-                return new Result
-                {
-                    Completed = true,
-                    ConvertedLine = line
-                };
-            }
-            return new Result();
-        }
-
-        private Result HandleRazorRightOfSingleString(string line)
-        {
-            if (CharacterConstants.Quotes.Any(quote => line.Count(quote) == 2 && line.StartsWith(quote.AsString()) && line.QuotesComeBeforeRazorVariables(quote, RazorVariables)))
-            {
-                line = RazorVariables.Aggregate(line, (current, vm) => current.Replace(vm.OriginalRazorText, vm.GetAp2Name()));
-
-                return new Result
-                {
-                    Completed = true,
-                    ConvertedLine = line
-                };
-            }
-            return new Result();
         }
 
         private Result HandleRazorEmbeddedInSingleString(string line)
