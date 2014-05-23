@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using MetricsUtility.Core.ViewModels;
 using NUnit.Framework;
-using MetricsUtility.Core.Services.Evaluators.JavaScript;
 
 namespace MetricsUtiltiy.Tests
 {
+
     /// <summary>
     /// Testing ability to process a block of javascript that contains @razor code.
     /// This is an integration test as the evaluator unit we are testing makes use of several other evaluator units.
@@ -15,13 +15,12 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Test_Single_Line()
         {
-            var obj = new JsModuleBlockEvaluator(new JsModuleLineEvaluator());
-            
+            var obj = ProcessorsToTest.GetJsModuleBlockEvaluator();
+
             var data = new[]
             {
                 "   $(function(){",
-                "       something='@abc'",                    
-
+                "       something='@abc'",
                 "   });"
             };
 
@@ -35,7 +34,7 @@ namespace MetricsUtiltiy.Tests
         [Test]
         public void Test_Complex()
         {
-            var obj = new JsModuleBlockEvaluator(new JsModuleLineEvaluator());
+            var obj = ProcessorsToTest.GetJsModuleBlockEvaluator();
 
             var data = new[]
             {
@@ -49,7 +48,7 @@ namespace MetricsUtiltiy.Tests
             List<JsModuleViewModel> result = obj.Evaluate(data);
 
             Assert.IsTrue(result.Count == 3);
-            
+
             Assert.AreEqual(result[0].OriginalRazorText, "'@abc'");
             Assert.AreEqual(result[0].JavaScriptName, "abc");
 

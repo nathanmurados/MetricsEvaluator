@@ -8,6 +8,6 @@ namespace MetricsUtility.Core.Services.RefactorServices
         /// <summary>
         /// Takes a JS block and replaces razor fragments with ap2 variables
         /// </summary>
-        List<string> Build(List<string> lines,IEnumerable<JsModuleViewModel> razorVariables);
+        List<string> Build(List<string> lines,List<JsModuleViewModel> razorVariables);
     }
 }

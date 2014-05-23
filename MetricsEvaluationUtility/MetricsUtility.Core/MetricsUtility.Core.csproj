@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\CharacterConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DateTimeProvider.cs" />
     <Compile Include="Services\Evaluators\Css\CssBlockEvaluator.cs" />
@@ -53,10 +54,16 @@
     <Compile Include="Services\Evaluators\Css\BlockContentEvaluator.cs" />
     <Compile Include="Services\Evaluators\IDirectoryDescendentFilesEvaluator.cs" />
     <Compile Include="Services\Evaluators\IRelevantAttributesEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\JsModuleBlockEvaluator2.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\BracketInfoModel.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\BracketModel.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\BracketTracker.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\BracketType.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\CharacterExtensions.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsModuleBlockEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsModuleLineEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsVariableNameEvaluator.cs" />
-    <Compile Include="Enums\JsPageEvaluationMode.cs" />
+    <Compile Include="Constants\Enums\JsPageEvaluationMode.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsModuleBlockEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsBlockContentEvaluator.cs" />
     <Compile Include="Services\Evaluators\DirectoryDescendentFilesEvaluator.cs" />
@@ -69,6 +76,8 @@
     <Compile Include="Services\Evaluators\JavaScript\IJsValidationEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsAttributesProvider.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsBlockEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\EndOfrazorEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\JsModuleLineEvaluator2.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JSModuleLineEvaluatorRegex.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsPageEvaluator.old.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsRazorEvaluator.cs" />
@@ -76,6 +85,8 @@
     <Compile Include="Services\Evaluators\JavaScript\JsValidationEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsModuleLineEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsVariableNameEvaluator.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\LineEvaluationModel.cs" />
+    <Compile Include="Services\Evaluators\JavaScript\LineEvaluator2\LineEvaluationModelExtensions.cs" />
     <Compile Include="Services\Evaluators\JavaScript\UncaughtPatternException.cs" />
     <Compile Include="Services\Evaluators\JavaScript\UnhandledPatternException.cs" />
     <Compile Include="Services\Evaluators\RelevantAttributesEvaluator.cs" />
@@ -105,16 +116,19 @@
     <Compile Include="Services\RefactorServices\IJsFileNameEvaluator.cs" />
     <Compile Include="Services\RefactorServices\IJsInjectNewModuleVariables.cs" />
     <Compile Include="Services\RefactorServices\IJsModuleFactory.cs" />
+    <Compile Include="Services\RefactorServices\JsModuleViewModelExtensions.cs" />
+    <Compile Include="Services\RefactorServices\RazorToJsConvertor.cs" />
     <Compile Include="Services\RefactorServices\IPageCssSeperationEvaluator.cs" />
     <Compile Include="Services\RefactorServices\IJsSeperationService.cs" />
     <Compile Include="Services\RefactorServices\ISolutionRelativeDirectoryEvaluator.cs" />
     <Compile Include="Services\RefactorServices\JsFileNameEvaluator.cs" />
     <Compile Include="Services\RefactorServices\JsInjectNewModuleVariables.cs" />
+    <Compile Include="Services\RefactorServices\JsInjectNewModuleVariables2.cs" />
     <Compile Include="Services\RefactorServices\JsModuleFactory.cs" />
     <Compile Include="Services\RefactorServices\PageCssSeperationEvaluator.cs" />
     <Compile Include="Services\RefactorServices\JsSeperationService.cs" />
     <Compile Include="Services\RefactorServices\RefactoredFileNameViewModel.cs" />
-    <Compile Include="Services\RefactorServices\RegexConstants.cs" />
+    <Compile Include="Constants\Enums\RegexConstants.cs" />
     <Compile Include="Services\RefactorServices\SeperatedJs.cs" />
     <Compile Include="Services\RefactorServices\SolutionRelativeDirectoryEvaluator.cs" />
     <Compile Include="Services\RefactorServices\StringExtensions.cs" />

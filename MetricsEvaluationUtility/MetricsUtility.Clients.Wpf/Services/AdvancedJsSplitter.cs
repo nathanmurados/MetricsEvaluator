@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using MetricsUtility.Core.Services;
-using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
 
 namespace MetricsUtility.Clients.Wpf.Services

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using MetricsUtility.Core.Enums;
+using MetricsUtility.Core.Constants.Enums;
 using MetricsUtility.Core.Services.Extensions;
 
 namespace MetricsUtility.Core.Services.Evaluators.Css

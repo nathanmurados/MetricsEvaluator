@@ -1,4 +1,4 @@
-﻿namespace MetricsUtility.Core.Services.RefactorServices
+﻿namespace MetricsUtility.Core.Constants.Enums
 {
     public class RegexConstants
     {

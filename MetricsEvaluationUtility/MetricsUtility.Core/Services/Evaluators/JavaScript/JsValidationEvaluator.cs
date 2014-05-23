@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MetricsUtility.Core.Enums;
+using MetricsUtility.Core.Constants.Enums;
 using MetricsUtility.Core.Services.Extensions;
 using MetricsUtility.Core.ViewModels;
 

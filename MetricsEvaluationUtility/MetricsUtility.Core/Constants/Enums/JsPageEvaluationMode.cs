@@ -1,4 +1,4 @@
-namespace MetricsUtility.Core.Enums
+namespace MetricsUtility.Core.Constants.Enums
 {
     public enum JsPageEvaluationMode
     {

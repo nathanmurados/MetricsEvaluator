@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using MetricsUtility.Core.ViewModels;
 using NUnit.Framework;
-using MetricsUtility.Core.Services.RefactorServices;
 
 namespace MetricsUtiltiy.Tests
 {
@@ -15,7 +14,7 @@ namespace MetricsUtiltiy.Tests
         public void Test_Single_Line()
         {
             // Arrange
-            var obj = new JsInjectNewModuleVariables();
+            var obj = ProcessorsToTest.GetJsInjectNewModuleVariables();
 
             List<string> data = new List<string>();
             data.Add("   $(function(){");
@@ -37,7 +36,7 @@ namespace MetricsUtiltiy.Tests
         public void Test_Multi_Line()
         {
             // Arrange
-            var obj = new JsInjectNewModuleVariables();
+            var obj = ProcessorsToTest.GetJsInjectNewModuleVariables();
 
             List<string> data = new List<string>();
             data.Add("   $(function(){");

@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    using MetricsUtility.Core.ViewModels;
+    using ViewModels;
 
-    public class JSModuleLineEvaluatorRegex: IJsModuleLineEvaluator
+    public class JsModuleLineEvaluatorRegex: IJsModuleLineEvaluator
     {
         public List<Fragment> Evaluate(string jsLine)
         {

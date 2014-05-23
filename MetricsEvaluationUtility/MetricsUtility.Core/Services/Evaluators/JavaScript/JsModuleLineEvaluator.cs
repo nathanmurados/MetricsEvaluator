@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using MetricsUtility.Core.ViewModels;
 
 namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
-    using System.Linq;
-
-    using ViewModels;
-
     public class JsModuleLineEvaluator : IJsModuleLineEvaluator
     {
         /// <summary>
@@ -16,8 +14,6 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         /// </summary>
         public List<Fragment> Evaluate(string jsLine)
         {
-            CheckForNotHandledPatterns(jsLine);
-
             List<Fragment> output = new List<Fragment>();
 
             // Multi fragment line?
@@ -45,11 +41,8 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                     output.Add(fragment);
                     return output;
                 }
-                else
-                {
-                    // We can't find the matching quote, or a space was hit before hitting the right quote
-                    throw new UnhandledPatternException(jsLine);
-                }
+                // We can't find the matching quote, or a space was hit before hitting the right quote
+                throw new UnhandledPatternException(jsLine);
             }
 
             // Non quoted?
@@ -57,7 +50,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             if (firstCharacterToLeft == ' ')
             {
                 // if there's a quote, play safe and terminate
-                if (jsLine.IndexOf("'") > 0)
+                if (jsLine.IndexOf("'", System.StringComparison.Ordinal) > 0)
                 {
                     throw new UnhandledPatternException(jsLine);
                 }
@@ -110,37 +103,6 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             return -1;
         }
 
-        private bool IsNoSpaces(string jsLine, int atPosition, int lastQuotePosition)
-        {
-            string chunck = jsLine.Substring(atPosition, lastQuotePosition - atPosition);
-            return chunck.IndexOf(" ") == -1;
-        }
-
-        private int PositionOfQuoteToLeft(string jsLine, int atPosition)
-        {
-            string leftPiece = jsLine.Substring(0, atPosition);
-            return leftPiece.IndexOf("'");
-        }
-
-        private int PositionOfQuoteToRight(string jsLine, int atPosition)
-        {
-            string rightPiece = jsLine.Substring(atPosition);
-            return rightPiece.IndexOf("'");
-        }
-
-        /// <summary>
-        /// Check for patterns we know we don't yet handle.
-        /// </summary>
-        private void CheckForNotHandledPatterns(string jsLine)
-        {
-            // We are handling
-            // @{ column++;}
-            //if (jsLine.Contains("@") && jsLine.Contains("++"))
-            //{
-            //    throw new System.NotImplementedException(_patternNotHandled + "@ && ++");
-            //}
-        }
-
         private List<Fragment> ProcessMultiFragmentLine(string jsline)
         {
             // I'm assuming the follow pattern of input
@@ -166,7 +128,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                     }
                     else
                     {
-                        throw new UnhandledPatternException (jsline);
+                        throw new UnhandledPatternException(jsline);
                     }
                 }
                 pos++;

@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
 using Moq;
@@ -19,16 +18,14 @@ namespace MetricsUtiltiy.Tests
                 new JsBlockContentEvaluator(),
                 new JsFileNameEvaluator(
                     new SolutionRelativeDirectoryEvaluator()),
-                new JsModuleBlockEvaluator(
-                    new JsModuleLineEvaluator()
-                ),
+                    ProcessorsToTest.GetJsModuleBlockEvaluator(),
                 new JsModuleFactory(),
-                new JsInjectNewModuleVariables()
+                ProcessorsToTest.GetJsInjectNewModuleVariables()
                 );
         }
 
         [Test]
-        public void IntegrationTest1()
+        public void EmbeddedWithinQuotes1()
         {
             var obj = GetObj();
 
@@ -81,10 +78,175 @@ namespace MetricsUtiltiy.Tests
             }
         }
 
+
+        [Test]
+        public void EmbeddedWithinQuotes3()
+        {
+            var obj = GetObj();
+
+            var input = new[]
+            {
+                "<html>",
+                "<head>",
+                "</head>",
+                "<body>",
+                "<script type='text/javascript'>",
+                "   $(function(){",
+                "       alert('I am a script with an ' + \"@Viewmodel.Variable\");",
+                "   });",
+                "</script>",
+                "   <div>",
+                "       test",
+                "   </div>",
+                "</body>",
+                "</html>"
+            };
+
+            var expected = new[]
+            {
+                "<html>",
+                "<head>",
+                "</head>",
+                "<body>",
+                "<script type=\"text/javascript\">",
+                "    var ap2 = (function(ap2) {", 
+                "        ap2.ViewmodelVariable = \"@Viewmodel.Variable\";", 
+                "        return ap2;", 
+                "    } (ap2 || {}));", 
+                "</script>", 
+                "<script src=\"~/blockjs/somefile.js\" type=\"text/javascript\"></script>",
+                "   <div>",
+                "       test",
+                "   </div>",
+                "</body>",
+                "</html>"
+            };
+
+            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml");
+
+            for (var i = 0; i < result.RefactoredLines.Length; i++)
+            {
+                Debug.WriteLine(expected[i]);
+                Debug.WriteLine(result.RefactoredLines[i]);
+                Debug.WriteLine("");
+                Assert.AreEqual(expected[i], result.RefactoredLines[i]);
+            }
+        }
+
+
+        [Test]
+        public void EmbeddedWithinQuotes4()
+        {
+            var obj = GetObj();
+
+            var input = new[]
+            {
+                "<html>",
+                "<head>",
+                "</head>",
+                "<body>",
+                "<script type='text/javascript'>",
+                "   $(function(){",
+                "       alert('I am a script with an ' + \"@Viewmodel.Variable\" + ' and another ' + '@Viewmodel.Variable2');",
+                "   });",
+                "</script>",
+                "   <div>",
+                "       test",
+                "   </div>",
+                "</body>",
+                "</html>"
+            };
+
+            var expected = new[]
+            {
+                "<html>",
+                "<head>",
+                "</head>",
+                "<body>",
+                "<script type=\"text/javascript\">",
+                "    var ap2 = (function(ap2) {", 
+                "        ap2.ViewmodelVariable = \"@Viewmodel.Variable\";", 
+                "        ap2.ViewmodelVariable2 = \'@Viewmodel.Variable2\';", 
+                "        return ap2;", 
+                "    } (ap2 || {}));", 
+                "</script>", 
+                "<script src=\"~/blockjs/somefile.js\" type=\"text/javascript\"></script>",
+                "   <div>",
+                "       test",
+                "   </div>",
+                "</body>",
+                "</html>"
+            };
+
+            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml");
+
+            for (var i = 0; i < result.RefactoredLines.Length; i++)
+            {
+                Debug.WriteLine(expected[i]);
+                Debug.WriteLine(result.RefactoredLines[i]);
+                Debug.WriteLine("");
+                Assert.AreEqual(expected[i], result.RefactoredLines[i]);
+            }
+        }
+
+        [Test]
+        public void EmbeddedWithinQuotes2()
+        {
+            var obj = GetObj();
+
+            var input = new[]
+            {
+                "<html>",
+                "<head>",
+                "</head>",
+                "<body>",
+                "<script type='text/javascript'>",
+                "   $(function(){",
+                "       alert('I am a script with an @Viewmodel.Variable');",
+                "   });",
+                "</script>",
+                "   <div>",
+                "       test",
+                "   </div>",
+                "</body>",
+                "</html>"
+            };
+
+            var expected = new[]
+            {
+                "<html>",
+                "<head>",
+                "</head>",
+                "<body>",
+                "<script type=\"text/javascript\">",
+                "    var ap2 = (function(ap2) {", 
+                "        ap2.ViewmodelVariable = '@Viewmodel.Variable';", 
+                "        return ap2;", 
+                "    } (ap2 || {}));", 
+                "</script>", 
+                "<script src=\"~/blockjs/somefile.js\" type=\"text/javascript\"></script>",
+                "   <div>",
+                "       test",
+                "   </div>",
+                "</body>",
+                "</html>"
+            };
+
+            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml");
+
+            for (var i = 0; i < result.RefactoredLines.Length; i++)
+            {
+                Debug.WriteLine(expected[i]);
+                Debug.WriteLine(result.RefactoredLines[i]);
+                Debug.WriteLine("");
+                Assert.AreEqual(expected[i], result.RefactoredLines[i]);
+            }
+        }
+
         private AdvancedJsSeperationService GetAdvancedJsSeperationService()
         {
             var mockJsInjectNewModuleVariables = new Mock<IJsInjectNewModuleVariables>();
-            mockJsInjectNewModuleVariables.Setup(x => x.Build(It.IsAny<List<string>>(), It.IsAny<IEnumerable<JsModuleViewModel>>())).Returns(() =>
+            mockJsInjectNewModuleVariables.Setup(x => x.Build(It.IsAny<List<string>>(), It.IsAny<List<JsModuleViewModel>>())).Returns(() =>
                 new List<string>
                 {
                     "   $(function(){", 
@@ -92,7 +254,14 @@ namespace MetricsUtiltiy.Tests
                     "   });"
                 });
 
-            return new AdvancedJsSeperationService(new JsBlockContentEvaluator(), new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()), new JsModuleBlockEvaluator(new JsModuleLineEvaluator()), new JsModuleFactory(), mockJsInjectNewModuleVariables.Object);
+            return
+                new AdvancedJsSeperationService(
+                    new JsBlockContentEvaluator(),
+                    new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()),
+                    ProcessorsToTest.GetJsModuleBlockEvaluator(),
+                    new JsModuleFactory(),
+                    mockJsInjectNewModuleVariables.Object
+                );
         }
 
         [Test]
@@ -121,8 +290,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>",
             };
 
-            var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs",
-                "somefile.cshtml");
+            var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs", "somefile.cshtml");
 
             Assert.AreEqual(1, result.JsRemoved.Count());
             Assert.AreEqual(3, result.JsRemoved[0].Lines.Count);

@@ -6,8 +6,11 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
     public class JsModuleBlockEvaluator : IJsModuleBlockEvaluator
     {
         public IJsModuleLineEvaluator JsModuleLineEvaluator { get; private set; }
-        public JsModuleBlockEvaluator(IJsModuleLineEvaluator jsModuleLineEvaluator)
+        public IJsVariableNameEvaluator JsVariableNameEvaluator { get; private set; }
+        
+        public JsModuleBlockEvaluator(IJsModuleLineEvaluator jsModuleLineEvaluator, IJsVariableNameEvaluator jsVariableNameEvaluator)
         {
+            JsVariableNameEvaluator = jsVariableNameEvaluator;
             JsModuleLineEvaluator = jsModuleLineEvaluator;
         }
 
@@ -26,7 +29,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
             List<JsModuleViewModel> output = new List<JsModuleViewModel>();
 
             
-            JsVariableNameEvaluator variableNameEvaluator = new JsVariableNameEvaluator();
+            
 
             foreach (string jsLine in jsLines)
             {
@@ -39,7 +42,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 
                 foreach (Fragment fragment in razorFragments)
                 {
-                    string razorVariable = variableNameEvaluator.Evaluate(fragment.Text);
+                    string razorVariable = JsVariableNameEvaluator.Evaluate(fragment.Text);
                     output.Add(new JsModuleViewModel() { JavaScriptName = razorVariable, OriginalRazorText = fragment.Text });
                 }
             }

@@ -10,7 +10,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
         /// <summary>
         /// Take a JS block and replace razor fragments with ap2 variables
         /// </summary>
-        public List<string> Build(List<string> lines, IEnumerable<JsModuleViewModel> razorVariables)
+        public List<string> Build(List<string> lines, List<JsModuleViewModel> razorVariables)
         {
             // input:
             //      razorVariable    '@razorVariable'

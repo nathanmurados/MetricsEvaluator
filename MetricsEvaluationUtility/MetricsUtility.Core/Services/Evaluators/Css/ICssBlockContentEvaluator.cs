@@ -1,4 +1,4 @@
-using MetricsUtility.Core.Enums;
+using MetricsUtility.Core.Constants.Enums;
 
 namespace MetricsUtility.Core.Services.Evaluators.Css
 {

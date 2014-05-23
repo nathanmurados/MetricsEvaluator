@@ -26,5 +26,8 @@
     <FixtureTestSelector>
       <FixtureName>MetricsUtiltiy.Tests.JsModuleLineEvaluatorRegexTests</FixtureName>
     </FixtureTestSelector>
+    <FixtureTestSelector>
+      <FixtureName>MetricsUtiltiy.Tests.JsModuleLineEvaluatorTests</FixtureName>
+    </FixtureTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

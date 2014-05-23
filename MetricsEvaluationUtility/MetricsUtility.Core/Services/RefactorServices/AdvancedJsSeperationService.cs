@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using MetricsUtility.Core.Enums;
+using MetricsUtility.Core.Constants.Enums;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.ViewModels;
 
@@ -45,7 +45,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
             {/*
                 * find the first script reference
                 * 
-                * Replace it with the js module
+                * Convert it with the js module
                 * 
                 * Create new js files without razor and references to them
                 * 
@@ -68,7 +68,10 @@ namespace MetricsUtility.Core.Services.RefactorServices
                     var blockContent = jsBlockContents[i];
                     razorLines.AddRange(JsModuleBlockEvaluator.Evaluate(blockContent.Lines));
 
-                    jsRemoved[i] = new GeneratedJsViewModel { Lines = JsInjectNewModuleVariables.Build(blockContent.Lines, razorLines).ToList() };
+                    jsRemoved[i] = new GeneratedJsViewModel
+                    {
+                        Lines = JsInjectNewModuleVariables.Build(blockContent.Lines, razorLines).ToList()
+                    };
                 }
 
                 var jsModule = JsModuleFactory.Build(razorLines.Distinct().ToList()); // generate the new ap2 module from the de-duplicated razor fragments
@@ -98,26 +101,11 @@ namespace MetricsUtility.Core.Services.RefactorServices
                             var hasStartTag = Regex.Matches(toReplace, RegexConstants.ScriptOpeningTag, RegexOptions.IgnoreCase).Count > 0;
                             var line = l;
 
-                            var replacement = Regex.Replace(toReplace, RegexConstants.ScriptClosingTag, "", RegexOptions.IgnoreCase);
-
                             if (hasStartTag)
                             {
-                                //replacement = Regex.Replace(replacement, RegexConstants.ScriptOpeningTag, "", RegexOptions.IgnoreCase);
-                                //if (openingTagWrittenFor != blockIndex)
-                                //{
-                                //    line = Regex.Replace(line, toReplace, jsFileDetails[blockIndex].HtmlLink, RegexOptions.IgnoreCase);
-                                //    openingTagWrittenFor = blockIndex;
-                                //}
-                                //else
-                                //{
-                                //    line = Regex.Replace(line, toReplace, "", RegexOptions.IgnoreCase);
-                                //}
-
                                 if (!moduleHasBeenIncluded)
                                 {
-                                    //refactoredLines.Add("<script type='text/javascript'>");
                                     refactoredLines.AddRange(jsModule);
-                                    //refactoredLines.Add("</script>");
                                     moduleHasBeenIncluded = true;
                                 }
 

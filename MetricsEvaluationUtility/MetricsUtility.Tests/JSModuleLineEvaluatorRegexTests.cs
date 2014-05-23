@@ -13,7 +13,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_ViewBag()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
             string input = "var selectedMenu = '@ViewBag.MenuInstanceName';";
 
             // Act
@@ -28,7 +28,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_UrlAction()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
             string input = "var addPageUrl = '@Url.Action(\"Configure\", \"ConfigureMenu\")';";
 
             // Act
@@ -42,7 +42,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_JQuery_val()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
             string input = "$('#DecommisionReason').val('@decommisionReason');";
 
             // Act
@@ -56,7 +56,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_No_Quotes()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
             string input = "globalFunction = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GlobalFunctionVmList));";
 
             // Act
@@ -70,7 +70,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_2_Fragments()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
 
             // NB contains 2 fragments of razor
             string input = " data: \"{'docId1':'\" + '@ViewBag.docid' + \"','conditionType1':'\" + '@ViewBag.doctype' + \"'}\",";
@@ -87,7 +87,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_ConertToString()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
             string input = "$('#HiddenName').val('@Convert.ToString(stateWatcherVM.LName)');";
 
             // Act
@@ -111,7 +111,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_wth_text_to_left()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
             string input = "alert('text left @Viewbag.Variable');";
 
             // Act
@@ -131,7 +131,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_wth_text_to_right()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
             string input = "alert('@Viewbag.Variable text right');";
 
             // Act
@@ -151,7 +151,7 @@ namespace MetricsUtiltiy.Tests
         public void Extract_Razor_wth_text_eitherside()
         {
             // Arrange
-            var evaluator = new JSModuleLineEvaluatorRegex();
+            var evaluator = new JsModuleLineEvaluatorRegex();
             string input = "alert('text left @Viewbag.Variable text right');";
 
             // Act
