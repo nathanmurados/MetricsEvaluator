@@ -8,17 +8,17 @@ namespace MetricsUtiltiy.Tests
     {
         public static IJsModuleLineEvaluator GetJsModuleLineEvaluator()
         {
-            return new JsModuleLineEvaluator();
+            return new JsModuleLineEvaluator2();
         }
 
         public static IJsModuleBlockEvaluator GetJsModuleBlockEvaluator()
         {
-            return new JsModuleBlockEvaluator(GetJsModuleLineEvaluator(), new JsVariableNameEvaluator());
+            return new JsModuleBlockEvaluator2(GetJsModuleLineEvaluator(), new JsVariableNameEvaluator());
         }
 
         public static IJsInjectNewModuleVariables GetJsInjectNewModuleVariables()
         {
-            return new JsInjectNewModuleVariables();
+            return new JsInjectNewModuleVariables2();
         }
     }
 }
