@@ -81,6 +81,21 @@ namespace MetricsUtiltiy.Tests
             Assert.AreEqual("@Url.Action(\"LoadTrendAnalysisChart\", \"WidgetGallery\", new { communityId = \"_Id\", startYear = \"_Sdate\", endYear = \"_eDate\", trendParametr = \"_trend\" })", result[0].Text);
         }
 
+        [Test]
+        public void Extract_Razor_BlockRazor_Exception()
+        {
+            // Arrange
+            var evaluator = GetEvaluator();
+            string input = "@{ column++;}";
+
+            // Act
+            //List<Fragment> result = evaluator.Evaluate(input);
+            Assert.Throws<UnhandledPatternException>(() => evaluator.Evaluate(input));
+
+            // Assert
+            //Assert.AreEqual(1, result.Count);
+        }
+
 
         [Test]
         public void Quoted_JQuery_val()

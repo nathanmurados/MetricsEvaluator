@@ -51,18 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NathanJsInjectNewModuleVariablesTests.cs" />
-    <Compile Include="NathansAdvancedJsSplitterIntegrationTests.cs" />
+    <Compile Include="JsInjectNewModuleVariablesTestsNathan.cs" />
+    <Compile Include="AdvancedJsSplitterIntegrationTestsNathans.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="DirectoryMimickerTests.cs" />
     <Compile Include="IsLegitimateConnectingJsFragmentTests.cs" />
-    <Compile Include="JsInjectNewModuleVariablesTests.cs" />
+    <Compile Include="JsInjectNewModuleVariablesTestsMikes.cs" />
     <Compile Include="JsModuleBlockEvaluator2Tests.cs" />
-    <Compile Include="MikesAdvancedJsSplitterIntegrationTests.cs" />
+    <Compile Include="AdvancedJsSplitterIntegrationTestsMikes.cs" />
     <Compile Include="RazorToJsConvertorTests.cs" />
     <Compile Include="JsModuleBlockEvaluatorTests.cs" />
-    <Compile Include="JsModuleLineEvaluatorTests - Copy.cs" />
-    <Compile Include="JsModuleLineEvaluator2Tests.cs" />
+    <Compile Include="JsModuleLineEvaluatorTestsMikes.cs" />
+    <Compile Include="JsModuleLineEvaluatorTestsNathan.cs" />
     <Compile Include="JsModuleFactoryTests.cs" />
     <Compile Include="JsVariableNameEvaluatorTests.cs" />
     <Compile Include="ProcessorsToTest.cs" />
