@@ -1,4 +1,5 @@
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
+using MetricsUtility.Core.Services.Evaluators.JavaScript.LineEvaluator2;
 using MetricsUtility.Core.Services.RefactorServices;
 
 namespace MetricsUtiltiy.Tests
