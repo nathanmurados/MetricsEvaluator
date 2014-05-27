@@ -25,6 +25,25 @@
 <script src="~/Scripts/jquery.validate.min.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
 <script src="~/Content/ckeditor/ckeditor.js" type="text/javascript"> </script>
+
+
+<script type="text/javascript">
+    // this block to be ignored. It was added during the manual phase.
+    var ap2 = (function (ap2) {
+        ap2.action = '@action';
+        ap2.DocId = '@DocId';
+        ap2.LName = '@Convert.ToString(stateWatcherVM.LName)';
+        ap2.Condition = '@Convert.ToString(stateWatcherVM.Condition)';
+        ap2.CType = '@Convert.ToString(stateWatcherVM.CType)';
+        ap2.ViewBagCType = '@ViewBag.CType';
+        ap2.decommissionReason = '@decommisionReason';
+        ap2.activationReason = '@activationReason';
+        return ap2;
+    }(ap2 || {}));
+</script>
+
+<!-- some lines to prevent blocks being merged -->
+
 <script type="text/javascript">
     var cssFilePath = "";
     var FlagremovePlainText = true;
@@ -57,7 +76,7 @@
             // Attempt match on search string.
             //            return;
             var r = str.match(re, "g");
-         
+
 
             while (r != null) {
                 var sp1 = r[0].toString();
@@ -67,7 +86,7 @@
                 sp1 = sp1.replace(/\]/g, '}');
 
                 var p1 = sp1.match(re1, "g");
-               
+
                 if (p1 != null) {
                     placeHolderCount = placeHolderCount + 1;
                     if (p1[1].toString().trim() == '') {
@@ -81,19 +100,19 @@
                         return msgFlag;
 
                     }
-//                    else if ($('#Type').val() == 'Master' && p1[1].toString().trim() != 'Content') {
+                    //                    else if ($('#Type').val() == 'Master' && p1[1].toString().trim() != 'Content') {
 
-//                        msgFlag = true;
-//                        if (msgFlag == true) {
+                    //                        msgFlag = true;
+                    //                        if (msgFlag == true) {
 
-//                            alert("Placeholder Name must be 'Content'.");
-//                            //                msgFlag = false;
-//                        }
+                    //                            alert("Placeholder Name must be 'Content'.");
+                    //                            //                msgFlag = false;
+                    //                        }
 
-//                        return msgFlag;
+                    //                        return msgFlag;
 
 
-//                    }
+                    //                    }
 
                 }
                 str = str.replace(r[0], "PHNameExit");
@@ -318,8 +337,8 @@
             //                    FlagremovePlainText = false;
             //                    if (event != null || event != undefined) {
             //                        event.preventDefault ? event.preventDefault() : event.returnValue = false;
-            //                      
-            //                    } 
+            //
+            //                    }
             //                }
             ////                FlagremovePlainText = true;
             ////                if (event != null || event != undefined) {
@@ -526,9 +545,6 @@
     });
 </script>
 
-<script type="text/javascript">
-    alert('hi there');
-</Script>
 
     @{
 

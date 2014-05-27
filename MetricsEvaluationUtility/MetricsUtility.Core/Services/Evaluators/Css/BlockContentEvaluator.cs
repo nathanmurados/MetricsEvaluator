@@ -87,7 +87,27 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 }
             }
 
-            return matches.ToArray();
+            // Throw out any existing ap2 blocks that were added during the manual phase
+            var filteredMatches = new List<BlockContent>();
+            foreach (var blockContent in matches)
+            {
+                bool isAp2Block = false;
+                foreach (string line in blockContent.Lines)
+                {
+                    if (line.Contains("var ap2 = (function") ||
+                        line.Contains("(ap2 || {}));"))
+                    {
+                        isAp2Block = true;
+                        break;
+                    }
+                }
+                if (isAp2Block == false)
+                {
+                    filteredMatches.Add(blockContent);
+                }
+            }
+
+            return filteredMatches.ToArray();
         }
     }
 
