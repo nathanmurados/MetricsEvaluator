@@ -51,7 +51,7 @@
     <Compile Include="Services\Evaluators\Css\ICssRazorEvaluator.cs" />
     <Compile Include="Services\Evaluators\Css\ICssValidationEvaluator.cs" />
     <Compile Include="Services\Evaluators\Css\BlockContent.cs" />
-    <Compile Include="Services\Evaluators\Css\BlockContentEvaluator.cs" />
+    <Compile Include="Services\Evaluators\BlockContentEvaluator.cs" />
     <Compile Include="Services\Evaluators\Css\IRemediatedBlockJsRemover.cs" />
     <Compile Include="Services\Evaluators\Css\RemediatedBlockJsRemover.cs" />
     <Compile Include="Services\Evaluators\IDirectoryDescendentFilesEvaluator.cs" />

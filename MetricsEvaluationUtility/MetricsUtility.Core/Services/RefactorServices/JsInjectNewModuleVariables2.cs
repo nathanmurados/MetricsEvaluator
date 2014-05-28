@@ -19,7 +19,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
 
             foreach (var line in lines)
             {
-                var newLine = line;
+                var newLine = line.Replace("<script type=\"text/javascript\">", "").Replace("</script>", "");
 
                 RazorToJsConvertor.RazorVariables = razorVariables;
 
