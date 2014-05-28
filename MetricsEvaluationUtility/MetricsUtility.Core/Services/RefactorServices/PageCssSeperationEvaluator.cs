@@ -18,7 +18,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
             CssBlockContentEvaluator = cssBlockContentEvaluator;
         }
 
-        public SeperatedCssViewModel Evaluate(string[] lines, string solutionRouteDirectory, string directoryForGeneratedCss, string fileName)
+        public SeperatedCssViewModel Evaluate(string[] lines, string solutionRouteDirectory, string directoryForGeneratedCss, string fileName, bool mergeBlocks)
         {
             var cleanedLines = new string[lines.Count()];
             for (int i = 0; i < lines.Length; i++)
@@ -26,7 +26,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
                 cleanedLines[i] = lines[i].Replace("<style>", "<style type=\"text/css\">");
             }
 
-            var inlineCss = CssBlockContentEvaluator.Split(cleanedLines, JsPageEvaluationMode.NonRazorOnly);
+            var inlineCss = CssBlockContentEvaluator.Split(cleanedLines, PageEvaluationMode.NonRazorOnly,mergeBlocks);
 
             GeneratedCssViewModel[] extractedCssBlocks;
             List<string> strippedContent;

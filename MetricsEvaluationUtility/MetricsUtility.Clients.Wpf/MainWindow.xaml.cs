@@ -257,7 +257,7 @@ namespace MetricsUtility.Clients.Wpf
 
         private void RefactorCss(object sender, RoutedEventArgs e)
         {
-            DoAction(() => CssSpliter.Split());
+            DoAction(() => CssSpliter.Split(true));
         }
 
         private void InspectFolderAbsoluteImagePaths(object sender, RoutedEventArgs e)
@@ -266,7 +266,7 @@ namespace MetricsUtility.Clients.Wpf
             DoAction(() => ImageReferencesEvaluator.Evaluate());
         }
 
-        private void RefactorJs(object sender, RoutedEventArgs e)
+        private void RefactorNonRazorJs(object sender, RoutedEventArgs e)
         {
             ((ViewModel)DataContext).Output = "";
 
@@ -280,7 +280,7 @@ namespace MetricsUtility.Clients.Wpf
             });
         }
 
-        private void RefactorJsWithAtVars(object sender, RoutedEventArgs e)
+        private void RefactorRazorJs(object sender, RoutedEventArgs e)
         {
             ((ViewModel)DataContext).Output = "";
 

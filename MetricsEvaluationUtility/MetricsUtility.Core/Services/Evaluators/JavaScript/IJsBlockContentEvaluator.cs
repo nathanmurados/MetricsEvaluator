@@ -5,6 +5,6 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
     public interface IJsBlockContentEvaluator
     {
-        BlockContent[] Evaluate(string[] contents, JsPageEvaluationMode mode);
+        BlockContent[] Evaluate(string[] contents, PageEvaluationMode mode, bool mergeBlocks);
     }
 }

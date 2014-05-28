@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.RefactorServices;
 using NUnit.Framework;
@@ -10,8 +11,8 @@ namespace MetricsUtiltiy.Tests
     {
         private static SeperatedJs Run(string[] testData)
         {
-            var obj = new JsSeperationService(new JsBlockContentEvaluator(), new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()));
-            return obj.Evaluate(testData, @"C:\dir1\dir2\dir3", @"C:\dir1\dir2\dir3\Content\BlockJs\Search", @"LoggingResultGrid.cshtml");
+            var obj = new JsSeperationService(new JsBlockContentEvaluator(new RemediatedBlockJsRemover()), new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()));
+            return obj.Evaluate(testData, @"C:\dir1\dir2\dir3", @"C:\dir1\dir2\dir3\Content\BlockJs\Search", @"LoggingResultGrid.cshtml", true);
         }
 
         [Test]

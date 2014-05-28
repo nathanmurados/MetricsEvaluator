@@ -108,7 +108,7 @@ namespace MetricsUtility.Clients.Wpf
             _container.Bind<IAdvancedJsSeperationService>().To<AdvancedJsSeperationService>();
             _container.Bind<IJsVariableNameEvaluator>().To<JsVariableNameEvaluator>();
             //_container.Bind<IJsModuleLineEvaluator>().To<JsModuleLineEvaluator>();
-            //_container.Bind<IJsInjectNewModuleVariables>().To<JsInjectNewModuleVariables>();
+            _container.Bind<IRemediatedBlockJsRemover>().To<RemediatedBlockJsRemover>();
             _container.Bind<IJsModuleFactory>().To<JsModuleFactory>();
 
             const bool useMikes = false;

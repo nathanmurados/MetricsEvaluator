@@ -138,8 +138,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" IsEnabled="{Binding IsIdle}">
                     <Button Click="RefactorCss" Content="Refactor CSS" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
-                    <Button Click="RefactorJs" Content="Refactor JS (non @)" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
-                    <Button Click="RefactorJsWithAtVars" Content="Refactor JS (@ only)" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
+                    <Button Click="RefactorNonRazorJs" Content="Refactor JS (non @)" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
+                    <Button Click="RefactorRazorJs" Content="Refactor JS (@ only)" IsEnabled="{Binding HasCssRefactorPaths}" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </Expander>

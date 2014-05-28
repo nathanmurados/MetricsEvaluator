@@ -23,7 +23,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
         }
 
 
-        public JavaScriptEvaluationResult Evaluate(string filename, string[] contents, List<string> attributes)
+        public JavaScriptEvaluationResult Evaluate(string filename, string[] contents, List<string> attributes, bool mergeBlocks)
         {
             var joinedString = string.Join("", contents);
 
@@ -32,7 +32,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
                 return null;
             }
 
-            var pageLevel = JsBlockContentEvaluator.Evaluate(contents, JsPageEvaluationMode.Any);
+            var pageLevel = JsBlockContentEvaluator.Evaluate(contents, PageEvaluationMode.Any,mergeBlocks);
             var references = JsReferencesEvaluator.Evaluate(joinedString);
             var block = JsBlockEvaluator.Evaluate(joinedString, attributes);
             var razor = JsRazorEvaluator.Evaluate(joinedString, attributes);

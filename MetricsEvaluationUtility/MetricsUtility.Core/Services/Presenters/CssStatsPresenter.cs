@@ -37,7 +37,7 @@ namespace MetricsUtility.Core.Services.Presenters
             {
                 var contents = File.ReadAllLines(file);
 
-                var result = CssValidationEvaluator.Evaluate(file, contents);
+                var result = CssValidationEvaluator.Evaluate(file, contents, false);
                 if (result != null)
                 {
                     results.Add(result);

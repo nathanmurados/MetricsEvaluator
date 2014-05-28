@@ -19,7 +19,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
             CssRazorEvaluator = cssRazorEvaluator;
         }
 
-        public CssEvaluationResult Evaluate(string filename, string[] contents)
+        public CssEvaluationResult Evaluate(string filename, string[] contents, bool mergeBlocks)
         {
             var joinedString = string.Join("", contents);
 
@@ -28,7 +28,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 return null;
             }
 
-            var page = CssBlockContentEvaluator.Split(contents, JsPageEvaluationMode.Any);
+            var page = CssBlockContentEvaluator.Split(contents, PageEvaluationMode.Any,mergeBlocks);
             var block = CssBlockEvaluator.Evaluate(joinedString);
             var razor = CssRazorEvaluator.Evaluate(joinedString);
 

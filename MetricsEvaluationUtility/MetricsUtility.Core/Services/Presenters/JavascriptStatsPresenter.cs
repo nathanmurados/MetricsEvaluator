@@ -39,7 +39,7 @@ namespace MetricsUtility.Core.Services.Presenters
                 {
                     var contents = File.ReadAllLines(file);
 
-                    var result = JsValidationEvaluator.Evaluate(file, contents, attributes);
+                    var result = JsValidationEvaluator.Evaluate(file, contents, attributes, false);
                     if (result != null)
                     {
                         results.Add(result);
@@ -61,7 +61,7 @@ namespace MetricsUtility.Core.Services.Presenters
             }
             else
             {
-                foreach (var result in from file in files let contents = File.ReadAllLines(file) select JsValidationEvaluator.Evaluate(file, contents, attributes))
+                foreach (var result in from file in files let contents = File.ReadAllLines(file) select JsValidationEvaluator.Evaluate(file, contents, attributes, false))
                 {
                     if (result != null)
                     {

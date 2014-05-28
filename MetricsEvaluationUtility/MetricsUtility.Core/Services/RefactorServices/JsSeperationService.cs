@@ -17,7 +17,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
             JsBlockContentEvaluator = jsBlockContentEvaluator;
         }
 
-        public SeperatedJs Evaluate(string[] lines, string solutionRouteDirectory, string generatedResultDirectory, string fileName)
+        public SeperatedJs Evaluate(string[] lines, string solutionRouteDirectory, string generatedResultDirectory, string fileName, bool mergeBlocks)
         {
             var cleanedLines = new string[lines.Length];
             const string correct = "<script type=\"text/javascript\">";
@@ -28,7 +28,7 @@ namespace MetricsUtility.Core.Services.RefactorServices
                     .Replace("<script language=\"javascript\" type=\"text/javascript\">", correct);
             }
 
-            var inlineJs = JsBlockContentEvaluator.Evaluate(cleanedLines, JsPageEvaluationMode.NonRazorOnly);
+            var inlineJs = JsBlockContentEvaluator.Evaluate(cleanedLines, PageEvaluationMode.NonRazorOnly,mergeBlocks);
 
             GeneratedJsViewModel[] extractedJsBlocks;
             List<string> replacmentContent;

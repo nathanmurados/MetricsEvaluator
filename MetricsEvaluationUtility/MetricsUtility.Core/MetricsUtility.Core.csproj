@@ -52,6 +52,8 @@
     <Compile Include="Services\Evaluators\Css\ICssValidationEvaluator.cs" />
     <Compile Include="Services\Evaluators\Css\BlockContent.cs" />
     <Compile Include="Services\Evaluators\Css\BlockContentEvaluator.cs" />
+    <Compile Include="Services\Evaluators\Css\IRemediatedBlockJsRemover.cs" />
+    <Compile Include="Services\Evaluators\Css\RemediatedBlockJsRemover.cs" />
     <Compile Include="Services\Evaluators\IDirectoryDescendentFilesEvaluator.cs" />
     <Compile Include="Services\Evaluators\IRelevantAttributesEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsModuleBlockEvaluator2.cs" />
@@ -63,7 +65,7 @@
     <Compile Include="Services\Evaluators\JavaScript\IJsModuleBlockEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsModuleLineEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\IJsVariableNameEvaluator.cs" />
-    <Compile Include="Constants\Enums\JsPageEvaluationMode.cs" />
+    <Compile Include="Constants\Enums\PageEvaluationMode.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsModuleBlockEvaluator.cs" />
     <Compile Include="Services\Evaluators\JavaScript\JsBlockContentEvaluator.cs" />
     <Compile Include="Services\Evaluators\DirectoryDescendentFilesEvaluator.cs" />

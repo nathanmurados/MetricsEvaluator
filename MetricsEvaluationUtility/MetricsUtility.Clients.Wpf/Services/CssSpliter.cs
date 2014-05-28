@@ -20,7 +20,7 @@ namespace MetricsUtility.Clients.Wpf.Services
             PageCssSeperationEvaluator = pageCssSeperationEvaluator;
         }
 
-        public void Split()
+        public void Split(bool mergeBlocks)
         {
             if (MessageBox.Show("Are you sure?", "Refactor CSS", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) { return; }
 
@@ -40,7 +40,7 @@ namespace MetricsUtility.Clients.Wpf.Services
 
                 try
                 {
-                    seperatedCssViewModel = PageCssSeperationEvaluator.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file);
+                    seperatedCssViewModel = PageCssSeperationEvaluator.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file,mergeBlocks);
                 }
                 catch (Exception)
                 {

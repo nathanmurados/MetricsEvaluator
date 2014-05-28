@@ -10,7 +10,7 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript.LineEvaluator2
         {
             new BracketModel {BracketType=BracketType.Brace,Opener = '{', Closer = '}'},
             new BracketModel {BracketType=BracketType.Parentheses,Opener = '(', Closer = ')'},
-            new BracketModel {BracketType=BracketType.Chevron,Opener = '<', Closer = '>'},
+            //new BracketModel {BracketType=BracketType.Chevron,Opener = '<', Closer = '>'},
             new BracketModel {BracketType=BracketType.Crotchet,Opener = '[', Closer = ']'}
         };
 

@@ -14,7 +14,7 @@ namespace MetricsUtiltiy.Tests
 
             var evaluator = new CssBlockContentEvaluator();
 
-            var result = evaluator.Split(raw.Contents, JsPageEvaluationMode.Any);
+            var result = evaluator.Split(raw.Contents, PageEvaluationMode.Any, false);
 
             Assert.AreEqual(1, result.Length);
             Assert.AreEqual(6, result[0].Lines.Count);

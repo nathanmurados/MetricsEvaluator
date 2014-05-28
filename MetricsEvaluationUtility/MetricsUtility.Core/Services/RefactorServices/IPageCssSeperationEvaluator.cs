@@ -4,6 +4,6 @@ namespace MetricsUtility.Core.Services.RefactorServices
 {
     public interface IPageCssSeperationEvaluator
     {
-        SeperatedCssViewModel Evaluate(string[] lines, string solutionRouteDirectory, string directoryForGeneratedCss, string fileName);
+        SeperatedCssViewModel Evaluate(string[] lines, string solutionRouteDirectory, string directoryForGeneratedCss, string fileName, bool mergeBlocks);
     }
 }

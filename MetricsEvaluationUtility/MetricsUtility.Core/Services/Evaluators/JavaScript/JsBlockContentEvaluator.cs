@@ -5,9 +5,14 @@ namespace MetricsUtility.Core.Services.Evaluators.JavaScript
 {
     public class JsBlockContentEvaluator : BlockContentEvaluator, IJsBlockContentEvaluator
     {
-        public BlockContent[] Evaluate(string[] contents, JsPageEvaluationMode mode)
+        public JsBlockContentEvaluator(IRemediatedBlockJsRemover remediatedBlockJsRemover)
         {
-            return Split(contents, RegexConstants.ScriptOpeningTag, RegexConstants.ScriptClosingTag, mode);
+            RemediatedBlockJsRemover = remediatedBlockJsRemover;
+        }
+
+        public BlockContent[] Evaluate(string[] contents, PageEvaluationMode mode, bool mergeBlocks)
+        {
+            return Split(contents, RegexConstants.ScriptOpeningTag, RegexConstants.ScriptClosingTag, mode, mergeBlocks);
         }
     }
 }

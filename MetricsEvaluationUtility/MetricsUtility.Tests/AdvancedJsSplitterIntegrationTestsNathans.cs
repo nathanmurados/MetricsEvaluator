@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using MetricsUtility.Core.Services.Evaluators.JavaScript.LineEvaluator2;
 using MetricsUtility.Core.Services.RefactorServices;
@@ -16,7 +17,7 @@ namespace MetricsUtiltiy.Tests
         public AdvancedJsSeperationService GetObj()
         {
             return new AdvancedJsSeperationService(
-                new JsBlockContentEvaluator(),
+                new JsBlockContentEvaluator(new RemediatedBlockJsRemover()),
                 new JsFileNameEvaluator(
                     new SolutionRelativeDirectoryEvaluator()),
                     new JsModuleBlockEvaluator2(new JsModuleLineEvaluator2(), new JsVariableNameEvaluator()), 
@@ -68,7 +69,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml");
+            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml", false);
 
             for (var i = 0; i < result.RefactoredLines.Length; i++)
             {
@@ -123,7 +124,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml");
+            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml", false);
 
             for (var i = 0; i < result.RefactoredLines.Length; i++)
             {
@@ -179,7 +180,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml");
+            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml", false);
 
             for (var i = 0; i < result.RefactoredLines.Length; i++)
             {
@@ -233,7 +234,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>"
             };
 
-            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml");
+            var result = obj.Evaluate(input, "c:\\code", "c:\\code\\blockjs", "somefile.cshtml", false);
 
             for (var i = 0; i < result.RefactoredLines.Length; i++)
             {
@@ -257,7 +258,7 @@ namespace MetricsUtiltiy.Tests
 
             return
                 new AdvancedJsSeperationService(
-                    new JsBlockContentEvaluator(),
+                    new JsBlockContentEvaluator(new RemediatedBlockJsRemover()),
                     new JsFileNameEvaluator(new SolutionRelativeDirectoryEvaluator()),
                     new JsModuleBlockEvaluator2(new JsModuleLineEvaluator2(), new JsVariableNameEvaluator()), 
                     new JsModuleFactory(),
@@ -291,7 +292,7 @@ namespace MetricsUtiltiy.Tests
                 "</html>",
             };
 
-            var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs", "somefile.cshtml");
+            var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs", "somefile.cshtml", false);
 
             Assert.AreEqual(1, result.JsRemoved.Count());
             Assert.AreEqual(3, result.JsRemoved[0].Lines.Count);
@@ -319,7 +320,7 @@ namespace MetricsUtiltiy.Tests
             };
 
             var result = obj.Evaluate(data, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs",
-                "somefile.cshtml");
+                "somefile.cshtml", false);
 
             Assert.AreEqual(1, result.JsRemoved.Count());
             Assert.AreEqual(3, result.JsRemoved[0].Lines.Count);
@@ -334,7 +335,7 @@ namespace MetricsUtiltiy.Tests
 
             var obj = GetObj();
 
-            var result = obj.Evaluate(raw.Contents, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs", "somefile.cshtml");
+            var result = obj.Evaluate(raw.Contents, "Z:\\SomeDirectory\\Project", "Z:\\SomeDirectory\\Project\\BlockJs", "somefile.cshtml", false);
 
         }
     }

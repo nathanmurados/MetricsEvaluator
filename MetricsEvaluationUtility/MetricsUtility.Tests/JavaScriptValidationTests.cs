@@ -1,4 +1,5 @@
 using MetricsUtility.Core.Constants.Enums;
+using MetricsUtility.Core.Services.Evaluators.Css;
 using MetricsUtility.Core.Services.Evaluators.JavaScript;
 using NUnit.Framework;
 
@@ -12,9 +13,9 @@ namespace MetricsUtiltiy.Tests
         {
             var raw = AssetRetriever.GetFileAndContent(AvailableTestingResources.TestingResource);
 
-            var evaluator = new JsBlockContentEvaluator();
+            var evaluator = new JsBlockContentEvaluator(new RemediatedBlockJsRemover());
 
-            var result = evaluator.Evaluate(raw.Contents, JsPageEvaluationMode.Any);
+            var result = evaluator.Evaluate(raw.Contents, PageEvaluationMode.Any, true);
 
             Assert.AreEqual(2, result.Length);
         }

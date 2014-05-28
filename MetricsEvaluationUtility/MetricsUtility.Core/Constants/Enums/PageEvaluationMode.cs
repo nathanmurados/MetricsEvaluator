@@ -1,6 +1,6 @@
 namespace MetricsUtility.Core.Constants.Enums
 {
-    public enum JsPageEvaluationMode
+    public enum PageEvaluationMode
     {
         NonRazorOnly,
         RazorOnly,

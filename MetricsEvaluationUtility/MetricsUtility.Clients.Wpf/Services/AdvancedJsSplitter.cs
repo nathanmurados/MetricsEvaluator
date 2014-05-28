@@ -40,12 +40,12 @@ namespace MetricsUtility.Clients.Wpf.Services
 
                 try
                 {
-                    seperatedJs = AdvancedJsSeperationService.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file);
+                    seperatedJs = AdvancedJsSeperationService.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file, false);
                 }
                 catch (Exception e)
                 {
                     //Ux.WriteLine(string.Format("{0} ({1})", e.Message, file));
-                    failedFiles.Add(file);
+                    failedFiles.Add(file + e.Message);
                     continue;
                 }
 

@@ -41,7 +41,7 @@ namespace MetricsUtility.Clients.Wpf.Services
 
                 try
                 {
-                    seperatedJs = JsSeperationService.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file);
+                    seperatedJs = JsSeperationService.Evaluate(File.ReadAllLines(file), Properties.Settings.Default.SolutionPath, newPath, file, true);
                 }
                 catch (Exception e)
                 {

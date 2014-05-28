@@ -9,12 +9,14 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
 {
     public abstract class BlockContentEvaluator
     {
-        public BlockContent[] Split(string[] lines, string openingRegexTag, string closeTag, JsPageEvaluationMode mode)
+        public IRemediatedBlockJsRemover RemediatedBlockJsRemover { get; set; }
+
+        public BlockContent[] Split(string[] lines, string openingRegexTag, string closeTag, PageEvaluationMode mode, bool mergeBlocks)
         {
             //var pageLevelCss = 0;
             var within = false;
             var matches = new List<BlockContent>();
-            var isWhitSpaceSinceLastBlock = false;
+            var isWhiteSpaceSinceLastBlock = false;
             var openingRegex = new Regex(openingRegexTag, RegexOptions.Multiline | RegexOptions.IgnoreCase);
             var atSymbols = 0;
 
@@ -32,7 +34,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
 
                     var isMatch = openingTagMatches.Cast<Match>().Any(match => string.IsNullOrWhiteSpace(line.Replace(match.Value, "")));
 
-                    isWhitSpaceSinceLastBlock = isWhitSpaceSinceLastBlock && (string.IsNullOrWhiteSpace(line) || isMatch);
+                    isWhiteSpaceSinceLastBlock = isWhiteSpaceSinceLastBlock && (string.IsNullOrWhiteSpace(line) || isMatch);
                 }
 
                 if (within)
@@ -54,19 +56,19 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                 }
                 else
                 {
-                    isWhitSpaceSinceLastBlock = isWhitSpaceSinceLastBlock && string.IsNullOrWhiteSpace(line);                    
+                    isWhiteSpaceSinceLastBlock = isWhiteSpaceSinceLastBlock && string.IsNullOrWhiteSpace(line);                    
                 }
 
                 if (within && line.Contains(closeTag, StringComparison.OrdinalIgnoreCase))
                 {
                     within = false;
                     if (
-                            (mode==JsPageEvaluationMode.RazorOnly && atSymbols > 0)
-                        ||  (mode==JsPageEvaluationMode.NonRazorOnly && atSymbols == 0)
-                        ||  (mode==JsPageEvaluationMode.Any)
+                            (mode==PageEvaluationMode.RazorOnly && atSymbols > 0)
+                        ||  (mode==PageEvaluationMode.NonRazorOnly && atSymbols == 0)
+                        ||  (mode==PageEvaluationMode.Any)
                     )
                     {
-                        if (isWhitSpaceSinceLastBlock && matches.Any())
+                        if (mergeBlocks && isWhiteSpaceSinceLastBlock && matches.Any())
                         {
                             matches.Last().Lines.AddRange(ls.Lines);
                             matches.Last().AtSymbols += atSymbols;
@@ -75,7 +77,7 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                         {
                             ls.AtSymbols = atSymbols;
                             matches.Add(ls);
-                            isWhitSpaceSinceLastBlock = true;
+                            isWhiteSpaceSinceLastBlock = true;
                         }
                     }
 
@@ -84,38 +86,26 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
                         Lines = new List<string>(),
                         AtSymbols = 0
                     };
+
+                    atSymbols = 0;
                 }
             }
 
-            // Throw out any existing ap2 blocks that were added during the manual phase
-            var filteredMatches = new List<BlockContent>();
-            foreach (var blockContent in matches)
+            if (mode == PageEvaluationMode.RazorOnly && openingRegexTag == RegexConstants.ScriptOpeningTag)
             {
-                bool isAp2Block = false;
-                foreach (string line in blockContent.Lines)
-                {
-                    if (line.Contains("var ap2 = (function") ||
-                        line.Contains("(ap2 || {}));"))
-                    {
-                        isAp2Block = true;
-                        break;
-                    }
-                }
-                if (isAp2Block == false)
-                {
-                    filteredMatches.Add(blockContent);
-                }
+                matches = RemediatedBlockJsRemover.Remove(matches);
             }
-
-            return filteredMatches.ToArray();
+            
+            return matches.ToArray();
         }
+        
     }
 
     //public static class JsPageEvaluationModeExtensions
     //{
-    //    public static bool AllowAtVars(this JsPageEvaluationMode mode)
+    //    public static bool AllowAtVars(this PageEvaluationMode mode)
     //    {
-    //        return mode != JsPageEvaluationMode.NonRazorOnly;
+    //        return mode != PageEvaluationMode.NonRazorOnly;
     //    }
     //}
 }

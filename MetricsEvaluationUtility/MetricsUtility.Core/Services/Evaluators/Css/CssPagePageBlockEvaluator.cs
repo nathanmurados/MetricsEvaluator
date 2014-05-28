@@ -10,9 +10,9 @@ namespace MetricsUtility.Core.Services.Evaluators.Css
         /// <param name="lines"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public BlockContent[] Split(string[] lines, JsPageEvaluationMode mode)
+        public BlockContent[] Split(string[] lines, PageEvaluationMode mode, bool mergeBlocks)
         {
-            return Split(lines, RegexConstants.StyleOpeningTag, RegexConstants.StyleClosingTag, mode);
+            return Split(lines, RegexConstants.StyleOpeningTag, RegexConstants.StyleClosingTag, mode, mergeBlocks);
         }
     }
 }
